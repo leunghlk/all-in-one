@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 半導體產業鏈投資圖譜 — Kathy Leung</title>
+<style>
+:root{
+  --bg:#eef2f6; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --blue:#1a73e8; --blue-deep:#1557b0; --blue-tint:#e8f0fe;
+  --teal:#0d9488; --teal-deep:#115e59; --teal-tint:#ccfbf1;
+  --emerald:#059669; --purple:#7c3aed; --rose:#be123c; --amber:#d97706;
+  --shadow:0 1px 2px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.04);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{max-width:1280px;margin:0 auto;padding:0 14px 40px}
+
+/* ===== leungkathy brand top bar（同 All-in-One suite 其他 dashboard 一致）===== */
+.lk-bar{background:linear-gradient(135deg,#1a73e8 0%,#1557b0 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:11px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.18);margin-bottom:12px}
+.lk-bar .lk-logo{width:38px;height:38px;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:300;font-style:italic;color:#1a73e8;transform:rotate(-6deg);font-family:'Brush Script MT','Segoe Script',cursive,sans-serif;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.lk-bar .lk-name{font-size:19px;font-weight:700;letter-spacing:.2px;line-height:1}
+.lk-bar .lk-sub{font-size:11.5px;opacity:.9;margin-top:3px}
+.lk-bar .lk-prod{margin-left:auto;font-size:12.5px;opacity:.92;text-align:right;line-height:1.5}
+@media(max-width:640px){.lk-bar .lk-prod{margin-left:0;text-align:left;width:100%}}
+
+/* ===== Sticky sub-bar ===== */
+.subbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:12px;padding:6px;margin:0 0 16px;box-shadow:var(--shadow)}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:none;background:#f1f5f9;color:#475569;padding:9px 14px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+.tab:hover{background:#e2e8f0;color:var(--blue-deep)}
+.tab.active{background:var(--blue);color:#fff;box-shadow:0 2px 6px rgba(26,115,232,.3)}
+.tab i{font-style:normal;margin-right:4px}
+
+/* ===== Panes ===== */
+.pane{display:none;animation:fadein .25s ease}
+.pane.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ===== Cards ===== */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-h{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-h .meta{font-size:11px;color:var(--muted);font-weight:600}
+.sec-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--blue);color:#fff;border-radius:8px;font-size:13px;font-weight:800;flex:0 0 auto}
+
+/* ===== RM 話術 ===== */
+.pitch{border-left:5px solid var(--blue);background:#f8fafc;border-radius:0 12px 12px 0;padding:14px 18px;margin:4px 0 16px;font-size:15.5px;color:#1e293b}
+.pitch b{color:var(--blue-deep)}
+.pitch .tag{display:inline-block;background:var(--blue-tint);color:var(--blue-deep);font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:20px;margin-right:8px;letter-spacing:.3px}
+
+/* ===== 解說 / 焦點 ===== */
+.explain{font-size:14px;color:#334155}
+.explain b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.sec-h{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.focus{padding-left:18px;font-size:13.5px;color:#334155}
+.focus li{margin-bottom:7px}
+.focus b{color:var(--ink)}
+
+/* ===== Stock tables ===== */
+table.stocks{width:100%;border-collapse:collapse;font-size:12.5px}
+table.stocks th{background:#f1f5f9;color:#475569;font-weight:800;text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
+table.stocks td{padding:7px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+table.stocks tr:hover td{background:#f8fafc}
+table.stocks .co{font-weight:800;color:var(--ink);white-space:nowrap}
+table.stocks .tk{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+table.stocks .role{color:#334155;font-size:12px}
+@media(max-width:640px){table.stocks,.tbl-wrap{display:block;overflow-x:auto;white-space:nowrap}}
+.badge{display:inline-block;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:800;border:1px solid}
+.b-us{background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe}
+.b-hk{background:#fee2e2;color:#b91c1c;border-color:#fecaca}
+.b-tw{background:#ffedd5;color:#c2410c;border-color:#fed7aa}
+.b-jp{background:#f3e8ff;color:#7e22ce;border-color:#e9d5ff}
+.b-kr{background:#ccfbf1;color:#0f766e;border-color:#99f6e4}
+.b-cn{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+.b-eu{background:#fef9c3;color:#a16207;border-color:#fef08a}
+
+/* ===== Ecosystem flow ===== */
+.flow{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap}
+.flow .node{flex:1 1 200px;border-radius:12px;padding:14px;text-align:center;border:2px solid}
+.flow .arrow{align-self:center;color:#94a3b8;font-size:20px;font-weight:800}
+.flow h4{font-size:13.5px;margin-bottom:2px}
+.flow p{font-size:11px;color:var(--muted);margin-bottom:8px}
+.flow .tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.flow .node-core{position:relative}
+.flow .node-core .flag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.tag-stock{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:10.5px;font-weight:700;color:#334155}
+.tag-stock b{color:var(--blue-deep);font-size:10px;font-weight:800}
+
+/* ===== Step chain (CPO) ===== */
+.steps{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:center}
+.steps .st{flex:1 1 150px;text-align:center;background:#f8fafc;border:2px solid var(--line);border-radius:12px;padding:12px 10px}
+.steps .st .big{font-size:12.5px;font-weight:800;color:var(--ink)}
+.steps .st .sm{font-size:10px;color:var(--muted);margin-top:2px}
+.steps .ar{align-self:center;color:#94a3b8;font-size:16px}
+
+/* ===== Tech chips (packaging selector) ===== */
+.techgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:760px){.techgrid{grid-template-columns:1fr}}
+.tech{border:2px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;background:#fff;transition:all .15s}
+.tech:hover{border-color:#93c5fd;background:#f8faff}
+.tech.active{border-color:var(--blue);background:var(--blue-tint);box-shadow:0 0 0 3px rgba(26,115,232,.12)}
+.tech .t{font-weight:800;font-size:13.5px;color:var(--ink);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.tech .t .pill{font-size:9.5px;background:#ecfdf5;color:#0f766e;border:1px solid #99f6e4;border-radius:20px;padding:1px 8px;font-weight:800;white-space:nowrap}
+.tech .t .pill.blue{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.tech .d{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+.techview{display:none}
+.techview.active{display:block}
+.svgbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;margin:10px 0}
+
+/* ===== Comparison matrix ===== */
+table.matrix{width:100%;border-collapse:collapse;font-size:12px}
+table.matrix th,table.matrix td{padding:9px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}
+table.matrix th{background:#f1f5f9;font-weight:800}
+table.matrix td:first-child{font-weight:700;background:#fafbfc;white-space:nowrap}
+table.matrix .ok{color:#047857;font-weight:700}
+table.matrix .warn{color:#b45309;font-weight:700}
+@media(max-width:640px){.tbl-wrap-matrix{display:block;overflow-x:auto}}
+
+/* ===== FAQ ===== */
+.qa{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.qa summary{padding:11px 14px;font-size:13px;font-weight:800;color:var(--ink);cursor:pointer;background:#f8fafc;list-style:none}
+.qa summary::before{content:'❓ ';color:var(--blue)}
+.qa[open] summary{border-bottom:1px solid var(--line)}
+.qa .a{padding:11px 14px;font-size:12.5px;color:#334155}
+.qa .a b{color:var(--ink)}
+
+/* ===== Callout ===== */
+.callout{border-radius:10px;padding:11px 14px;font-size:12.5px;margin-top:12px}
+.callout.amber{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.callout.blue{background:var(--blue-tint);border:1px solid #bfdbfe;color:#1e40af}
+
+/* ===== Sub-section titles inside a card ===== */
+.sub-sec{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
+.sub-sec:first-of-type{margin-top:0;padding-top:0;border-top:none}
+.sub-h{font-size:13px;font-weight:800;color:var(--blue-deep);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+
+/* ===== Footer ===== */
+.foot{text-align:center;color:#94a3b8;font-size:11px;padding:16px 0 0}
+.foot a{color:#94a3b8}
+
+@media(max-width:640px){.card{padding:14px}.pitch{font-size:14px}}
+</style>
+</head>
+<body><div class="container">
+
+<div class="lk-bar">
+  <div class="lk-logo">k</div>
+  <div>
+    <div class="lk-name">leungkathy</div>
+    <div class="lk-sub">All-in-One Financial Dashboard Suite</div>
+  </div>
+  <div class="lk-prod">AI 半導體產業鏈投資圖譜 · AI Industry Chain<br>教學性質 · 整合 4 大主題 · RM 客戶推介參考</div>
+</div>
+
+<nav class="subbar">
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="ecosystem"><i>🏠</i>產業全景</button>
+    <button class="tab" data-tab="compute"><i>🧠</i>算力與設計</button>
+    <button class="tab" data-tab="foundry"><i>🏭</i>晶圓代工與設備</button>
+    <button class="tab" data-tab="packaging"><i>🔷</i>先進封裝與基板</button>
+    <button class="tab" data-tab="memory"><i>🧩</i>記憶體與儲存</button>
+    <button class="tab" data-tab="pcb"><i>🟩</i>高階PCB與材料</button>
+    <button class="tab" data-tab="optical"><i>💡</i>光通訊與CPO</button>
+    <button class="tab" data-tab="power"><i>⚡</i>電力散熱與終端</button>
+  </div>
+</nav>
+
+<!-- ============ 1. 產業全景 ============ -->
+<section class="pane active" id="pane-ecosystem">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">①</span>RM 銷售話術（一秒懂的比喻）<span class="meta">如何向客戶講解成條 AI 產業鏈</span></div>
+    <div class="pitch"><span class="tag">開場白</span>「投資半導體就像投資房地產開發。<b>IC 設計</b>係『建築師』（畫圖紙）；<b>晶圓代工</b>係『營造廠』（把樓起出嚟）；<b>封裝與 PCB</b>就係『裝修與地基』。而家 AI 爆發，全世界都喺度搶最高級嘅建築師同營造廠，我哋投資嘅就係呢條全球寡占嘅黃金產業鏈。」</div>
+    <div class="explain">AI 晶片產業極度倚賴「專業分工」：<b>NVIDIA</b> 專注設計、將製造交畀良率最高嘅 <b>台積電（TSM）</b>、並綁定 <b>SK Hynix</b> 嘅 HBM 記憶體。呢種鐵三角關係形成極高嘅生態壁壘。由一粒 AI 晶片誕生到裝入伺服器，至少要經過以下四大環節：</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🌐 全球半導體產業生態圈：從設計到製造</div>
+    <div class="flow">
+      <div class="node" style="border-color:#cbd5e1;background:#f8fafc">
+        <h4>上游 · IC 設計 &amp; 架構</h4><p>主導 AI 算力規格</p>
+        <div class="tags"><span class="tag-stock"><b>NVDA</b> NVIDIA</span><span class="tag-stock"><b>AMD</b> AMD</span><span class="tag-stock"><b>ARM</b> ARM</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node node-core" style="border-color:#60a5fa;background:#eff6ff">
+        <div class="flag">利潤製造核心</div>
+        <h4>中游 · 晶圓代工 &amp; 記憶體</h4><p>實體化晶片與龐大數據吞吐</p>
+        <div class="tags"><span class="tag-stock"><b>TSM</b> 台積電</span><span class="tag-stock"><b>INTC</b> Intel</span><span class="tag-stock"><b>000660</b> SK Hynix</span><span class="tag-stock"><b>MU</b> Micron</span><span class="tag-stock"><b>ASML</b> 極紫外光機</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" style="border-color:#cbd5e1;background:#f8fafc">
+        <h4>下游 · 封裝測試</h4><p>打破摩爾定律極限</p>
+        <div class="tags"><span class="tag-stock"><b>ASX</b> 日月光</span><span class="tag-stock"><b>AMKR</b> Amkor</span><span class="tag-stock"><b>AMAT</b> 設備</span><span class="tag-stock"><b>KLAC</b> 檢測</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" style="border-color:#cbd5e1;background:#f8fafc">
+        <h4>終端 · 伺服器 &amp; 基建</h4><p>算力落地與供電散熱</p>
+        <div class="tags"><span class="tag-stock"><b>2317</b> 工業富聯</span><span class="tag-stock"><b>VRT</b> Vertiv</span><span class="tag-stock"><b>ETN</b> 電力</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資策略與焦點</div>
+    <ul class="focus">
+      <li><b>雲端自研晶片（ASIC）崛起：</b>Google、AWS 為降成本轉向自研晶片，長線看好提供底層架構嘅 <b>ARM</b>。</li>
+      <li><b>記憶體超級循環：</b>AI 帶來海量數據吞吐需求，<b>SK Hynix</b> 掌握 HBM 最強護城河；<b>Samsung</b> 與 <b>Kioxia（鎧俠）</b> 亦受惠。</li>
+      <li><b>封裝產能即金礦：</b>AI 晶片缺貨主要因為先進封裝產能唔夠，連帶載板、PCB、材料都出現供需失衡。</li>
+    </ul>
+    <div class="callout amber">⚠️ 教學性質圖譜：以下各環節均有獨立分頁詳解技術、標的與投資邏輯，方便向客戶按板塊逐一講解。</div>
+  </div>
+</section>
+
+<!-- ============ 2. 算力與設計 ============ -->
+<section class="pane" id="pane-compute">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">②</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「如果話 AI 係新時代嘅『腦力』，咁晶片設計就係『諗嘢嘅人』。NVIDIA 就係最出名嘅『首席設計師』——佢唔使自己起廠，專心畫出最強嘅 GPU，再交畀台積電呢位『營造廠』幫佢起出嚟。所以投資設計層，就係投資 AI 嘅『大腦』。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 技術解說：GPU vs ASIC vs IP</div>
+    <div class="explain">
+      <b>GPU（圖形處理器）：</b>NVIDIA、AMD 設計嘅通用 AI 運算晶片，適合大規模並行運算，係而家 AI 訓練嘅主力。<br>
+      <b>ASIC（專用晶片）：</b>Google TPU、AWS Trainium 等雲端巨頭自研嘅專用晶片，慳電慳成本，正逐步蠶食 GPU 市佔。<br>
+      <b>EDA / IP（工具與矽智財）：</b>Synopsys、Cadence 提供設計軟件（EDA），ARM 提供晶片藍圖（IP）。ASIC 崛起最大受惠者就係賣「鏟子」嘅底層架構公司。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5">AI 算力晶片<br>(GPU / ASIC)</td><td class="co">NVIDIA</td><td class="tk">NVDA</td><td><span class="badge b-us">US</span></td><td class="role">AI GPU 絕對龍頭，Hopper / Blackwell 平台</td></tr>
+        <tr><td class="co">AMD</td><td class="tk">AMD</td><td><span class="badge b-us">US</span></td><td class="role">MI300 系列直挑 NVIDIA</td></tr>
+        <tr><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td class="role">ASIC 客製化晶片 + 網通晶片雙引擎</td></tr>
+        <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td class="role">ASIC / DSP，自研晶片大贏家</td></tr>
+        <tr><td class="co">Qualcomm</td><td class="tk">QCOM</td><td><span class="badge b-us">US</span></td><td class="role">手機 AI SoC + 邊緣 AI</td></tr>
+        <tr><td rowspan="5">EDA 軟件<br>與矽智財</td><td class="co">Synopsys</td><td class="tk">SNPS</td><td><span class="badge b-us">US</span></td><td class="role">EDA 雙寡頭之一，AI 設計自動化</td></tr>
+        <tr><td class="co">Cadence</td><td class="tk">CDNS</td><td><span class="badge b-us">US</span></td><td class="role">EDA 雙寡頭之一</td></tr>
+        <tr><td class="co">ARM Holdings</td><td class="tk">ARM</td><td><span class="badge b-eu">UK</span></td><td class="role">CPU IP 授權霸主，ASIC 趨勢核心受惠</td></tr>
+        <tr><td class="co">Siemens EDA</td><td class="tk">—</td><td><span class="badge b-eu">DE</span></td><td class="role">未獨立上市（西門子分部）</td></tr>
+        <tr><td class="co">Alphawave IP</td><td class="tk">AWE.LN</td><td><span class="badge b-eu">UK</span></td><td class="role">高速 SerDes IP，Chiplet 趨勢受惠</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 中國本土：華為海思（未上市）、寒武紀（688256.SH）、海光信息（688041.SH）。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>ASIC 取代 GPU 長線趨勢：</b>雲端巨頭為慳電慳錢自研晶片，<b>ARM</b> 作為架構授權方收「過路費」；<b>Broadcom / Marvell</b> 接單做 ASIC 代工設計。</li>
+      <li><b>EDA 抗經濟週期：</b>賣「設計工具」嘅公司唔受單一客戶成敗影響，收費穩定。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 3. 晶圓代工與設備 ============ -->
+<section class="pane" id="pane-foundry">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">③</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「晶圓代工就係半導體界嘅『國家級營造廠』——台積電就係最頂尖嗰間。一粒 3 納米晶片上面有過百億粒電晶體，只有良率最高嘅廠先做得起，所以『代工』唔係體力活，係全世界最貴嘅『工藝』。而做呢啲工藝要用嘅『重型機械』（光刻機、蝕刻機），就係 ASML、AMAT 呢啲設備廠賣嘅。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 技術解說：先進製程與前道設備五大工序</div>
+    <div class="explain">
+      晶圓製造（前道）就好似「印製納米級印刷術」：喺一塊矽晶圓上，透過<b>曝光（光刻）→ 沉積 → 蝕刻 → 拋光 → 量測</b>等幾百道工序，層層堆疊出電晶體。以下五大工序各有全球壟斷設備廠：
+    </div>
+    <div class="tbl-wrap" style="margin-top:10px"><table class="stocks">
+      <thead><tr><th>前道工序</th><th>做咩</th><th>全球龍頭設備商</th></tr></thead>
+      <tbody>
+        <tr><td class="co">光刻機 (Lithography)</td><td class="role">用光畫電路，先進製程靠 EUV 極紫外光</td><td class="role"><b>ASML（獨家壟斷 EUV）</b> · Canon · Nikon</td></tr>
+        <tr><td class="co">薄膜沉積 (Deposition)</td><td class="role">一層層鍍上導電／絕緣薄膜</td><td class="role">Applied Materials · Lam Research · Tokyo Electron · ASM</td></tr>
+        <tr><td class="co">等離子蝕刻 (Etching)</td><td class="role">用等離子精準「雕走」多餘物料</td><td class="role">Lam Research · Tokyo Electron · 中微公司</td></tr>
+        <tr><td class="co">化學機械拋光 (CMP)</td><td class="role">打磨到納米級平滑，先可以疊下一層</td><td class="role">Applied Materials · Ebara 荏原 · 華海清科</td></tr>
+        <tr><td class="co">量測與檢測 (Inspection)</td><td class="role">檢查每一層有冇瑕疵，良率把關</td><td class="role">KLA（龍頭）· Onto Innovation · Nova</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="sub-sec">
+      <div class="sub-h">晶圓代工（Foundry）</div>
+      <div class="tbl-wrap"><table class="stocks">
+        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+        <tbody>
+          <tr><td class="co">台積電 TSMC</td><td class="tk">TSM / 2330</td><td><span class="badge b-tw">TW</span></td><td class="role">先進製程 + CoWoS 封裝雙壟斷，AI 晶片唯一標配</td></tr>
+          <tr><td class="co">Intel</td><td class="tk">INTC</td><td><span class="badge b-us">US</span></td><td class="role">IDM 2.0 開放代工，美國本土產能 + CHIPS Act 補貼</td></tr>
+          <tr><td class="co">Samsung Foundry</td><td class="tk">005930</td><td><span class="badge b-kr">KR</span></td><td class="role">追趕先進製程，自產自銷記憶體</td></tr>
+          <tr><td class="co">中芯國際 SMIC</td><td class="tk">0981.HK</td><td><span class="badge b-cn">CN</span></td><td class="role">中國先進製程旗手（受出口管制限制）</td></tr>
+          <tr><td class="co">聯電 UMC</td><td class="tk">2303</td><td><span class="badge b-tw">TW</span></td><td class="role">成熟製程 + 面板級封裝佈局</td></tr>
+          <tr><td class="co">GlobalFoundries</td><td class="tk">GFS</td><td><span class="badge b-us">US</span></td><td class="role">特殊製程（射頻／車用）</td></tr>
+          <tr><td class="co">華虹宏力</td><td class="tk">1347.HK</td><td><span class="badge b-cn">CN</span></td><td class="role">中國特色工藝代工</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sub-sec">
+      <div class="sub-h">前道設備（五大工序龍頭）</div>
+      <div class="tbl-wrap"><table class="stocks">
+        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+        <tbody>
+          <tr><td class="co">ASML</td><td class="tk">ASML</td><td><span class="badge b-eu">EU</span></td><td class="role">EUV 光刻機全球獨家，先進製程必買</td></tr>
+          <tr><td class="co">Applied Materials</td><td class="tk">AMAT</td><td><span class="badge b-us">US</span></td><td class="role">薄膜沉積／CMP／檢測全能王</td></tr>
+          <tr><td class="co">Lam Research</td><td class="tk">LRCX</td><td><span class="badge b-us">US</span></td><td class="role">蝕刻龍頭</td></tr>
+          <tr><td class="co">Tokyo Electron</td><td class="tk">8035</td><td><span class="badge b-jp">JP</span></td><td class="role">日本設備巨頭，沉積／蝕刻全覆蓋</td></tr>
+          <tr><td class="co">KLA</td><td class="tk">KLAC</td><td><span class="badge b-us">US</span></td><td class="role">量檢測龍頭，寡占高毛利</td></tr>
+          <tr><td class="co">ASM International</td><td class="tk">ASM</td><td><span class="badge b-eu">EU</span></td><td class="role">ALD 原子層沉積</td></tr>
+          <tr><td class="co">Onto Innovation</td><td class="tk">ONTO</td><td><span class="badge b-us">US</span></td><td class="role">量測／先進封裝檢測</td></tr>
+          <tr><td class="co">Nova</td><td class="tk">NVMI</td><td><span class="badge b-eu">IL</span></td><td class="role">製程量測</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout blue">💡 中國突圍：中微公司（688012.SH）、拓荊科技（688072.SH）、華海清科（688120.SH）、上海微電子 SMEE（未上市）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>台積電「高鐵通行證」邏輯：</b>3 奈米良率 + CoWoS 產能全球唯一，客戶（NVIDIA、AMD、Apple）黏著度極高，有強勁定價權。</li>
+      <li><b>設備「賣水人」邏輯：</b>無論邊間代工廠贏，都要買 ASML / AMAT / LRCX 嘅機器；中國建廠潮亦拉動設備需求。</li>
+      <li><b>EUV 獨家護城河：</b>ASML 壟斷 EUV，先進製程每代升級都離唔開佢。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 4. 先進封裝與基板 ============ -->
+<section class="pane" id="pane-packaging">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">④</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「以前嘅晶片好似平房，好佔地。<b>先進封裝（CoWoS）</b>就係將平房改成『高密度豪宅社區』——我哋將大腦（GPU）同記憶體（HBM）全部起埋一齊，唔止慳位，溝通速度快十倍！而家 AI 晶片缺貨，最主要就係『豪宅社區』起得太慢（封裝產能不足）。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 四大封裝技術對決：台積電 vs 英特爾</div>
+    <div class="explain" style="margin-bottom:12px">點擊下面技術卡片，睇架構斷面示意圖、優勢、瓶頸與客戶比喻：</div>
+    <div class="techgrid">
+      <button class="tech active" data-tech="tsmc-cowos">
+        <div class="t">CoWoS (2.5D) <span class="pill">AI 晶片標配</span></div>
+        <div class="d">應用於 NVIDIA H100 / B200。高成本矽中介層，實現極致傳輸頻寬。</div>
+      </button>
+      <button class="tech" data-tech="tsmc-soic">
+        <div class="t">SoIC (3D) <span class="pill">原子級無凸塊</span></div>
+        <div class="d">應用於 AMD MI300。無微凸塊混合鍵合，訊號接近單一晶片極限。</div>
+      </button>
+      <button class="tech" data-tech="intel-emib">
+        <div class="t">EMIB (2.5D) <span class="pill blue">極高性價比</span></div>
+        <div class="d">唔使整片矽中介層，基板內「插積木式」局部橋接，慳成本、尺寸彈性大。</div>
+      </button>
+      <button class="tech" data-tech="intel-foveros">
+        <div class="t">Foveros (3D) <span class="pill blue">主動底層晶片</span></div>
+        <div class="d">底層本身就係有 I/O 功能嘅活性晶片，上層堆疊核心晶片，立體化極致整合。</div>
+      </button>
+    </div>
+
+    <!-- CoWoS -->
+    <div class="techview active" id="tv-tsmc-cowos">
+      <div class="svgbox">
+        <svg width="100%" height="200" viewBox="0 0 500 200" style="max-width:520px;display:block;margin:0 auto">
+          <rect x="20" y="150" width="460" height="30" rx="4" fill="#e2e8f0" stroke="#94a3b8"/><text x="250" y="170" fill="#475569" font-size="11" text-anchor="middle" font-weight="bold">ABF 有機載板 (Substrate) — Ibiden / Shinko</text>
+          <line x1="60" y1="150" x2="60" y2="132" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/><line x1="160" y1="150" x2="160" y2="132" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/><line x1="340" y1="150" x2="340" y2="132" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/><line x1="440" y1="150" x2="440" y2="132" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/>
+          <rect x="40" y="115" width="420" height="17" rx="2" fill="#10b981" stroke="#059669"/><text x="250" y="127" fill="#065f46" font-size="10" text-anchor="middle" font-weight="bold">矽中介層 Silicon Interposer（整片高成本）— 台積電</text>
+          <rect x="50" y="55" width="100" height="60" rx="3" fill="#a7f3d0" stroke="#059669"/><text x="100" y="88" fill="#064e3b" font-size="11" text-anchor="middle" font-weight="bold">HBM 記憶體</text>
+          <rect x="170" y="35" width="160" height="80" rx="3" fill="#4f46e5" stroke="#4338ca"/><text x="250" y="80" fill="#fff" font-size="13" text-anchor="middle" font-weight="bold">AI 核心 (GPU/CPU)</text>
+          <rect x="350" y="55" width="100" height="60" rx="3" fill="#a7f3d0" stroke="#059669"/><text x="400" y="88" fill="#064e3b" font-size="11" text-anchor="middle" font-weight="bold">HBM 記憶體</text>
+        </svg>
+      </div>
+      <div class="explain"><b>概念：</b>將多個小晶片（Chiplets）與 HBM 並排放喺一片超薄矽中介層上，好似鋪咗一條「超高速高鐵線」。<br>
+      <b>優勢：</b>佈線密度極高、延遲極低、頻寬極大，係 H100 / B200 最難被取代嘅護城河。<br>
+      <b>瓶頸：</b>整片大矽中介層成本貴、黃光製程耗時、全球產能供不應求。<br>
+      <b>💡 比喻：</b>「喺信義區寸金寸土起巨型捷運樞紐，將所有辦公大樓（晶片）用地下超高速通道連起嚟。速度最快，但地價（成本）最高。」</div>
+    </div>
+    <!-- SoIC -->
+    <div class="techview" id="tv-tsmc-soic">
+      <div class="svgbox">
+        <svg width="100%" height="200" viewBox="0 0 500 200" style="max-width:520px;display:block;margin:0 auto">
+          <rect x="20" y="150" width="460" height="30" rx="4" fill="#e2e8f0" stroke="#94a3b8"/><text x="250" y="170" fill="#475569" font-size="11" text-anchor="middle" font-weight="bold">有機封裝基板</text>
+          <line x1="100" y1="150" x2="100" y2="130" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/><line x1="250" y1="150" x2="250" y2="130" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/><line x1="400" y1="150" x2="400" y2="130" stroke="#94a3b8" stroke-width="5" stroke-dasharray="2,5"/>
+          <rect x="60" y="85" width="380" height="45" rx="3" fill="#064e3b" stroke="#059669"/><text x="250" y="112" fill="#a7f3d0" font-size="11" text-anchor="middle" font-weight="bold">底層晶片／矽中介（TSV 通孔，無凸塊鍵合）</text>
+          <line x1="60" y1="85" x2="440" y2="85" stroke="#34d399" stroke-width="4"/><text x="250" y="78" fill="#059669" font-size="9.5" text-anchor="middle" font-weight="bold">原子級銅對銅直接鍵合（無凸塊／極薄）</text>
+          <rect x="110" y="25" width="120" height="55" rx="2" fill="#047857" stroke="#10b981"/><text x="170" y="58" fill="#e6fdf5" font-size="11" text-anchor="middle" font-weight="bold">晶粒 A (CPU)</text>
+          <rect x="270" y="25" width="120" height="55" rx="2" fill="#047857" stroke="#10b981"/><text x="330" y="58" fill="#e6fdf5" font-size="11" text-anchor="middle" font-weight="bold">晶粒 B (GPU)</text>
+        </svg>
+      </div>
+      <div class="explain"><b>概念：</b>晶片與晶片之間唔用傳統微凸塊，直接將銅金屬表面室溫對準、高溫融合，實現原子級電性連接。<br>
+      <b>優勢：</b>傳輸間距縮短至數微米，散熱與電性接近單一整塊晶片，厚度極薄（AMD MI300 採用）。<br>
+      <b>瓶頸：</b>對晶粒平整度潔淨度要求極致苛刻（一粒塵都唔得），良率極難控制。<br>
+      <b>💡 比喻：</b>「將兩層公寓之間嘅樓板打通，直接融合成挑高樓中樓，樓梯變成電梯，空間利用率同移動速度到極致。」</div>
+    </div>
+    <!-- EMIB -->
+    <div class="techview" id="tv-intel-emib">
+      <div class="svgbox">
+        <svg width="100%" height="200" viewBox="0 0 500 200" style="max-width:520px;display:block;margin:0 auto">
+          <rect x="20" y="130" width="460" height="50" rx="4" fill="#e2e8f0" stroke="#94a3b8"/><text x="130" y="165" fill="#475569" font-size="11" text-anchor="start" font-weight="bold">有機封裝基板（標準低成本）</text>
+          <rect x="190" y="120" width="120" height="22" rx="2" fill="#3b82f6" stroke="#2563eb"/><text x="250" y="135" fill="#eff6ff" font-size="9.5" text-anchor="middle" font-weight="bold">嵌入式矽橋 EMIB</text>
+          <rect x="40" y="45" width="190" height="70" rx="3" fill="#1e3a8a" stroke="#3b82f6"/><text x="135" y="86" fill="#eff6ff" font-size="12" text-anchor="middle" font-weight="bold">核心 A (CPU/AI)</text>
+          <rect x="270" y="45" width="190" height="70" rx="3" fill="#1e3a8a" stroke="#3b82f6"/><text x="365" y="86" fill="#eff6ff" font-size="12" text-anchor="middle" font-weight="bold">核心 B (HBM/GPU)</text>
+          <line x1="210" y1="120" x2="210" y2="115" stroke="#60a5fa" stroke-width="4"/><line x1="270" y1="120" x2="270" y2="115" stroke="#60a5fa" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="explain"><b>概念：</b>英特爾唔用整片矽中介層，只喺兩個晶片需要通訊嘅交界位，嵌入一塊極細嘅矽橋。<br>
+      <b>優勢：</b>大幅慳成本、尺寸唔受限、封裝面積可以做得好大，良率高彈性強（Xeon / Gaudi 採用）。<br>
+      <b>瓶頸：</b>整體晶片間通訊密度極高時，佈線靈活性略遜於全矽中介層。<br>
+      <b>💡 比喻：</b>「唔蓋成個捷運網，只喺兩條河之間起一座高架鋼筋橋連接兩岸。成本慳、起得快，邊度需要就塞一座橋。」</div>
+    </div>
+    <!-- Foveros -->
+    <div class="techview" id="tv-intel-foveros">
+      <div class="svgbox">
+        <svg width="100%" height="200" viewBox="0 0 500 200" style="max-width:520px;display:block;margin:0 auto">
+          <rect x="20" y="150" width="460" height="30" rx="4" fill="#e2e8f0" stroke="#94a3b8"/><text x="250" y="170" fill="#475569" font-size="11" text-anchor="middle" font-weight="bold">有機封裝基板</text>
+          <rect x="50" y="80" width="400" height="45" rx="3" fill="#1e3a8a" stroke="#2563eb"/><text x="250" y="108" fill="#bfdbfe" font-size="11" text-anchor="middle" font-weight="bold">主動底層晶片 Active Base Die（有 I/O 與電源管理）</text>
+          <rect x="80" y="15" width="150" height="55" rx="2" fill="#1d4ed8" stroke="#3b82f6"/><text x="155" y="47" fill="#eff6ff" font-size="11" text-anchor="middle" font-weight="bold">運算核心 1</text>
+          <rect x="270" y="15" width="150" height="55" rx="2" fill="#1d4ed8" stroke="#3b82f6"/><text x="345" y="47" fill="#eff6ff" font-size="11" text-anchor="middle" font-weight="bold">運算核心 2</text>
+          <line x1="90" y1="80" x2="90" y2="70" stroke="#60a5fa" stroke-width="4" stroke-dasharray="1,3"/><line x1="150" y1="80" x2="150" y2="70" stroke="#60a5fa" stroke-width="4" stroke-dasharray="1,3"/><line x1="210" y1="80" x2="210" y2="70" stroke="#60a5fa" stroke-width="4" stroke-dasharray="1,3"/><line x1="290" y1="80" x2="290" y2="70" stroke="#60a5fa" stroke-width="4" stroke-dasharray="1,3"/><line x1="350" y1="80" x2="350" y2="70" stroke="#60a5fa" stroke-width="4" stroke-dasharray="1,3"/>
+        </svg>
+      </div>
+      <div class="explain"><b>概念：</b>將運算核心晶片 3D 立體堆疊喺「主動底層晶片」上，底層晶片本身有運算、I/O 功能，內部佈滿 TSV。<br>
+      <b>優勢：</b>底層釋放咗上層昂貴先進製程晶片嘅空間，實現完美異質整合（Meteor Lake 採用）。<br>
+      <b>瓶頸：</b>3D 堆疊發熱問題嚴重，製程步驟繁瑣。<br>
+      <b>💡 比喻：</b>「喺百貨公司地下街（底層，負責收銀物流）上蓋高檔精品專櫃（上層運算核心）。唔浪費一寸土地，但人潮（熱量）擁擠時要好強嘅冷氣（散熱）。」</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">⚖️ 四大封裝技術核心參數對比</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>指標</th><th>台積電 CoWoS-S (2.5D)</th><th>台積電 SoIC (3D)</th><th>英特爾 EMIB (2.5D)</th><th>英特爾 Foveros (3D)</th></tr></thead>
+      <tbody>
+        <tr><td>連接介質</td><td>矽中介層</td><td>無凸塊直接混合鍵合</td><td>嵌入式局部矽橋</td><td>主動矽底層 + 微凸塊</td></tr>
+        <tr><td>連接間距</td><td>約 30–40 μm</td><td class="ok">&lt; 10 μm（密度最高）</td><td>約 35–55 μm</td><td>約 25–36 μm</td></tr>
+        <tr><td>製造成本</td><td class="warn">極高（整片大矽板）</td><td class="warn">高（精密無塵）</td><td class="ok">中等（性價比優）</td><td>中高</td></tr>
+        <tr><td>封裝尺寸限制</td><td>受限曝光機光罩</td><td>極薄但唔適合過大面積</td><td class="ok">極靈活唔受限</td><td>受制底層良率與散熱</td></tr>
+        <tr><td>代表產品</td><td>NVIDIA H100/H200、B200</td><td>AMD MI300A/X</td><td>Intel Xeon、Gaudi 3</td><td>Intel Meteor Lake</td></tr>
+        <tr><td>量產成熟度 (2026)</td><td class="ok">高度成熟、供不應求</td><td>良率拉升中</td><td class="ok">極高</td><td>商業化順暢</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3">先進封裝<br>(OSAT)</td><td class="co">日月光 ASE</td><td class="tk">ASX / 3711</td><td><span class="badge b-tw">TW</span></td><td class="role">全球 OSAT 龍頭，先進封裝訂單外溢受惠</td></tr>
+        <tr><td class="co">Amkor</td><td class="tk">AMKR</td><td><span class="badge b-us">US</span></td><td class="role">與台積電策略合作，承接 HBM 整合測試</td></tr>
+        <tr><td class="co">長電科技／力成／通富</td><td class="tk">600584 / 6239 / 002156</td><td><span class="badge b-cn">CN</span><span class="badge b-tw">TW</span></td><td class="role">中國／台灣封測主力</td></tr>
+        <tr><td rowspan="2">測試機台<br>(ATE)</td><td class="co">Advantest 愛德萬</td><td class="tk">6857</td><td><span class="badge b-jp">JP</span></td><td class="role">測試機龍頭，HBM 測試最大受惠</td></tr>
+        <tr><td class="co">Teradyne 泰瑞達</td><td class="tk">TER</td><td><span class="badge b-us">US</span></td><td class="role">半導體／SoC 測試</td></tr>
+        <tr><td rowspan="3">次世代基板<br>(玻璃基板)</td><td class="co">Corning 康寧</td><td class="tk">GLW</td><td><span class="badge b-us">US</span></td><td class="role">低 CTE 玻璃專利，材料龍頭</td></tr>
+        <tr><td class="co">Intel</td><td class="tk">INTC</td><td><span class="badge b-us">US</span></td><td class="role">深度佈局 CoPoS，圖打破台積獨大</td></tr>
+        <tr><td class="co">LPKF / SKC (Absolics)</td><td class="tk">LPK / 011790</td><td><span class="badge b-eu">EU</span><span class="badge b-kr">KR</span></td><td class="role">TGV 玻璃鑽孔雷射設備；SKC 已美國建廠</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🪟 次世代封裝：玻璃基板（CoPoS）</div>
+    <div class="pitch"><span class="tag">解說</span>「而家嘅封裝基板好似塑膠，晶片越大越熱，基板就會『彎曲變形』——呢個就係 CoWoS 而家嘅瓶頸：<b>封得落，但封唔大</b>。未來嘅<b>『玻璃基板（CoPoS）』</b>就好似一塊超大、超平、耐高溫嘅頂級玻璃，晶片封得極大、絕對唔翹曲。呢個係 Intel 同 AMD 2026 年後彎道超車嘅核心武器。」</div>
+    <div class="grid2">
+      <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px"><b style="font-size:13px">當下：CoWoS（圓形晶圓）</b><div style="font-size:12px;color:#334155;margin-top:4px">12 吋圓形晶圓。<span style="color:#dc2626;font-weight:700">缺點：</span>邊角廢料多（利用率 &lt;70%）、有機基板易翹曲。</div></div>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px"><b style="font-size:13px;color:#1e40af">次世代：CoPoS（方形玻璃面板）</b><div style="font-size:12px;color:#334155;margin-top:4px">方形玻璃面板。<span style="color:#047857;font-weight:700">優點：</span>無邊角廢料（利用率 &gt;90%）、高平坦度不翹曲、支援超大 AI 晶片。</div></div>
+    </div>
+    <div class="callout amber">⚠️ CoPoS 屬 2026 後技術演進，仍處早期，宜以「題材＋材料/設備先行」角度看待（Corning 玻璃、LPKF 雷射設備、SKC 量產）。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">❓ 專家 Q&amp;A（CFA 分析師精選）</div>
+    <details class="qa"><summary>無凸塊混合鍵合（Hybrid Bonding）點運作？台積電 SoIC 領先喺邊？</summary>
+      <div class="a">傳統封裝用「微凸塊」連接晶片，好似兩個城市之間得一條窄橋。混合鍵合係將兩個晶片嘅<b>銅金屬表面直接原子級融合</b>，唔使中間物，傳輸間距（Pitch）縮短到 &lt;10 μm，訊號近乎零損耗。台積電喺呢項技術累積多年、良率領先，AMD MI300 已量產採用，令佢喺 3D 封裝保持技術領導地位。</div></details>
+    <details class="qa"><summary>NVIDIA Blackwell (B200) 出貨樽頸係 CoWoS 定 HBM？點解決？</summary>
+      <div class="a">兩者都係樽頸：B200 用 CoWoS-L 超大封裝 + 最新 HBM3E。<b>短期</b>樽頸更多喺 HBM 供貨（SK Hynix／Micron／Samsung 擴產需時）同 CoWoS 產能。<b>解決方向</b>：台積電大幅擴充先進封裝產能（2025–26 產能翻倍級）、記憶體廠加速 HBM 爬坡。所以投資上設備商（ASML/AMAT）與封測（Advantest/AMKR）均長期受惠。</div></details>
+    <details class="qa"><summary>Intel EMIB 對自研晶片（ASIC）大廠嚟講，成本上有咩吸引力？</summary>
+      <div class="a">EMIB 唔使成塊昂貴矽中介層，只喺晶片交界位插矽橋，<b>成本可慳大半</b>，而且封裝尺寸唔受限（可以拼巨型晶片）。對希望控制成本、分散台積電風險嘅雲端巨頭（如自研 XPU 嘅 Microsoft、Amazon、Meta）極具吸引力——Intel 亦借 IFS 開放代工吸納呢啲訂單，呢個正正係「穩健型客戶」配置 Intel 鏈嘅核心邏輯。</div></details>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>產能即金礦：</b>台積電 CoWoS 產能吃緊，除咗台積電本身，設備商 <b>ASML / AMAT</b> 同封測 <b>AMKR / 日月光</b> 皆長期受惠。</li>
+      <li><b>載板供需失衡：</b>CoWoS 令最下方載板（<b>Ibiden / Shinko</b>）面積倍數增長，成為高利潤技術卡口。</li>
+      <li><b>玻璃基板題材：</b>設備先行（<b>LPKF</b> 雷射 TGV、<b>AMAT / LRCX / ONTO</b> 量測），材料看 <b>Corning</b>。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5. 記憶體與儲存 ============ -->
+<section class="pane" id="pane-memory">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑤</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「AI 唔止要識計數，仲要『記得晒啲嘢』。GPU 係大腦，記憶體就係『短期記憶』——AI 模型訓練嘅數據、中間結果，都要有極速記憶體不停吞吐。<b>HBM</b> 就係最新一代『記憶體大廈』，用堆疊方式一層層起高，係 AI 晶片嘅『血液』。邊間公司壟斷呢啲記憶體，就壟斷咗 AI 嘅供血系統。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 技術解說：記憶體四大類</div>
+    <div class="grid2">
+      <div style="background:#fffbeb;border-left:4px solid #d97706;border-radius:8px;padding:12px">
+        <b style="font-size:13px">HBM（高頻寬記憶體）— AI 嘅血液</b>
+        <div style="font-size:12.5px;color:#713f12;margin-top:4px">透過 <b>TSV（矽穿孔）</b>技術將多層 DRAM 垂直堆疊，與 GPU 以先進封裝整合，大幅縮短數據路徑。NVIDIA 晶片標配。</div>
+      </div>
+      <div style="background:#eff6ff;border-left:4px solid #2563eb;border-radius:8px;padding:12px">
+        <b style="font-size:13px">DDR5 — 伺服器主記憶體</b>
+        <div style="font-size:12.5px;color:#1e40af;margin-top:4px">AI 訓練所需嘅基礎記憶體容量，傳輸速度為上一代兩倍，係不可或缺基石。</div>
+      </div>
+      <div style="background:#f8fafc;border-left:4px solid #64748b;border-radius:8px;padding:12px">
+        <b style="font-size:13px">NAND / eSSD — AI 資料倉庫</b>
+        <div style="font-size:12.5px;color:#334155;margin-top:4px">儲存龐大訓練資料集，吞吐量決定數據餵入 GPU 嘅效率。</div>
+      </div>
+      <div style="background:#fef2f2;border-left:4px solid #dc2626;border-radius:8px;padding:12px">
+        <b style="font-size:13px">HDD（機械硬碟）— 大容量冷存儲</b>
+        <div style="font-size:12.5px;color:#991b1b;margin-top:4px">海量資料歸檔，容量成本最低，AI 數據備份仍需要。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5">HBM / DRAM<br>(內存)</td><td class="co">SK 海力士</td><td class="tk">000660</td><td><span class="badge b-kr">KR</span></td><td class="role">HBM 最強護城河，NVIDIA 核心供應商</td></tr>
+        <tr><td class="co">Samsung</td><td class="tk">005930</td><td><span class="badge b-kr">KR</span></td><td class="role">記憶體全球龍頭，HBM 追趕</td></tr>
+        <tr><td class="co">Micron 美光</td><td class="tk">MU</td><td><span class="badge b-us">US</span></td><td class="role">美系唯一 HBM 供應商</td></tr>
+        <tr><td class="co">南亞科</td><td class="tk">2408</td><td><span class="badge b-tw">TW</span></td><td class="role">台系 DRAM</td></tr>
+        <tr><td class="co">華邦電</td><td class="tk">2344</td><td><span class="badge b-tw">TW</span></td><td class="role">利基型記憶體</td></tr>
+        <tr><td rowspan="4">NAND Flash<br>(閃存 / eSSD)</td><td class="co">Samsung / SK Group</td><td class="tk">005930 / 000660</td><td><span class="badge b-kr">KR</span></td><td class="role">NAND 雙巨頭（SK 旗下 Solidigm 專攻企業 SSD）</td></tr>
+        <tr><td class="co">SanDisk</td><td class="tk">SNDK</td><td><span class="badge b-us">US</span></td><td class="role">NAND 品牌廠</td></tr>
+        <tr><td class="co">Kioxia 鎧俠</td><td class="tk">285A</td><td><span class="badge b-jp">JP</span></td><td class="role">日系 NAND 龍頭</td></tr>
+        <tr><td class="co">Micron 美光</td><td class="tk">MU</td><td><span class="badge b-us">US</span></td><td class="role">NAND + DRAM 雙線</td></tr>
+        <tr><td rowspan="3">HDD（硬碟）</td><td class="co">Seagate</td><td class="tk">STX</td><td><span class="badge b-us">US</span></td><td class="role">HDD 雙寡頭之一</td></tr>
+        <tr><td class="co">Western Digital</td><td class="tk">WDC</td><td><span class="badge b-us">US</span></td><td class="role">HDD 雙寡頭之一</td></tr>
+        <tr><td class="co">Toshiba</td><td class="tk">6502</td><td><span class="badge b-jp">JP</span></td><td class="role">HDD 第三大</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 中國本土：長江存儲 YMTC（未上市，全球第六大 NAND）。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>記憶體超級循環：</b>AI 海量數據吞吐，HBM 需求爆發式增長，<b>SK Hynix</b> 技術領先食正勢頭。</li>
+      <li><b>HBM 供貨瓶頸＝投資機會：</b>HBM 爬坡需時，利好測試設備 <b>Advantest</b> 同封裝 <b>AMKR</b>（承接 HBM 整合測試）。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 6. 高階PCB與材料 ============ -->
+<section class="pane" id="pane-pcb">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑥</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「大家以為 PCB 只係綠色塑膠板？錯喇！喺 AI 伺服器入面，佢係厚達近 30 層嘅『立體超級高速公路』。要令跑車（AI 訊號）跑得快，柏油路必須極度平滑——呢個好考驗『材料』。其實 PCB 成本嘅 80% 都俾最上游嘅材料商（玻璃纖維、樹脂、銅箔）賺走咗，呢啲先係真正嘅隱形冠軍！」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 PCB 其實係「材料科學」：三大壟斷材料</div>
+    <div class="grid2">
+      <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px">
+        <b style="font-size:13px">電子玻纖布（骨架）</b>
+        <div style="font-size:12.5px;color:#334155;margin-top:4px">撐住板材唔變形嘅鋼筋。高階 T-glass（低損耗）嚴重缺貨。<br><b>壟斷：</b>日東紡 Nittobo（3110，日本）</div>
+      </div>
+      <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px">
+        <b style="font-size:13px">特種樹脂（絕緣）</b>
+        <div style="font-size:12.5px;color:#334155;margin-top:4px">包覆訊號防外溢，AI 必須用高階樹脂。<br><b>壟斷：</b>SABIC（沙特）、旭化成（3407）、Panasonic（6752）</div>
+      </div>
+      <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px">
+        <b style="font-size:13px">電子銅箔（傳輸）</b>
+        <div style="font-size:12.5px;color:#334155;margin-top:4px">高頻訊號只行表面（趨膚效應），需要極端平滑嘅「鏡面銅箔」。<br><b>壟斷：</b>三井金屬（5706，日本）</div>
+      </div>
+      <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px">
+        <b style="font-size:13px;color:#065f46">覆銅板 CCL（成品）</b>
+        <div style="font-size:12.5px;color:#334155;margin-top:4px">三大材料壓合即成 CCL。中游 CCL 廠係「配方公司」，須經 NVIDIA 長達一兩年認證——平台由 Hopper 升到 Rubin，規格越嚟越嚴。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🧲 AI 超級磁吸效應（供需失衡）</div>
+    <div class="explain" style="border-left:4px solid var(--teal);padding-left:14px">
+      <b>NVIDIA Vera Rubin 平台</b>需採用最高階 M9 等級材料（CCL），利潤極高、訂單極大，<b>吸走所有高階產能</b> → 網通／伺服器設備廠交期拉長買唔到板；NB／消費電子廠被迫接受 PCB/CCL 漲價。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="4">上游壟斷<br>材料</td><td class="co">日東紡 Nittobo</td><td class="tk">3110</td><td><span class="badge b-jp">JP</span></td><td class="role">電子玻纖布全球壟斷（T-glass 缺貨受惠）</td></tr>
+        <tr><td class="co">SABIC 沙特基礎</td><td class="tk">SABIC</td><td><span class="badge b-eu">EU</span></td><td class="role">高階樹脂雙寡頭</td></tr>
+        <tr><td class="co">旭化成／Panasonic</td><td class="tk">3407 / 6752</td><td><span class="badge b-jp">JP</span></td><td class="role">特種樹脂／高階基材</td></tr>
+        <tr><td class="co">三井金屬</td><td class="tk">5706</td><td><span class="badge b-jp">JP</span></td><td class="role">鏡面銅箔壟斷</td></tr>
+        <tr><td rowspan="6">高階 PCB<br>／載板／CCL</td><td class="co">Ibiden 揖斐電</td><td class="tk">4062</td><td><span class="badge b-jp">JP</span></td><td class="role">ABF 載板龍頭（CoWoS 下方載板）</td></tr>
+        <tr><td class="co">Shinko</td><td class="tk">4114</td><td><span class="badge b-jp">JP</span></td><td class="role">ABF 載板供應商</td></tr>
+        <tr><td class="co">臻鼎-KY</td><td class="tk">4958</td><td><span class="badge b-tw">TW</span></td><td class="role">全球 PCB 龍頭</td></tr>
+        <tr><td class="co">欣興電子</td><td class="tk">3037</td><td><span class="badge b-tw">TW</span></td><td class="role">ABF 載板台系主力</td></tr>
+        <tr><td class="co">建滔積層板</td><td class="tk">01888.HK</td><td><span class="badge b-hk">HK</span></td><td class="role">全球 CCL 產能規模最大，漲價效應受惠</td></tr>
+        <tr><td class="co">TTM／滬電／勝宏</td><td class="tk">TTMI / 002463</td><td><span class="badge b-us">US</span><span class="badge b-cn">CN</span></td><td class="role">高頻高速板供應商</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>揾上游定價權：</b>唔好淨係睇下游組裝，要留意擁有獨占技術嘅 <b>日東紡</b> 等上游材料巨頭——真正「收費站」喺日本同海外材料商。</li>
+      <li><b>受惠漲價效應：</b>AI 吸走高階產能，中低階板都會漲價，港股 <b>建滔積層板</b>、韓國 <b>Doosan</b> 係全球標的。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 7. 光通訊與CPO ============ -->
+<section class="pane" id="pane-optical">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑦</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「AI 伺服器算力太強，傳輸資料如果全部用傳統銅線，就好似『高鐵跑喺普通鐵軌上』，極度耗電仲發高熱。<b>CPO（共封裝光學）同矽光子</b>，就係直接將『光纖插頭』做埋喺晶片隔籬（光進銅退）。用『光』傳數據，零阻力、唔發熱、速度飛快——係解決 AI 缺電樽頸嘅唯一解藥。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 光進銅退：O-E-O（光-電-光）傳輸鏈路</div>
+    <div class="steps">
+      <div class="st"><div class="big">運算晶片<br>GPU / ASIC</div><div class="sm">NVDA</div></div>
+      <div class="ar">→</div>
+      <div class="st" style="border-color:#60a5fa"><div class="big">網通晶片<br>Switch / DSP</div><div class="sm">Broadcom · Marvell</div></div>
+      <div class="ar">→</div>
+      <div class="st" style="border-color:#a855f7"><div class="big">光電轉換<br>矽光子 PIC</div><div class="sm">Intel · 台積電</div></div>
+      <div class="ar">→</div>
+      <div class="st" style="border-color:#eab308"><div class="big">光纖傳輸</div><div class="sm">光纖玻璃</div></div>
+      <div class="ar">→</div>
+      <div class="st" style="border-color:#a855f7"><div class="big">光模組<br>(接收端)</div><div class="sm">中際旭創 · Fabrinet</div></div>
+    </div>
+    <div class="callout blue">* CPO 核心：將「光電轉換」同「網通晶片」封裝喺同一塊載板，消滅高耗損嘅銅線走線。傳統可插拔光模組距離晶片遠，銅線傳輸產生龐大熱能；矽光子直接用半導體技術製造光學元件，係大廠解決 AI 資料中心「缺電」嘅終極方案。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2">網通晶片<br>(CPO 大腦)</td><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td class="role">Switch 晶片龍頭，CPO 最大贏家</td></tr>
+        <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td class="role">DSP 主導者</td></tr>
+        <tr><td rowspan="4">光纖與<br>特種玻璃</td><td class="co">Corning 康寧</td><td class="tk">GLW</td><td><span class="badge b-us">US</span></td><td class="role">光纖玻璃龍頭</td></tr>
+        <tr><td class="co">長飛光纖光纜</td><td class="tk">6869.HK</td><td><span class="badge b-cn">CN</span></td><td class="role">中國光纖龍頭</td></tr>
+        <tr><td class="co">亨通光電</td><td class="tk">600487</td><td><span class="badge b-cn">CN</span></td><td class="role">光纖＋海纜</td></tr>
+        <tr><td class="co">古河電工／Prysmian</td><td class="tk">5801 / PRY.MI</td><td><span class="badge b-jp">JP</span><span class="badge b-eu">EU</span></td><td class="role">日／歐光纖巨頭</td></tr>
+        <tr><td rowspan="3">光模組<br>(Transceiver)</td><td class="co">中際旭創</td><td class="tk">300308 / 3308.HK</td><td><span class="badge b-cn">CN</span></td><td class="role">全球光模組龍頭，訂單滿載</td></tr>
+        <tr><td class="co">Coherent</td><td class="tk">COHR</td><td><span class="badge b-us">US</span></td><td class="role">光通訊＋光器件</td></tr>
+        <tr><td class="co">新易盛／海信寬帶</td><td class="tk">300502 / —</td><td><span class="badge b-cn">CN</span></td><td class="role">800G 高速模組主力</td></tr>
+        <tr><td rowspan="3">光器件／光引擎<br>／雷射晶片</td><td class="co">Fabrinet</td><td class="tk">FN</td><td><span class="badge b-us">US</span></td><td class="role">光學專業代工</td></tr>
+        <tr><td class="co">Lumentum</td><td class="tk">LITE</td><td><span class="badge b-us">US</span></td><td class="role">光雷射晶片龍頭</td></tr>
+        <tr><td class="co">天孚通信／三菱電機／住友電工</td><td class="tk">300394 / 6503 / 5802</td><td><span class="badge b-cn">CN</span><span class="badge b-jp">JP</span></td><td class="role">光器件／光引擎／雷射</td></tr>
+        <tr><td rowspan="3">高速連接器</td><td class="co">Amphenol 安費諾</td><td class="tk">APH</td><td><span class="badge b-us">US</span></td><td class="role">連接器全球龍頭</td></tr>
+        <tr><td class="co">TE Connectivity</td><td class="tk">TEL</td><td><span class="badge b-us">US</span></td><td class="role">連接器巨頭</td></tr>
+        <tr><td class="co">立訊精密／鴻騰 FIT</td><td class="tk">002475 / 6088.HK</td><td><span class="badge b-cn">CN</span><span class="badge b-tw">TW</span></td><td class="role">高速連接＋線纜</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>網通晶片寡占者（美股）：</b><b>Broadcom（AVGO）</b>同 <b>Marvell（MRVL）</b>掌握 Switch 同 DSP，控制光訊號「大腦」，係 CPO 趨勢最大贏家。</li>
+      <li><b>光模組與頂級代工：</b>全球光模組龍頭 <b>中際旭創</b>、美股光學代工 <b>Fabrinet（FN）</b>訂單持續滿載。</li>
+      <li><b>光進銅退大勢：</b>銅線愈行愈慢愈熱，光纖／矽光子係資料中心擴張嘅剛需基建。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 8. 電力散熱與終端 ============ -->
+<section class="pane" id="pane-power">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑧</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「AI 數據中心係『吃電怪獸』——一座大型 AI 園區用電量相當於一個小城市。所以除咗買『計數機』（GPU），仲要買『發電廠、變電站、冷氣』。呢啲『賣電賣冷氣』嘅公司（電力設備、液冷、散熱），先係 AI 基建入面最穩定、最先落袋嘅贏家。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📌 投資標的</div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>板塊</th><th>公司</th><th>代碼</th><th>地區</th><th>角色／亮點</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5">功率半導體<br>(Power Semi)</td><td class="co">Infineon</td><td class="tk">IFX.DE</td><td><span class="badge b-eu">EU</span></td><td class="role">功率半導體龍頭</td></tr>
+        <tr><td class="co">STMicroelectronics</td><td class="tk">STM</td><td><span class="badge b-eu">EU</span></td><td class="role">功率＋SiC 碳化矽</td></tr>
+        <tr><td class="co">Onsemi</td><td class="tk">ON</td><td><span class="badge b-us">US</span></td><td class="role">車用＋電源功率</td></tr>
+        <tr><td class="co">Texas Instruments</td><td class="tk">TXN</td><td><span class="badge b-us">US</span></td><td class="role">類比電源之王</td></tr>
+        <tr><td class="co">Rohm</td><td class="tk">6963</td><td><span class="badge b-jp">JP</span></td><td class="role">SiC 功率</td></tr>
+        <tr><td rowspan="5">電力與配電<br>基建</td><td class="co">Eaton 伊頓</td><td class="tk">ETN</td><td><span class="badge b-us">US</span></td><td class="role">數據中心配電龍頭</td></tr>
+        <tr><td class="co">Schneider Electric</td><td class="tk">SU.PA</td><td><span class="badge b-eu">EU</span></td><td class="role">電能管理＋配電</td></tr>
+        <tr><td class="co">ABB</td><td class="tk">ABBN.SW</td><td><span class="badge b-eu">EU</span></td><td class="role">電氣化設備</td></tr>
+        <tr><td class="co">Siemens</td><td class="tk">SIE.DE</td><td><span class="badge b-eu">EU</span></td><td class="role">工業＋電網</td></tr>
+        <tr><td class="co">GE Vernova</td><td class="tk">GEV</td><td><span class="badge b-us">US</span></td><td class="role">燃氣輪機／電網，AI 缺電直接受惠</td></tr>
+        <tr><td rowspan="3">液冷與<br>溫控</td><td class="co">Vertiv</td><td class="tk">VRT</td><td><span class="badge b-us">US</span></td><td class="role">液冷龍頭，AI 散熱剛需</td></tr>
+        <tr><td class="co">台達電 Delta</td><td class="tk">2308</td><td><span class="badge b-tw">TW</span></td><td class="role">電源＋液冷方案</td></tr>
+        <tr><td class="co">Modine／英維克</td><td class="tk">MOD / 002837</td><td><span class="badge b-us">US</span><span class="badge b-cn">CN</span></td><td class="role">液冷散熱</td></tr>
+        <tr><td rowspan="5">AI Server<br>組裝 (ODM)</td><td class="co">工業富聯／鴻海</td><td class="tk">2317</td><td><span class="badge b-tw">TW</span></td><td class="role">AI 伺服器出貨全球第一</td></tr>
+        <tr><td class="co">廣達 Quanta</td><td class="tk">2382</td><td><span class="badge b-tw">TW</span></td><td class="role">雲端伺服器主力</td></tr>
+        <tr><td class="co">緯創 Wistron</td><td class="tk">3231</td><td><span class="badge b-tw">TW</span></td><td class="role">GPU 主板代工</td></tr>
+        <tr><td class="co">英業達 Inventec</td><td class="tk">2356</td><td><span class="badge b-tw">TW</span></td><td class="role">伺服器組裝</td></tr>
+        <tr><td class="co">Super Micro 超微</td><td class="tk">SMCI</td><td><span class="badge b-us">US</span></td><td class="role">美系 AI 伺服器</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 中國本土：許繼電氣（000400.SZ）、思格新能源（06656.HK）。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>AI 缺電＝電力設備超級週期：</b>大型 AI 園區落成需要大量變壓器、配電、燃氣輪機，<b>GE Vernova / Eaton / Schneider</b> 訂單能見度極高。</li>
+      <li><b>液冷取代氣冷：</b>GPU 功率暴升，液冷成為 AI 伺服器標配，<b>Vertiv</b> 係純正受惠者。</li>
+      <li><b>ODM 代工賺辛苦錢：</b>伺服器組裝毛利低但出貨量巨大，可視為 AI 資本開支嘅「風向標」。</li>
+    </ul>
+  </div>
+</section>
+
+<div class="foot"><span style="color:#1a73e8;font-weight:700">leungkathy</span> · All-in-One Financial Dashboard Suite — AI 半導體產業鏈投資圖譜（教學性質）· 整合 4 大 Gemini 主題 · 僅供參考，不構成投資建議</div>
+</div>
+
+<script>
+(function(){
+  const tabs=document.querySelectorAll('.tab');
+  const show=function(id){
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('active',p.id==='pane-'+id);});
+    tabs.forEach(function(t){t.classList.toggle('active',t.dataset.tab===id);});
+    window.scrollTo(0,0);
+  };
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab);});});
+  // packaging tech selector
+  const techs=document.querySelectorAll('.tech');
+  techs.forEach(function(t){
+    t.addEventListener('click',function(){
+      techs.forEach(function(x){x.classList.toggle('active',x===t);});
+      const key=t.dataset.tech;
+      document.querySelectorAll('.techview').forEach(function(v){v.classList.toggle('active',v.id==='tv-'+key);});
+    });
+  });
+})();
+</script>
+</body>
+</html>
