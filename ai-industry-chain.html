@@ -459,9 +459,58 @@ table.matrix .warn{color:#b45309;font-weight:700}
   <div class="card">
     <div class="card-h">🪟 次世代封裝：玻璃基板（CoPoS）</div>
     <div class="pitch"><span class="tag">解說</span>「而家嘅封裝基板好似塑膠，晶片越大越熱，基板就會『彎曲變形』——呢個就係 CoWoS 而家嘅瓶頸：<b>封得落，但封唔大</b>。未來嘅<b>『玻璃基板（CoPoS）』</b>就好似一塊超大、超平、耐高溫嘅頂級玻璃，晶片封得極大、絕對唔翹曲。呢個係 Intel 同 AMD 2026 年後彎道超車嘅核心武器。」</div>
-    <div class="grid2">
-      <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px"><b style="font-size:13px">當下：CoWoS（圓形晶圓）</b><div style="font-size:12px;color:#334155;margin-top:4px">12 吋圓形晶圓。<span style="color:#dc2626;font-weight:700">缺點：</span>邊角廢料多（利用率 &lt;70%）、有機基板易翹曲。</div></div>
-      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px"><b style="font-size:13px;color:#1e40af">次世代：CoPoS（方形玻璃面板）</b><div style="font-size:12px;color:#334155;margin-top:4px">方形玻璃面板。<span style="color:#047857;font-weight:700">優點：</span>無邊角廢料（利用率 &gt;90%）、高平坦度不翹曲、支援超大 AI 晶片。</div></div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 372" style="max-width:760px;display:block;margin:0 auto">
+        <!-- ===== 左：CoWoS（當下主流）===== -->
+        <rect x="4" y="8" width="360" height="356" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+        <text x="184" y="30" fill="#0f172a" font-size="14" text-anchor="middle" font-weight="bold">當下主流：CoWoS（晶圓級封裝）</text>
+        <text x="184" y="48" fill="#64748b" font-size="10" text-anchor="middle">目標：解決「封得下」｜ 12 吋圓形晶圓</text>
+        <!-- 圓形晶圓：紅圈 = 邊角廢料，中間白色方陣 = 可用晶粒 -->
+        <circle cx="184" cy="138" r="76" fill="#fee2e2" stroke="#fca5a5" stroke-width="3"/>
+        <rect x="132" y="86" width="104" height="104" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+        <rect x="138" y="126" width="30" height="50" fill="#10b981" stroke="#059669"/><text x="153" y="156" fill="#064e3b" font-size="8.5" text-anchor="middle" font-weight="bold">HBM</text>
+        <rect x="170" y="116" width="28" height="70" fill="#4f46e5" stroke="#4338ca"/><text x="184" y="156" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">GPU</text>
+        <rect x="200" y="126" width="30" height="50" fill="#10b981" stroke="#059669"/><text x="215" y="156" fill="#064e3b" font-size="8.5" text-anchor="middle" font-weight="bold">HBM</text>
+        <text x="184" y="230" fill="#dc2626" font-size="9.5" text-anchor="middle" font-weight="bold">邊角廢料（紅色區）＝ 白白浪費嘅晶圓</text>
+        <!-- 邊個做 -->
+        <text x="24" y="254" fill="#64748b" font-size="9" font-weight="bold">🔧 邊個做：</text>
+        <text x="24" y="272" font-size="9"><tspan fill="#64748b">圓形矽晶圓</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">台積電 TSM</tspan><tspan fill="#94a3b8">（製造）</tspan></text>
+        <text x="24" y="292" font-size="9"><tspan fill="#64748b">GPU 核心</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">NVIDIA NVDA</tspan><tspan fill="#94a3b8">（設計）</tspan></text>
+        <text x="188" y="272" font-size="9"><tspan fill="#64748b">HBM 記憶體</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">SK海力士 000660</tspan><tspan fill="#94a3b8">（供應）</tspan></text>
+        <text x="188" y="292" font-size="9"><tspan fill="#64748b">CoWoS 整合</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">台積電 TSM</tspan><tspan fill="#94a3b8">（封裝）</tspan></text>
+        <rect x="20" y="312" width="320" height="36" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+        <text x="180" y="334" fill="#991b1b" font-size="10" text-anchor="middle" font-weight="bold">⚠ 缺點：邊角廢料多（利用率 &lt;70%）· 有機基板易翹曲</text>
+
+        <!-- ===== 中間箭頭 ===== -->
+        <text x="390" y="150" fill="#6366f1" font-size="9.5" text-anchor="middle" font-weight="bold">技術演進</text>
+        <text x="390" y="172" fill="#6366f1" font-size="22" text-anchor="middle" font-weight="bold">→</text>
+        <text x="390" y="192" fill="#6366f1" font-size="9.5" text-anchor="middle" font-weight="bold">2026+</text>
+
+        <!-- ===== 右：CoPoS（次世代）===== -->
+        <rect x="416" y="8" width="360" height="356" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+        <text x="596" y="30" fill="#1e40af" font-size="14" text-anchor="middle" font-weight="bold">次世代：CoPoS（面板級封裝）</text>
+        <text x="596" y="48" fill="#64748b" font-size="10" text-anchor="middle">目標：封得大，仲要唔翹｜ 方形玻璃面板</text>
+        <!-- 方形玻璃面板：晶粒排滿方陣，無浪費 -->
+        <rect x="504" y="52" width="192" height="184" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="4"/>
+        <rect x="516" y="64" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="544" y="95" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <rect x="574" y="64" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="602" y="95" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <rect x="632" y="64" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="660" y="95" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <rect x="516" y="122" width="56" height="52" fill="#10b981" stroke="#059669"/><text x="544" y="153" fill="#064e3b" font-size="8.5" text-anchor="middle" font-weight="bold">HBM</text>
+        <rect x="574" y="122" width="56" height="52" fill="#4f46e5" stroke="#4338ca"/><text x="602" y="153" fill="#fff" font-size="11" text-anchor="middle" font-weight="bold">GPU</text>
+        <rect x="632" y="122" width="56" height="52" fill="#10b981" stroke="#059669"/><text x="660" y="153" fill="#064e3b" font-size="8.5" text-anchor="middle" font-weight="bold">HBM</text>
+        <rect x="516" y="180" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="544" y="211" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <rect x="574" y="180" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="602" y="211" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <rect x="632" y="180" width="56" height="52" fill="#c7d2fe" stroke="#818cf8"/><text x="660" y="211" fill="#3730a3" font-size="7" text-anchor="middle">die</text>
+        <text x="596" y="252" fill="#047857" font-size="9.5" text-anchor="middle" font-weight="bold">✓ 晶粒排滿方陣，無角落浪費</text>
+        <!-- 邊個做 -->
+        <text x="432" y="254" fill="#64748b" font-size="9" font-weight="bold">🔧 邊個做：</text>
+        <text x="432" y="272" font-size="9"><tspan fill="#64748b">玻璃面板材料</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">Corning GLW</tspan><tspan fill="#94a3b8">（美）</tspan></text>
+        <text x="432" y="292" font-size="9"><tspan fill="#64748b">玻璃基板量產</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">SKC/Absolics 011790</tspan><tspan fill="#94a3b8">（韓）</tspan></text>
+        <text x="600" y="272" font-size="9"><tspan fill="#64748b">TGV 雷射鑽孔</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">LPKF LPK</tspan><tspan fill="#94a3b8">（歐）</tspan></text>
+        <text x="600" y="292" font-size="9"><tspan fill="#64748b">CoPoS 封裝主導</tspan><tspan fill="#94a3b8"> → </tspan><tspan fill="#0f172a" font-weight="bold">Intel INTC</tspan><tspan fill="#94a3b8">（美）</tspan></text>
+        <rect x="420" y="312" width="340" height="36" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
+        <text x="590" y="334" fill="#047857" font-size="10" text-anchor="middle" font-weight="bold">✓ 優點：無邊角廢料（利用率 &gt;90%）· 高平坦度不翹曲 · 支援超大 AI 晶片</text>
+      </svg>
     </div>
     <div class="callout amber">⚠️ CoPoS 屬 2026 後技術演進，仍處早期，宜以「題材＋材料/設備先行」角度看待（Corning 玻璃、LPKF 雷射設備、SKC 量產）。</div>
   </div>
@@ -495,6 +544,57 @@ table.matrix .warn{color:#b45309;font-weight:700}
 
   <div class="card">
     <div class="card-h">🔍 技術解說：記憶體四大類</div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 444" style="max-width:760px;display:block;margin:0 auto">
+        <!-- GPU（記憶體嘅「老闆」） -->
+        <rect x="270" y="14" width="240" height="46" rx="10" fill="#4f46e5" stroke="#4338ca"/>
+        <text x="390" y="32" fill="#fff" font-size="13" text-anchor="middle" font-weight="bold">AI 運算核心 GPU</text>
+        <text x="390" y="49" fill="#e0e7ff" font-size="9" text-anchor="middle">設計 NVIDIA NVDA ｜ 製造 台積電 TSM ｜ 封裝 CoWoS 台積電</text>
+        <line x1="390" y1="60" x2="390" y2="84" stroke="#94a3b8" stroke-width="2.5"/>
+        <polygon points="385,80 395,80 390,89" fill="#94a3b8"/>
+        <!-- 快 / 慢 階梯 -->
+        <line x1="30" y1="122" x2="30" y2="388" stroke="#cbd5e1" stroke-width="2.5"/>
+        <polygon points="25,122 35,122 30,113" fill="#dc2626"/>
+        <text x="30" y="102" fill="#dc2626" font-size="9" text-anchor="middle" font-weight="bold">最快</text>
+        <text x="30" y="406" fill="#0f766e" font-size="9" text-anchor="middle" font-weight="bold">最慢</text>
+        <text x="30" y="424" fill="#64748b" font-size="8" text-anchor="middle">容量 ↓</text>
+        <!-- ① HBM -->
+        <rect x="120" y="92" width="560" height="74" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+        <text x="140" y="112" font-size="12.5" font-weight="bold" fill="#92400e">① HBM 高頻寬記憶體 — AI 嘅血液</text>
+        <text x="140" y="129" font-size="9.5" fill="#713f12">TSV 垂直堆疊 + CoWoS 同 GPU 整合，最快最貼近運算核心 ｜ 邊個做：</text>
+        <rect x="140" y="139" width="96" height="18" rx="5" fill="#fff" stroke="#0d9488"/><text x="188" y="152" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">SK海力士 000660</text>
+        <rect x="244" y="139" width="88" height="18" rx="5" fill="#fff" stroke="#0d9488"/><text x="288" y="152" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Samsung 005930</text>
+        <rect x="340" y="139" width="82" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="381" y="152" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Micron MU</text>
+        <rect x="430" y="139" width="96" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="478" y="152" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">台積電 CoWoS</text>
+        <rect x="534" y="139" width="112" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="590" y="152" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">＋封測 AMKR 測試</text>
+        <!-- ② DDR5 -->
+        <rect x="120" y="176" width="560" height="74" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+        <text x="140" y="196" font-size="12.5" font-weight="bold" fill="#1e40af">② DDR5 — 伺服器主記憶體</text>
+        <text x="140" y="213" font-size="9.5" fill="#1e40af">AI 訓練嘅基礎容量基石，速度為上一代兩倍 ｜ 邊個做：</text>
+        <rect x="140" y="223" width="96" height="18" rx="5" fill="#fff" stroke="#0d9488"/><text x="188" y="236" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">SK海力士 000660</text>
+        <rect x="244" y="223" width="88" height="18" rx="5" fill="#fff" stroke="#0d9488"/><text x="288" y="236" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Samsung 005930</text>
+        <rect x="340" y="223" width="82" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="381" y="236" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Micron MU</text>
+        <rect x="430" y="223" width="82" height="18" rx="5" fill="#fff" stroke="#d97706"/><text x="471" y="236" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">南亞科 2408</text>
+        <rect x="520" y="223" width="82" height="18" rx="5" fill="#fff" stroke="#d97706"/><text x="561" y="236" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">華邦電 2344</text>
+        <!-- ③ NAND / eSSD -->
+        <rect x="120" y="260" width="560" height="74" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+        <text x="140" y="280" font-size="12.5" font-weight="bold" fill="#334155">③ NAND / eSSD 固態硬碟 — AI 資料倉庫</text>
+        <text x="140" y="297" font-size="9.5" fill="#475569">儲存龐大訓練資料集，吞吐量決定餵數據效率 ｜ 邊個做：</text>
+        <rect x="140" y="307" width="88" height="18" rx="5" fill="#fff" stroke="#0d9488"/><text x="184" y="320" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Samsung 005930</text>
+        <rect x="236" y="307" width="88" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="280" y="320" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Kioxia 285A</text>
+        <rect x="332" y="307" width="88" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="376" y="320" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">SanDisk SNDK</text>
+        <rect x="428" y="307" width="82" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="469" y="320" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Micron MU</text>
+        <rect x="518" y="307" width="88" height="18" rx="5" fill="#fff" stroke="#059669"/><text x="562" y="320" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">長江存儲</text>
+        <!-- ④ HDD -->
+        <rect x="120" y="344" width="560" height="74" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="140" y="364" font-size="12.5" font-weight="bold" fill="#991b1b">④ HDD 機械硬碟 — 大容量冷存儲</text>
+        <text x="140" y="381" font-size="9.5" fill="#991b1b">海量資料歸檔、容量成本最低，AI 備份仍需要 ｜ 邊個做：</text>
+        <rect x="140" y="391" width="88" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="184" y="404" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Seagate STX</text>
+        <rect x="236" y="391" width="88" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="280" y="404" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">WD WDC</text>
+        <rect x="332" y="391" width="88" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="376" y="404" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Toshiba 6502</text>
+        <text x="390" y="436" fill="#64748b" font-size="9.5" text-anchor="middle" font-weight="bold">記憶體階梯：越上越快越貴（貼近 GPU），越落越平、容量越大 —— 上中游全被韓／美／日巨頭壟斷</text>
+      </svg>
+    </div>
     <div class="grid2">
       <div style="background:#fffbeb;border-left:4px solid #d97706;border-radius:8px;padding:12px">
         <b style="font-size:13px">HBM（高頻寬記憶體）— AI 嘅血液</b>
@@ -555,6 +655,61 @@ table.matrix .warn{color:#b45309;font-weight:700}
 
   <div class="card">
     <div class="card-h">🔍 PCB 其實係「材料科學」：三大壟斷材料</div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 356" style="max-width:760px;display:block;margin:0 auto">
+        <defs><marker id="pcb-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#94a3b8"/></marker></defs>
+        <!-- ① 電子玻纖布 -->
+        <rect x="8" y="24" width="240" height="84" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+        <rect x="176" y="30" width="60" height="16" rx="8" fill="#ccfbf1" stroke="#99f6e4"/><text x="206" y="42" font-size="8" font-weight="bold" fill="#0f766e" text-anchor="middle">全球壟斷</text>
+        <text x="24" y="48" font-size="12" font-weight="bold" fill="#115e59">① 電子玻纖布（骨架）</text>
+        <text x="24" y="68" font-size="9.5" fill="#334155">撐住板材唔變形嘅鋼筋 · T-glass 缺貨</text>
+        <rect x="24" y="76" width="144" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="96" y="89" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">日東紡 Nittobo 3110</text>
+        <!-- ② 特種樹脂 -->
+        <rect x="8" y="120" width="240" height="84" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+        <rect x="176" y="126" width="60" height="16" rx="8" fill="#dbeafe" stroke="#bfdbfe"/><text x="206" y="138" font-size="8" font-weight="bold" fill="#1d4ed8" text-anchor="middle">全球壟斷</text>
+        <text x="24" y="144" font-size="12" font-weight="bold" fill="#1e40af">② 特種樹脂（絕緣）</text>
+        <text x="24" y="164" font-size="9.5" fill="#334155">包覆訊號防外溢 · AI 必用高階樹脂</text>
+        <rect x="24" y="170" width="72" height="18" rx="5" fill="#fff" stroke="#ca8a04"/><text x="60" y="183" font-size="8" font-weight="bold" fill="#334155" text-anchor="middle">SABIC 沙特</text>
+        <rect x="100" y="170" width="64" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="132" y="183" font-size="8" font-weight="bold" fill="#334155" text-anchor="middle">旭化成 3407</text>
+        <rect x="168" y="170" width="72" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="204" y="183" font-size="8" font-weight="bold" fill="#334155" text-anchor="middle">Panasonic 6752</text>
+        <!-- ③ 電子銅箔 -->
+        <rect x="8" y="216" width="240" height="84" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+        <rect x="176" y="222" width="60" height="16" rx="8" fill="#fef3c7" stroke="#fde68a"/><text x="206" y="234" font-size="8" font-weight="bold" fill="#b45309" text-anchor="middle">全球壟斷</text>
+        <text x="24" y="240" font-size="12" font-weight="bold" fill="#92400e">③ 電子銅箔（傳輸）</text>
+        <text x="24" y="260" font-size="9.5" fill="#334155">高頻訊號行表面 · 極平滑「鏡面銅箔」</text>
+        <rect x="24" y="266" width="110" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="79" y="279" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">三井金屬 5706</text>
+        <!-- 箭頭：三大材料 → CCL -->
+        <line x1="248" y1="66" x2="326" y2="128" stroke="#94a3b8" stroke-width="2" marker-end="url(#pcb-arr)"/>
+        <line x1="248" y1="162" x2="326" y2="162" stroke="#94a3b8" stroke-width="2" marker-end="url(#pcb-arr)"/>
+        <line x1="248" y1="258" x2="326" y2="192" stroke="#94a3b8" stroke-width="2" marker-end="url(#pcb-arr)"/>
+        <text x="290" y="150" font-size="8.5" fill="#64748b" text-anchor="middle" font-weight="bold">壓合成板</text>
+        <!-- 覆銅板 CCL -->
+        <rect x="330" y="96" width="210" height="142" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
+        <text x="435" y="122" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">覆銅板 CCL（成品）</text>
+        <text x="435" y="140" font-size="9.5" fill="#334155" text-anchor="middle">三大材料壓合成板</text>
+        <text x="435" y="158" font-size="8.5" fill="#047857" text-anchor="middle">需經 NVIDIA 1–2 年認證</text>
+        <text x="348" y="176" font-size="8.5" fill="#64748b">CCL 巨頭（配方公司）：</text>
+        <text x="348" y="194" font-size="9.5" fill="#334155"><tspan font-weight="bold">建滔積層板 01888.HK</tspan><tspan fill="#64748b"> · 全球最大 CCL</tspan></text>
+        <text x="348" y="212" font-size="9.5" fill="#334155"><tspan font-weight="bold">台光電 2383</tspan><tspan fill="#64748b"> · 高階 M9 CCL 龍頭</tspan></text>
+        <text x="348" y="230" font-size="9.5" fill="#334155"><tspan font-weight="bold">生益科技 600183</tspan><tspan fill="#64748b"> · 中國 CCL 龍頭</tspan></text>
+        <!-- 箭頭：CCL → 高階 PCB -->
+        <line x1="540" y1="167" x2="616" y2="167" stroke="#94a3b8" stroke-width="2" marker-end="url(#pcb-arr)"/>
+        <text x="578" y="158" font-size="8.5" fill="#64748b" text-anchor="middle" font-weight="bold">多層層疊</text>
+        <!-- 高階 PCB / 載板 -->
+        <rect x="620" y="70" width="152" height="200" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.5"/>
+        <text x="696" y="96" font-size="12.5" font-weight="bold" fill="#6d28d9" text-anchor="middle">高階 PCB／載板</text>
+        <text x="696" y="112" font-size="9" fill="#7c3aed" text-anchor="middle">多層層疊 · AI 伺服器母板</text>
+        <line x1="632" y1="122" x2="760" y2="122" stroke="#e9d5ff"/>
+        <text x="632" y="140" font-size="9" fill="#334155"><tspan font-weight="bold">Ibiden 4062</tspan><tspan fill="#64748b"> · ABF 載板龍頭</tspan></text>
+        <text x="632" y="157" font-size="9" fill="#334155"><tspan font-weight="bold">Shinko 4114</tspan><tspan fill="#64748b"> · ABF 載板</tspan></text>
+        <text x="632" y="174" font-size="9" fill="#334155"><tspan font-weight="bold">臻鼎 4958</tspan><tspan fill="#64748b"> · 全球 PCB 龍頭</tspan></text>
+        <text x="632" y="191" font-size="9" fill="#334155"><tspan font-weight="bold">欣興 3037</tspan><tspan fill="#64748b"> · 台系載板主力</tspan></text>
+        <text x="632" y="208" font-size="9" fill="#334155"><tspan font-weight="bold">滬電 002463</tspan><tspan fill="#64748b"> · 高頻高速板</tspan></text>
+        <text x="632" y="225" font-size="9" fill="#334155"><tspan font-weight="bold">TTM TTMI</tspan><tspan fill="#64748b"> · 高頻高速板</tspan></text>
+        <!-- 底部金句 -->
+        <text x="390" y="340" font-size="10.5" fill="#334155" text-anchor="middle" font-weight="bold">💡 PCB 成本約 80% 俾最上游材料商（玻纖布・樹脂・銅箔）賺走 —— 真正嘅「隱形收費站」</text>
+      </svg>
+    </div>
     <div class="grid2">
       <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px">
         <b style="font-size:13px">電子玻纖布（骨架）</b>
