@@ -256,135 +256,94 @@ table.matrix .warn{color:#b45309;font-weight:700}
 <section class="pane" id="pane-compute">
   <div class="card">
     <div class="card-h"><span class="sec-num">②</span>RM 銷售話術</div>
-    <div class="pitch"><span class="tag">開場白</span>「如果說 AI 是新時代的『腦力』，那麼晶片設計就是『思考的人』。NVIDIA 是最出名的『首席設計師』——它無需自行建廠，而是專注設計出最強的 GPU，再交給台積電這位『營造廠』代工生產。因此投資設計層，就是投資 AI 的『大腦』。」</div>
+    <div class="pitch"><span class="tag">開場白</span>「晶片設計＝AI 的『大腦』。NVIDIA 是首席設計師：不建廠、專注畫出最強 GPU，交給台積電代工。投資設計層＝投資 AI 大腦。」</div>
   </div>
 
   <div class="card">
-    <div class="card-h">🔍 技術解說：GPU vs ASIC vs IP</div>
-    <div class="explain">
-      <b>GPU（圖形處理器）：</b>NVIDIA、AMD 設計的通用 AI 運算晶片，適合大規模並行運算，是目前 AI 訓練的主力。<br>
-      <b>ASIC（專用晶片）：</b>Google TPU、AWS Trainium 等雲端巨頭自研的專用晶片，省電又省成本，正逐步蠶食 GPU 市占。<br>
-      <b>EDA / IP（工具與矽智財）：</b>Synopsys、Cadence 提供設計軟體（EDA），ARM 提供晶片藍圖（IP）。ASIC 崛起最大的受惠者，就是販售『鏟子』的底層架構公司。
+    <div class="card-h">🗺️ 晶片三類：GPU／ASIC／IP</div>
+    <div class="flow">
+      <div class="node" style="border-color:#60a5fa;background:#eff6ff">
+        <h4>GPU · 通用</h4><p>AI 訓練主力</p>
+        <div class="tags"><span class="tag-stock"><b>NVDA</b></span><span class="tag-stock"><b>AMD</b></span></div>
+      </div>
+      <div class="node" style="border-color:#10b981;background:#ecfdf5">
+        <h4>ASIC · 專用</h4><p>雲端自研 · 省電</p>
+        <div class="tags"><span class="tag-stock"><b>TPU</b></span><span class="tag-stock"><b>Trainium</b></span></div>
+      </div>
+      <div class="node" style="border-color:#a855f7;background:#faf5ff">
+        <h4>IP · 架構</h4><p>賣藍圖 · 收租</p>
+        <div class="tags"><span class="tag-stock"><b>ARM</b></span></div>
+      </div>
     </div>
+    <div class="callout blue">💡 GPU 出貨僅 <b>NVDA（Blackwell）／AMD（MI300）</b>兩家；雲端 <b>CPU</b> 全向 <b>ARM</b> 授權自研（Graviton·Axion·Cobalt·Grace）。</div>
   </div>
 
   <div class="card">
-    <div class="card-h">🔗 上中下游：從 IP／工具 → GPU／ASIC 設計 → 雲端自研生態</div>
-    <div class="stages">
-      <div class="sg"><span class="sl up">上游 · 工具與架構</span><h4>EDA 軟體＋IP 授權</h4><p>販售「鏟子」的底層架構</p><div class="tg"><span>SNPS</span><span>CDNS</span><span>ARM</span></div></div>
-      <div class="ar">→</div>
-      <div class="sg"><span class="sl mid">中游 · 晶片設計</span><h4>GPU 與 ASIC 設計</h4><p>把 AI 算力「畫」出來</p><div class="tg"><span>NVDA</span><span>AMD</span><span>AVGO</span><span>MRVL</span><span>QCOM</span></div></div>
-      <div class="ar">→</div>
-      <div class="sg"><span class="sl down">下游 · 雲端自研生態</span><h4>需求方與客戶</h4><p>Google TPU · AWS Trainium · Meta</p><div class="tg"><span>Google</span><span>AWS</span><span>Meta</span></div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-h">🏢 雲端自研晶片大拆解：TPU / Trainium / MTIA / Maia 誰設計、誰代工？</div>
-    <div class="explain">四大雲端巨頭都走「<b>自研但不自造</b>」路線：自家出<b>架構與規格</b>，再交 <b>Broadcom（AVGO）</b> 或 <b>Marvell（MRVL）</b> 做 ASIC 協同設計，最後由 <b>台積電</b> 代工製造。記住口訣：<b>TPU＋Maia → AVGO</b>；<b>Trainium＋MTIA → MRVL</b>。</div>
-    <div class="tbl-wrap" style="margin-top:10px"><table class="stocks">
-      <thead><tr><th>雲端巨頭</th><th>自研晶片</th><th>用途</th><th>設計夥伴（ASIC）</th><th>代工製造</th><th>進度</th></tr></thead>
-      <tbody>
-        <tr><td class="co">Google</td><td class="tk">TPU（Trillium）</td><td class="role">訓練＋推理</td><td class="role"><b>Broadcom（AVGO）</b> — 獨家合作</td><td class="role">台積電 TSM</td><td class="role">Ironwood v7 量產中</td></tr>
-        <tr><td class="co">AWS</td><td class="tk">Trainium 2</td><td class="role">訓練</td><td class="role"><b>Marvell（MRVL）</b> — Annapurna 協同</td><td class="role">台積電 TSM</td><td class="role">Trainium 3 佈局中</td></tr>
-        <tr><td class="co">AWS</td><td class="tk">Inferentia</td><td class="role">推理</td><td class="role"><b>Marvell（MRVL）</b> — Annapurna 自研</td><td class="role">台積電 TSM</td><td class="role">已量產</td></tr>
-        <tr><td class="co">Meta</td><td class="tk">MTIA</td><td class="role">推理</td><td class="role"><b>Marvell（MRVL）</b> — 2024 年起合作</td><td class="role">台積電 TSM</td><td class="role">v2 已量產</td></tr>
-        <tr><td class="co">Microsoft</td><td class="tk">Maia 100</td><td class="role">訓練</td><td class="role"><b>Broadcom（AVGO）</b></td><td class="role">台積電 TSM</td><td class="role">Maia 200 發展中</td></tr>
-      </tbody>
-    </table></div>
-    <div class="callout amber">💡 投資邏輯很直接：<b>AVGO</b>＝押 Google（TPU）＋微軟（Maia）；<b>MRVL</b>＝押 AWS（Trainium）＋Meta（MTIA）。兩家都不碰消費市場，專吃雲端客製 ASIC 訂單。</div>
-  </div>
-
-  <div class="card">
-    <div class="card-h">🖥️ 各雲端巨頭 GPU／CPU 一覽：用什麼架構、誰一起做的？</div>
-    <div class="sub-sec">
-      <div class="sub-h">CPU 架構對照（重點：#NVDA Grace／Vera、#AMZN Graviton、#MSFT Cobalt）</div>
-      <div class="tbl-wrap"><table class="stocks">
-        <thead><tr><th>公司</th><th>CPU 型號</th><th>架構</th><th>怎麼做出來</th></tr></thead>
-        <tbody>
-          <tr><td class="co">NVIDIA</td><td class="tk">Grace（現役）</td><td class="role"><b>ARM</b>（Neoverse）</td><td class="role">授權 ARM 架構自研，與 Hopper／Blackwell GPU 組成 SuperChip</td></tr>
-          <tr><td class="co">NVIDIA</td><td class="tk">Vera（次代）</td><td class="role"><b>ARM</b>（Neoverse）</td><td class="role">授權 ARM 架構自研，將搭配 Rubin 平台（GB300）</td></tr>
-          <tr><td class="co">Amazon AWS</td><td class="tk">Graviton 4</td><td class="role"><b>ARM</b>（Neoverse）</td><td class="role">Annapurna 實驗室自研，台積電代工</td></tr>
-          <tr><td class="co">Google</td><td class="tk">Axion</td><td class="role"><b>ARM</b>（Neoverse）</td><td class="role">自研，2024 年推出，台積電代工</td></tr>
-          <tr><td class="co">Microsoft</td><td class="tk">Cobalt 100</td><td class="role"><b>ARM</b>（Neoverse）</td><td class="role">自研、台積電代工；<b>另與 AMD 合作</b>客製 EPYC CPU（x86 路線）供 Azure</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-    <div class="sub-sec">
-      <div class="sub-h">GPU／加速器一覽（誰有 GPU、誰只靠自家 ASIC）</div>
-      <div class="tbl-wrap"><table class="stocks">
-        <thead><tr><th>公司</th><th>GPU／加速器</th><th>架構／合作</th></tr></thead>
-        <tbody>
-          <tr><td class="co">NVIDIA</td><td class="tk">Blackwell B200／GB200</td><td class="role">自研 CUDA 生態，台積電代工＋CoWoS 封裝</td></tr>
-          <tr><td class="co">AMD</td><td class="tk">MI300X／MI350</td><td class="role">自研 CDNA 架構，台積電代工＋SoIC 封裝</td></tr>
-          <tr><td class="co">Google</td><td class="tk">無 GPU（用自家 TPU）</td><td class="role">TPU 見上表（AVGO 協同設計）</td></tr>
-          <tr><td class="co">AWS</td><td class="tk">無 GPU（用自家 Trainium）</td><td class="role">另同時採購 NVIDIA／AMD 補足彈性</td></tr>
-          <tr><td class="co">Meta</td><td class="tk">無 GPU（用 NVIDIA＋MTIA）</td><td class="role">大規模採購 NVIDIA，MTIA 只做推理</td></tr>
-          <tr><td class="co">Microsoft</td><td class="tk">無 GPU（用 NVIDIA／AMD＋Maia）</td><td class="role">Maia 只做訓練，其餘採購 NVIDIA／AMD</td></tr>
-        </tbody>
-      </table></div>
-    </div>
+    <div class="card-h">🖼️ 設計層一張圖：誰畫、誰造、誰用</div>
+    <svg viewBox="0 0 720 356" style="width:100%;height:auto;display:block" role="img" aria-label="算力與設計全景圖">
+      <rect x="20" y="14" width="680" height="60" rx="12" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+      <text x="40" y="40" font-size="14" font-weight="700" fill="#115e59">上游 · 賣鏟子：EDA＋IP</text>
+      <text x="40" y="62" font-size="12" fill="#0f766e">SNPS · CDNS（設計軟體）＋ ARM（架構藍圖）—— 人人買單 · 抗週期</text>
+      <text x="360" y="90" text-anchor="middle" font-size="14" fill="#94a3b8">▼</text>
+      <rect x="20" y="100" width="680" height="60" rx="12" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="40" y="126" font-size="14" font-weight="700" fill="#1d4ed8">中游 · 把算力「畫」出來：GPU／ASIC</text>
+      <text x="40" y="148" font-size="12" fill="#2563eb">GPU：NVDA · AMD（Blackwell · MI300）　　　ASIC：AVGO · MRVL</text>
+      <text x="360" y="176" text-anchor="middle" font-size="14" fill="#94a3b8">▼</text>
+      <rect x="20" y="186" width="680" height="86" rx="12" fill="#faf5ff" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="40" y="212" font-size="14" font-weight="700" fill="#6b21a8">下游 · 雲端自研（自研不自造 · 委託設計）</text>
+      <text x="40" y="238" font-size="12" fill="#7e22ce">AVGO 設計 ＝ Google ＋ 微軟　（TPU · Maia）</text>
+      <text x="40" y="260" font-size="12" fill="#7e22ce">MRVL 設計 ＝ AWS ＋ Meta　（Trainium · MTIA）</text>
+      <text x="360" y="288" text-anchor="middle" font-size="14" fill="#94a3b8">▼</text>
+      <rect x="160" y="298" width="400" height="44" rx="22" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+      <text x="360" y="325" text-anchor="middle" font-size="13" font-weight="700" fill="#065f46">台積電 · 代工 —— 四家自研晶片的共同製造商</text>
+    </svg>
   </div>
 
   <div class="card">
     <div class="card-h">📌 投資標的</div>
     <div class="sub-sec">
-      <div class="sub-h">上游 · EDA 軟體與矽智財（賣「鏟子」的人）</div>
+      <div class="sub-h">上游 · EDA＋IP（賣鏟子）</div>
       <div class="tbl-wrap"><table class="stocks">
-        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>主營與亮點</th><th>護城河／同類比較</th></tr></thead>
+        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
-          <tr><td class="co">Synopsys</td><td class="tk">SNPS</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">EDA 全球 #1</span></td><td class="role">AI 設計自動化</td><td class="role">護城河：設計工具市占第一、客戶黏著度高｜比較：與 Cadence 幾乎壟斷市場</td></tr>
-          <tr><td class="co">Cadence</td><td class="tk">CDNS</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">EDA 全球 #2</span></td><td class="role">EDA 雙寡頭之一</td><td class="role">護城河：與晶圓廠深度綁定｜比較：與 Synopsys 規模相當</td></tr>
-          <tr><td class="co">ARM Holdings</td><td class="tk">ARM</td><td><span class="badge b-eu">UK</span></td><td><span class="pos g1">CPU IP 全球 #1</span></td><td class="role">CPU IP 授權霸主，ASIC 趨勢核心受惠</td><td class="role">護城河：全球手機架構壟斷｜比較：對立於 x86（Intel／AMD）生態（全球龍頭保留）</td></tr>
-          <tr><td class="co">Siemens EDA</td><td class="tk">—</td><td><span class="badge b-eu">DE</span></td><td><span class="pos g3">EDA 全球 #3</span></td><td class="role">未獨立上市（西門子分部）</td><td class="role">比較：全球前五保留，惟無獨立股份可投資</td></tr>
+          <tr><td class="co">Synopsys</td><td class="tk">SNPS</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">EDA 全球 #1</span></td><td class="role">EDA 雙寡頭 · AI 設計自動化</td></tr>
+          <tr><td class="co">Cadence</td><td class="tk">CDNS</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">EDA 全球 #2</span></td><td class="role">與 SNPS 壟斷 EDA</td></tr>
+          <tr><td class="co">ARM Holdings</td><td class="tk">ARM</td><td><span class="badge b-eu">UK</span></td><td><span class="pos g1">CPU IP 全球 #1</span></td><td class="role">CPU 架構壟斷 · 手機霸主</td></tr>
+          <tr><td class="co">Siemens EDA</td><td class="tk">—</td><td><span class="badge b-eu">DE</span></td><td><span class="pos g3">EDA 全球 #3</span></td><td class="role">西門子分部 · 無獨立股份</td></tr>
         </tbody>
       </table></div>
     </div>
     <div class="sub-sec">
-      <div class="sub-h">中游 · GPU 與 ASIC 算力晶片（把算力「畫」出來）</div>
+      <div class="sub-h">中游 · GPU／ASIC（把算力畫出來）</div>
       <div class="tbl-wrap"><table class="stocks">
-        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>主營與亮點</th><th>護城河／同類比較</th></tr></thead>
+        <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
-          <tr><td class="co">NVIDIA</td><td class="tk">NVDA</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">AI 加速器全球 #1（約 90%）</span></td><td class="role">AI GPU 絕對龍頭，Hopper / Blackwell 平台</td><td class="role">護城河：CUDA 生態＋先進封裝產能綁定｜比較：壟斷 AI 訓練，AMD 追趕中</td></tr>
-          <tr><td class="co">AMD</td><td class="tk">AMD</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">AI 加速器全球 #2</span></td><td class="role">MI300 系列直挑 NVIDIA</td><td class="role">護城河：性價比與開放平台｜比較：軟體生態仍落後 NVIDIA</td></tr>
-          <tr><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">ASIC 全球 #1</span></td><td class="role">ASIC 客製化晶片＋網通晶片雙引擎</td><td class="role">護城河：Google TPU 獨家合作｜比較：規模最大，客戶集中於 Google</td></tr>
-          <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">ASIC 全球 #2</span></td><td class="role">ASIC／DSP，自研晶片大贏家</td><td class="role">護城河：高速介面與客製經驗｜比較：與 Broadcom 瓜分雲端 ASIC 訂單</td></tr>
-          <tr><td class="co">Qualcomm</td><td class="tk">QCOM</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">手機 SoC 全球 #1</span></td><td class="role">手機 AI SoC＋邊緣 AI</td><td class="role">護城河：手機基頻＋NPU 領導｜比較：聚焦端側，不與 NVIDIA 正面衝突</td></tr>
-          <tr><td class="co">Intel</td><td class="tk">INTC</td><td><span class="badge b-us">US</span></td><td><span class="pos flag">IDM（自製為主）</span></td><td class="role">x86 CPU＋Gaudi AI 加速器，IDM 2.0 開放代工</td><td class="role">護城河：美國本土製造｜比較：Gaudi 追趕 NVIDIA、製程落後台積電（詳見下表三方比較）</td></tr>
+          <tr><td class="co">NVIDIA</td><td class="tk">NVDA</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">AI 加速器全球 #1（約 90%）</span></td><td class="role">AI GPU 龍頭 · CUDA 生態＋封裝綁定</td></tr>
+          <tr><td class="co">AMD</td><td class="tk">AMD</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">AI 加速器全球 #2</span></td><td class="role">MI300 直挑 NVIDIA · 性價比</td></tr>
+          <tr><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">ASIC 全球 #1</span></td><td class="role">ASIC＋網通雙引擎 · TPU 獨家</td></tr>
+          <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">ASIC 全球 #2</span></td><td class="role">客製彈性 · 分食 ASIC 訂單</td></tr>
+          <tr><td class="co">Qualcomm</td><td class="tk">QCOM</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">手機 SoC 全球 #1</span></td><td class="role">手機 AI SoC · 邊緣 AI</td></tr>
+          <tr><td class="co">Intel</td><td class="tk">INTC</td><td><span class="badge b-us">US</span></td><td><span class="pos flag">IDM（自製為主）</span></td><td class="role">x86＋Gaudi＋IDM 代工 · 美國製造</td></tr>
         </tbody>
       </table></div>
     </div>
     <div class="sub-sec">
-      <div class="sub-h">下游 · 雲端自研晶片生態（需求方）</div>
-      <div class="callout blue">💡 <b>Google TPU、AWS Trainium、Meta MTIA</b> 等雲端巨頭自研晶片，多委託 <b>Broadcom／Marvell</b> 設計、<b>台積電</b>代工，形成「自研但不自造」的產業分工。<br><b>🇨🇳 中國本土三強：是設計，不是製造。</b>華為海思（未上市，麒麟／昇騰）、寒武紀（688256.SH，思元 AI 晶片）、海光信息（688041.SH，x86 相容 CPU）三者<b>皆為 Fabless（純晶片設計）公司</b>——只設計晶片、<b>沒有自家晶圓廠</b>，量產全數委託中芯國際（SMIC）／台積電等代工。它們賺的是「設計」的錢，不是「製造」的錢。</div>
+      <div class="sub-h">下游 · 雲端自研生態（需求方）</div>
+      <div class="callout blue">💡 雲端自研：委託 <b>AVGO／MRVL</b> 設計＋<b>台積電</b>代工。🇨🇳 中國三強——華為海思、寒武紀（688256.SH）、海光（688041.SH）皆 Fabless，製造靠代工。</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-h">⚖️ 算力晶片四大玩家比較</div>
+    <div class="card-h">⚖️ 算力設計玩家比較</div>
     <div class="tbl-wrap-matrix"><table class="matrix">
-      <thead><tr><th>公司</th><th>定位</th><th>強項</th><th>主要客戶</th><th>風險</th></tr></thead>
+      <thead><tr><th>公司</th><th>定位</th><th>強項／客戶</th><th>風險</th></tr></thead>
       <tbody>
-        <tr><td>NVIDIA</td><td>通用 GPU</td><td>CUDA 生態＋全套軟體棧</td><td>所有雲端／企業</td><td>ASIC 長期侵蝕</td></tr>
-        <tr><td>AMD</td><td>GPU 追趕者</td><td>性價比＋開放平台</td><td>Microsoft、Oracle</td><td>軟體生態落後</td></tr>
-        <tr><td>Broadcom</td><td>ASIC 訂製</td><td>Google TPU＋微軟 Maia</td><td>Google、Microsoft</td><td>客戶過度集中</td></tr>
-        <tr><td>Marvell</td><td>ASIC／DSP</td><td>客製彈性＋高速介面</td><td>AWS、Meta、Oracle</td><td>量產規模較小</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="card">
-    <div class="card-h">⚔️ Intel（INTC）的位置：與 AMD、ARM 三方比一比</div>
-    <div class="explain" style="margin-bottom:10px"><b>Intel 在這個 tab 其實有三個身份：</b>① <b>x86 伺服器 CPU</b> 龍頭（與 AMD 對打）② <b>Gaudi 3</b> AI 加速器（追趕 NVIDIA）③ <span class="tip" data-tip="<b>IDM（整合元件製造商）</b>：同時做設計＋製造＋封測、自建晶圓廠的公司（如 Intel、Samsung、TI）。Intel 自 2021 年推行「IDM 2.0」開放代工，把自有晶圓廠開放替別人代工（詳見 ③ 晶圓代工與設備 tab）。">IDM</span> 自有晶圓廠兼營代工。它橫跨「設計＋製造」，這正是與 AMD、ARM 最大的分野。</div>
-    <div class="tbl-wrap-matrix"><table class="matrix">
-      <thead><tr><th>項目</th><th>Intel（INTC）</th><th>AMD</th><th>ARM</th></tr></thead>
-      <tbody>
-        <tr><td>主業</td><td>x86 CPU＋Gaudi AI 加速器</td><td>x86 CPU＋GPU（MI 系列）</td><td>CPU 架構 IP 授權</td></tr>
-        <tr><td>架構</td><td>x86（自有）</td><td>x86（自有）</td><td>RISC（Neoverse 等授權給客戶）</td></tr>
-        <tr><td>製造模式</td><td class="warn">IDM 自有晶圓廠（IDM 2.0 兼營代工）</td><td class="ok">Fabless（台積電代工）</td><td class="ok">Fabless（連晶片都不做，只賣 IP）</td></tr>
-        <tr><td>AI 角色</td><td>Gaudi 3 加速器＋Xeon AI</td><td>MI300X／MI350 直挑 NVIDIA</td><td>雲端自研 CPU 的「骨架」提供者</td></tr>
-        <tr><td>雲端受惠邏輯</td><td>美國本土製造＋政府／軍工訂單</td><td>性價比＋開放軟體棧（ROCm）</td><td>每家自研 CPU（Graviton／Axion／Cobalt）都要付授權金</td></tr>
-        <tr><td>風險</td><td>製程落後台積電、財務承壓</td><td>軟體生態仍落後 CUDA</td><td>無自有產品、完全靠授權金</td></tr>
+        <tr><td>NVIDIA</td><td>通用 GPU</td><td>所有雲端企業 · CUDA 生態</td><td>ASIC 長期侵蝕</td></tr>
+        <tr><td>AMD</td><td>GPU 追趕者</td><td>Microsoft、Oracle · 性價比</td><td>軟體生態落後</td></tr>
+        <tr><td>Broadcom</td><td>ASIC 訂製</td><td>Google＋微軟 · 網通</td><td>客戶過度集中</td></tr>
+        <tr><td>Marvell</td><td>ASIC／DSP</td><td>AWS、Meta · 客製彈性</td><td>量產規模較小</td></tr>
+        <tr><td>ARM</td><td>CPU 架構 IP</td><td>全雲端 CPU 授權</td><td>單靠授權金</td></tr>
+        <tr><td>Intel</td><td>CPU＋GPU＋代工</td><td>美國製造 · 軍工訂單</td><td>製程落後 · 財務承壓</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -392,12 +351,13 @@ table.matrix .warn{color:#b45309;font-weight:700}
   <div class="card">
     <div class="card-h">🎯 投資焦點</div>
     <ul class="focus">
-      <li><b>ASIC 取代 GPU 長線趨勢：</b>雲端巨頭為省電省錢自研晶片，<b>ARM</b> 作為架構授權方收取權利金；<b>Broadcom / Marvell</b> 接單做 ASIC 設計服務。</li>
-      <li><b>雲端 ASIC 雙寡頭分工：</b><b>AVGO</b>＝押 Google TPU＋微軟 Maia；<b>MRVL</b>＝押 AWS Trainium＋Meta MTIA。四家雲端巨頭的 AI 晶片都由這兩家代設計、台積電代工。</li>
-      <li><b>EDA 抗經濟週期：</b>販售「設計工具」的公司不受單一客戶成敗影響，收入穩定。</li>
+      <li><b>ASIC 崛起：</b>雲端自研成趨勢 → <b>ARM</b> 收租、<b>AVGO／MRVL</b> 接單。</li>
+      <li><b>分工口訣：</b><b>AVGO</b>＝Google＋微軟；<b>MRVL</b>＝AWS＋Meta。</li>
+      <li><b>EDA 抗週期：</b>SNPS／CDNS 收入穩，不受單一客戶成敗影響。</li>
     </ul>
   </div>
 </section>
+
 
 <!-- ============ 3. 晶圓代工與設備 ============ -->
 <section class="pane" id="pane-foundry">
