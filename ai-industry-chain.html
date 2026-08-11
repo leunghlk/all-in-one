@@ -234,7 +234,49 @@ tr.flash{animation:rowflash 2.2s ease}
 .b-an{display:inline-block;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:800;border:1px solid;background:#fff1f2;color:#be123c;border-color:#fecdd3}
 .b-op{display:inline-block;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:800;border:1px solid;background:#ecfdf5;color:#0f766e;border-color:#99f6e4}
 
-@media(max-width:640px){.card{padding:14px}.pitch{font-size:var(--fs-body)}}
+/* ===== 跨鏈地圖（11th tab）===== */
+.cm-intro{font-size:var(--fs-body);color:#334155;line-height:1.7}
+.cm-intro b{color:var(--ink)}
+.cm-read{border-left:5px solid var(--blue);background:#f8fafc;border-radius:0 12px 12px 0;padding:12px 16px;margin:10px 0 4px;font-size:var(--fs-body)}
+.cm-legend{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px;font-size:11.5px;color:#475569}
+.cm-leg{display:inline-flex;align-items:center;gap:6px}
+.cm-dot{width:12px;height:12px;border-radius:4px;display:inline-block;flex:0 0 auto}
+.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:6px}
+.cm-card{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fff;border-top:4px solid var(--line)}
+.cm-card .cm-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.3px;color:#fff;padding:2px 9px;border-radius:20px;margin-bottom:7px}
+.cm-card h4{font-size:var(--fs-sub);margin-bottom:6px;line-height:1.4}
+.cm-card .cm-ticks{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:7px;line-height:1.6}
+.cm-card .cm-text{font-size:11.5px;color:#475569;line-height:1.65}
+.cm-conc{font-size:11px;font-weight:800;padding:1px 8px;border-radius:20px;margin-left:6px;white-space:nowrap}
+.cm-conc.hi{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.cm-conc.lo{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0}
+.cm-matrix{width:100%;border-collapse:collapse;font-size:12px}
+.cm-matrix th,.cm-matrix td{padding:7px 8px;border:1px solid var(--line);text-align:center;vertical-align:middle}
+.cm-matrix thead th{background:#f1f5f9;font-weight:800;font-size:11px;white-space:nowrap}
+.cm-matrix thead th.cm-ch{font-size:10.5px}
+.cm-matrix td.cm-tk{text-align:left;font-weight:700;white-space:nowrap;background:#fafbfc}
+.cm-matrix td.cm-tk .csp{font-size:9.5px;color:#94a3b8;font-weight:600;display:block}
+.cm-matrix .cm-cell{font-size:13px;line-height:1}
+.cm-matrix .cm-n{font-size:11px;font-weight:800}
+.cm-matrix .cm-conc-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:12px;white-space:nowrap}
+.cm-matrix .cm-conc-tag.d1{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.cm-matrix .cm-conc-tag.d2{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0}
+.cm-matrix .cm-conc-tag.dn{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.cm-note{font-size:10.5px;color:#94a3b8;margin-top:8px;line-height:1.6}
+.cm-find{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:6px}
+.cm-find .fcard{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:12px 14px;background:#fff}
+.cm-find .fcard h4{font-size:var(--fs-sub);margin-bottom:5px}
+.cm-find .fcard p{font-size:11.5px;color:#475569;line-height:1.6}
+.cm-find .fcard .num{display:inline-block;background:var(--blue);color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:0 6px;margin-right:7px}
+.cm-signal{margin-top:14px}
+.cm-signal h5{font-size:12.5px;font-weight:800;color:var(--ink);margin-bottom:8px}
+.cm-signal .sig{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin-bottom:8px;font-size:12px}
+.cm-signal .sig b{color:var(--blue-deep)}
+.cm-stock{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:10.5px;font-weight:700;color:#334155}
+.cm-stock b{color:var(--blue-deep);font-size:10px;font-weight:800}
+.cm-stock[data-goto]{cursor:pointer;transition:all .15s}
+.cm-stock[data-goto]:hover{background:var(--blue-tint);border-color:#93c5fd;box-shadow:0 1px 4px rgba(26,115,232,.2)}
+@media(max-width:640px){.cm-grid{grid-template-columns:1fr}.cm-matrix{display:block;overflow-x:auto;white-space:nowrap}}
 </style>
 </head>
 <body><div class="container">
@@ -260,6 +302,7 @@ tr.flash{animation:rowflash 2.2s ease}
     <button class="tab" data-tab="power"><i>⚡</i>電力散熱與終端</button>
     <button class="tab" data-tab="neocloud"><i>☁️</i>Neocloud 算力雲</button>
     <button class="tab" data-tab="frontier"><i>🦾</i>模型雙雄生態圈</button>
+    <button class="tab" data-tab="chainmap"><i>🕸️</i>跨鏈地圖</button>
   </div>
 </nav>
 
@@ -413,7 +456,7 @@ tr.flash{animation:rowflash 2.2s ease}
           <tr id="st-NVDA"><td class="co">NVIDIA</td><td class="tk">NVDA</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">AI 加速器全球 #1（約 90%）</span></td><td class="role">AI GPU 龍頭 · CUDA 生態＋封裝綁定</td></tr>
           <tr id="st-AMD"><td class="co">AMD</td><td class="tk">AMD</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">AI 加速器全球 #2</span></td><td class="role">MI300 直挑 NVIDIA · 性價比</td></tr>
           <tr><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">ASIC 全球 #1</span></td><td class="role">ASIC＋網通雙引擎 · TPU 獨家</td></tr>
-          <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">ASIC 全球 #2</span></td><td class="role">客製彈性 · 分食 ASIC 訂單</td></tr>
+          <tr id="st-MRVL"><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">ASIC 全球 #2</span></td><td class="role">客製彈性 · 分食 ASIC 訂單</td></tr>
           <tr><td class="co">Qualcomm</td><td class="tk">QCOM</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">手機 SoC 全球 #1</span></td><td class="role">手機 AI SoC · 邊緣 AI</td></tr>
           <tr><td class="co">Intel</td><td class="tk">INTC</td><td><span class="badge b-us">US</span></td><td><span class="pos flag">IDM（自製為主）</span></td><td class="role">x86＋Gaudi＋IDM 代工 · 美國製造</td></tr>
         </tbody>
@@ -1141,7 +1184,7 @@ tr.flash{animation:rowflash 2.2s ease}
         <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
           <tr><td class="co">Broadcom</td><td class="tk">AVGO</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">交換晶片全球 #1</span></td><td class="role">高階 Switch 壟斷＋CPO 佈局 · CPO 最大贏家</td></tr>
-          <tr><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">光通 DSP 全球 #1</span></td><td class="role">800G／1.6T DSP 領導 · 比 AVGO 更聚焦光通訊｜比喻＝翻譯官：電轉光，幫 AWS/Google 定制 ASIC</td></tr>
+          <tr id="st-MRVL"><td class="co">Marvell</td><td class="tk">MRVL</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">光通 DSP 全球 #1</span></td><td class="role">800G／1.6T DSP 領導 · 比 AVGO 更聚焦光通訊｜比喻＝翻譯官：電轉光，幫 AWS/Google 定制 ASIC</td></tr>
           <tr><td class="co">Arista Networks</td><td class="tk">ANET</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">Ethernet 交換機全球 #1</span></td><td class="role">AI 網路「總指揮」· 賣整機（AVGO/MRVL 賣晶片）｜比喻＝超級交通警：指揮幾萬張 GPU 互傳</td></tr>
           <tr><td class="co">Credo</td><td class="tk">CRDO</td><td><span class="badge b-us">US</span></td><td><span class="pos g1"><span class="tip" data-tip="<b>AEC（主動式電纜）</b>：內置 DSP 的主動銅纜，用於機櫃內約 2 米級短距離高速互連，比光纖便宜、比傳統銅線更快。">AEC</span> 全球 #1</span></td><td class="role">機櫃內 2 米短距利基 · SerDes 技術主導｜比喻＝神經線：AEC 排線平快省電</td></tr>
           <tr><td class="co">Amphenol 安費諾</td><td class="tk">APH</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">連接器全球 #1</span></td><td class="role">連接器全品類與規模 · 與 TEL 並列雙雄</td></tr>
@@ -1976,6 +2019,208 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 </section>
 
+<!-- ============ 11. 跨鏈地圖 ============ -->
+<section class="pane" id="pane-chainmap">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑪</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「前 10 個 tab 我們逐個環節觀察，這個 tab 用一張地圖將它們串連起來：<b>同一間公司，如何貫穿多個產業鏈環節</b>。貫穿越多環節＝在供應鏈的話語權越大——<b>NVIDIA</b> 由設計 GPU 一路持有到投資模型公司；<b>台積電</b> 既做代工、又壟斷先進封裝。這張『跨鏈地圖』幫你一眼看清：誰是 AI 供應鏈的樞紐、哪些環節根本沒有跨鏈巨頭。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🗺️ AI 半導體全鏈跨鏈地圖 <span class="meta">橫帶＝公司貫穿的環節 · 資料取自前 10 個 tab 已核實內容</span></div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 545" style="max-width:780px;display:block;margin:0 auto" role="img" aria-label="AI 半導體產業鏈跨鏈地圖">
+        <text x="14" y="22" font-size="15" font-weight="bold" fill="#0f172a">產業鏈八環節</text>
+        <text x="14" y="40" font-size="10" fill="#64748b">實心方塊＝龍頭／獨家　空心方塊＝參與／追趕　橫帶＝該公司貫穿的環節</text>
+        <!-- ===== 環節節點（8 個） ===== -->
+        <rect x="14" y="52" width="82" height="56" rx="10" fill="#eff6ff" stroke="#1a73e8" stroke-width="1.5"/><text x="55" y="78" font-size="11" font-weight="bold" fill="#1d4ed8" text-anchor="middle">🧠 算力與設計</text><text x="55" y="95" font-size="8" fill="#64748b" text-anchor="middle">GPU·ASIC·IP</text>
+        <rect x="104" y="52" width="82" height="56" rx="10" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/><text x="145" y="78" font-size="11" font-weight="bold" fill="#115e59" text-anchor="middle">🏭 晶圓代工</text><text x="145" y="95" font-size="8" fill="#64748b" text-anchor="middle">先進製程·IDM</text>
+        <rect x="194" y="52" width="82" height="56" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="235" y="78" font-size="11" font-weight="bold" fill="#5b21b6" text-anchor="middle">🔷 先進封裝</text><text x="235" y="95" font-size="8" fill="#64748b" text-anchor="middle">CoWoS·SoIC</text>
+        <rect x="284" y="52" width="82" height="56" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/><text x="325" y="78" font-size="11" font-weight="bold" fill="#92400e" text-anchor="middle">🧩 記憶體</text><text x="325" y="95" font-size="8" fill="#64748b" text-anchor="middle">HBM·DRAM·NAND</text>
+        <rect x="374" y="52" width="82" height="56" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/><text x="415" y="78" font-size="11" font-weight="bold" fill="#155e75" text-anchor="middle">💡 光通訊互連</text><text x="415" y="95" font-size="8" fill="#64748b" text-anchor="middle">交換·光模組</text>
+        <rect x="464" y="52" width="82" height="56" rx="10" fill="#fff7ed" stroke="#b45309" stroke-width="1.5"/><text x="505" y="78" font-size="11" font-weight="bold" fill="#7c2d12" text-anchor="middle">🟩 PCB與材料</text><text x="505" y="95" font-size="8" fill="#64748b" text-anchor="middle">載板·CCL</text>
+        <rect x="554" y="52" width="82" height="56" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5"/><text x="595" y="78" font-size="11" font-weight="bold" fill="#9f1239" text-anchor="middle">⚡ 電力散熱終端</text><text x="595" y="95" font-size="8" fill="#64748b" text-anchor="middle">電源·液冷</text>
+        <rect x="644" y="52" width="82" height="56" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/><text x="685" y="78" font-size="11" font-weight="bold" fill="#14532d" text-anchor="middle">☁️ 雲與模型</text><text x="685" y="95" font-size="8" fill="#64748b" text-anchor="middle">Neocloud·雙雄</text>
+        <!-- ===== 跨鏈玩家橫帶（按貫穿數排序） ===== -->
+        <text x="14" y="128" font-size="10" fill="#475569">⬇ 跨鏈玩家：貫穿幾多環節</text>
+        <!-- 1 NVIDIA：算力◎ 封裝○ 記憶體○ 光電○ 雲與模型◎ -->
+        <rect x="14" y="136" width="712" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="24" y="158" font-size="11" font-weight="bold" fill="#0f172a">NVIDIA</text><text x="76" y="158" font-size="9" fill="#64748b">英偉達 · 全鏈最長</text>
+        <rect x="50" y="148" width="10" height="10" rx="2" fill="#1a73e8"/>
+        <rect x="230" y="148" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="320" y="148" width="10" height="10" rx="2" fill="#fff" stroke="#d97706" stroke-width="2"/>
+        <rect x="410" y="148" width="10" height="10" rx="2" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+        <rect x="680" y="148" width="10" height="10" rx="2" fill="#16a34a"/>
+        <!-- 2 台積電：代工◎ 封裝◎ 記憶體○ -->
+        <rect x="104" y="182" width="262" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="20" y="204" font-size="11" font-weight="bold" fill="#0f172a">台積電</text><text x="62" y="204" font-size="9" fill="#64748b">TSMC · 單點之王</text>
+        <rect x="140" y="194" width="10" height="10" rx="2" fill="#0d9488"/>
+        <rect x="230" y="194" width="10" height="10" rx="2" fill="#7c3aed"/>
+        <rect x="320" y="194" width="10" height="10" rx="2" fill="#fff" stroke="#d97706" stroke-width="2"/>
+        <!-- 3 三星：代工○ 封裝○ 記憶體◎ -->
+        <rect x="104" y="228" width="262" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="20" y="250" font-size="11" font-weight="bold" fill="#0f172a">三星</text><text x="50" y="250" font-size="9" fill="#64748b">Samsung · 垂直整合</text>
+        <rect x="140" y="240" width="10" height="10" rx="2" fill="#fff" stroke="#0d9488" stroke-width="2"/>
+        <rect x="230" y="240" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="320" y="240" width="10" height="10" rx="2" fill="#d97706"/>
+        <!-- 4 Intel：算力○ 代工○ 封裝○ -->
+        <rect x="14" y="274" width="262" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="24" y="296" font-size="11" font-weight="bold" fill="#0f172a">Intel</text><text x="58" y="296" font-size="9" fill="#64748b">英特爾 · IDM 反攻</text>
+        <rect x="50" y="286" width="10" height="10" rx="2" fill="#fff" stroke="#1a73e8" stroke-width="2"/>
+        <rect x="140" y="286" width="10" height="10" rx="2" fill="#fff" stroke="#0d9488" stroke-width="2"/>
+        <rect x="230" y="286" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <!-- 5 AMD：算力○ 封裝○ 記憶體○ -->
+        <rect x="14" y="320" width="352" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="24" y="342" font-size="11" font-weight="bold" fill="#0f172a">AMD</text><text x="56" y="342" font-size="9" fill="#64748b">超微 · 第二人</text>
+        <rect x="50" y="332" width="10" height="10" rx="2" fill="#fff" stroke="#1a73e8" stroke-width="2"/>
+        <rect x="230" y="332" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="320" y="332" width="10" height="10" rx="2" fill="#fff" stroke="#d97706" stroke-width="2"/>
+        <!-- 6 Broadcom：算力◎ 封裝○ 光電◎ -->
+        <rect x="14" y="366" width="442" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="24" y="388" font-size="11" font-weight="bold" fill="#0f172a">Broadcom</text><text x="92" y="388" font-size="9" fill="#64748b">博通 · 網絡＋ASIC</text>
+        <rect x="50" y="378" width="10" height="10" rx="2" fill="#1a73e8"/>
+        <rect x="230" y="378" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="410" y="378" width="10" height="10" rx="2" fill="#0891b2"/>
+        <!-- 7 SK海力士：封裝○ 記憶體◎ -->
+        <rect x="194" y="412" width="172" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="20" y="434" font-size="11" font-weight="bold" fill="#0f172a">SK海力士</text><text x="72" y="434" font-size="9" fill="#64748b">HBM #1</text>
+        <rect x="230" y="424" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="320" y="424" width="10" height="10" rx="2" fill="#d97706"/>
+        <!-- 8 美光：封裝○ 記憶體○ -->
+        <rect x="194" y="458" width="172" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="20" y="480" font-size="11" font-weight="bold" fill="#0f172a">美光</text><text x="50" y="480" font-size="9" fill="#64748b">Micron</text>
+        <rect x="230" y="470" width="10" height="10" rx="2" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="320" y="470" width="10" height="10" rx="2" fill="#fff" stroke="#d97706" stroke-width="2"/>
+        <!-- 9 Marvell：算力○ 光電○ -->
+        <rect x="14" y="504" width="442" height="34" rx="7" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="24" y="526" font-size="11" font-weight="bold" fill="#0f172a">Marvell</text><text x="76" y="526" font-size="9" fill="#64748b">MRVL · ASIC＋光通 DSP</text>
+        <rect x="50" y="516" width="10" height="10" rx="2" fill="#fff" stroke="#1a73e8" stroke-width="2"/>
+        <rect x="410" y="516" width="10" height="10" rx="2" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="cm-legend">
+      <span class="cm-leg"><span class="cm-dot" style="background:#1a73e8"></span>算力與設計</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#0d9488"></span>晶圓代工</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#7c3aed"></span>先進封裝</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#d97706"></span>記憶體</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#0891b2"></span>光通訊互連</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#b45309"></span>PCB與材料</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#e11d48"></span>電力散熱終端</span>
+      <span class="cm-leg"><span class="cm-dot" style="background:#16a34a"></span>雲與模型</span>
+    </div>
+    <div class="cm-read"><b>一分鐘讀法：</b>橫帶越長＝貫穿越多環節。NVIDIA 全鏈最長（5 環）；台積電橫帶雖短，卻是「單點之王」（代工＋封裝雙壟斷）；<b>PCB 與電力散熱兩層沒有任何橫帶</b>——純玩家區，沒有壟斷溢價、也沒有單點風險。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🏢 跨鏈龍頭檔案 <span class="meta">貫穿環節 · 龍頭位置 · 集中度</span></div>
+    <div class="cm-grid">
+      <div class="cm-card" style="border-top-color:#1a73e8">
+        <span class="cm-tag" style="background:#1a73e8">🏆 全鏈王者</span>
+        <h4>NVIDIA 英偉達</h4>
+        <div class="cm-ticks">NVDA · AI 加速器 #1（約 90%）</div>
+        <div class="cm-text">貫穿 <b>5 環</b>：算力（GPU 龍頭）＋封裝（CoWoS 標配）＋記憶體（HBM 整合）＋光電（NVLink 互連）＋雲與模型（OpenAI／Anthropic 股東）。「賣鏟子＋買方＋股東」三重身份。<span class="cm-conc hi">集中度 高</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="compute" data-stock="NVDA">🔍 算力 tab</span> <span class="cm-stock" data-goto="optical">🔍 光電 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#0d9488">
+        <span class="cm-tag" style="background:#0d9488">🏭 製造樞紐</span>
+        <h4>台積電 TSMC</h4>
+        <div class="cm-ticks">TSM / 2330 · 代工 #1（約 60%）</div>
+        <div class="cm-text">貫穿 <b>3 環</b>：晶圓代工（全球 #1）＋先進封裝（CoWoS／SoIC 獨家）＋記憶體（HBM 整合）。「所有人的代工廠」——AI 晶片唯一標配，橫帶短但價值密度最高。<span class="cm-conc hi">集中度 高</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="foundry" data-stock="TSM">🔍 代工 tab</span> <span class="cm-stock" data-goto="packaging">🔍 封裝 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#d97706">
+        <span class="cm-tag" style="background:#d97706">🧬 垂直整合王者</span>
+        <h4>三星 Samsung</h4>
+        <div class="cm-ticks">005930 · DRAM／NAND 全球 #1</div>
+        <div class="cm-text">貫穿 <b>3 環</b>：記憶體（DRAM／NAND #1＋HBM）＋代工（#2）＋封裝（自家 I-Cube）。唯一在「記憶體＋代工」雙線都進入全球前二的公司，惟良率仍追不上。<span class="cm-conc lo">集中度 低</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="memory">🔍 記憶體 tab</span> <span class="cm-stock" data-goto="foundry">🔍 代工 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#d97706">
+        <span class="cm-tag" style="background:#d97706">💾 HBM 霸主</span>
+        <h4>SK 海力士</h4>
+        <div class="cm-ticks">000660 · HBM 全球 #1</div>
+        <div class="cm-text">貫穿 <b>2 環</b>：記憶體（HBM #1，NVIDIA 核心供應商，領先半代）＋封裝（MR-MUF 自家封裝）。「記憶體霸主＝封裝獨攬」，HBM 擴產最直接受惠。<span class="cm-conc hi">集中度 高</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="memory" data-stock="000660">🔍 記憶體 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#1a73e8">
+        <span class="cm-tag" style="background:#1a73e8">🗽 美系獨苗</span>
+        <h4>美光 Micron</h4>
+        <div class="cm-ticks">MU · DRAM／HBM 全球 #3</div>
+        <div class="cm-text">貫穿 <b>2 環</b>：記憶體（美系唯一 HBM 供應商）＋封裝（HBM 自家整合）。地緣政治受惠——美國 AI 政策下的「本土記憶體」，擴產取證先於韓廠。<span class="cm-conc hi">集中度 高</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="memory" data-stock="MU">🔍 記憶體 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#1a73e8">
+        <span class="cm-tag" style="background:#1a73e8">🛠️ IDM 反攻</span>
+        <h4>Intel 英特爾</h4>
+        <div class="cm-ticks">INTC · x86＋IDM 2.0</div>
+        <div class="cm-text">貫穿 <b>3 環</b>：算力（x86＋Gaudi）＋代工（IDM 2.0 開放代工）＋封裝（EMIB／Foveros）。唯一想在「設計＋製造＋封裝」全包的美企，惟製程落後＋財務承壓。<span class="cm-conc lo">集中度 低</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="foundry" data-stock="INTC">🔍 代工 tab</span> <span class="cm-stock" data-goto="compute">🔍 算力 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#1a73e8">
+        <span class="cm-tag" style="background:#1a73e8">🚀 追趕者</span>
+        <h4>AMD 超微</h4>
+        <div class="cm-ticks">AMD · AI 加速器 #2</div>
+        <div class="cm-text">貫穿 <b>3 環</b>：算力（MI300 直挑 NVIDIA）＋封裝（SoIC 3D 堆疊首用）＋記憶體（HBM 用家）。性價比路線＋封裝技術領先，軟體生態是短板。<span class="cm-conc lo">集中度 低</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="compute" data-stock="AMD">🔍 算力 tab</span> <span class="cm-stock" data-goto="packaging">🔍 封裝 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#0891b2">
+        <span class="cm-tag" style="background:#0891b2">🕸️ 網絡＋ASIC</span>
+        <h4>Broadcom 博通</h4>
+        <div class="cm-ticks">AVGO · ASIC #1＋交換晶片 #1</div>
+        <div class="cm-text">貫穿 <b>3 環</b>：算力（ASIC #1：Google TPU 獨家）＋封裝（CPO 共封裝佈局）＋光電（高階交換晶片壟斷）。ASIC＋網通雙引擎，CPO 趨勢最大贏家。<span class="cm-conc hi">集中度 高</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="compute">🔍 算力 tab</span> <span class="cm-stock" data-goto="optical">🔍 光電 tab</span></div>
+      </div>
+      <div class="cm-card" style="border-top-color:#0891b2">
+        <span class="cm-tag" style="background:#0891b2">🎯 客製化＋DSP</span>
+        <h4>Marvell 邁威爾</h4>
+        <div class="cm-ticks">MRVL · ASIC 全球 #2＋光通 DSP #1</div>
+        <div class="cm-text">貫穿 <b>2 環</b>：算力（AWS／Meta 客製 ASIC）＋光電（800G／1.6T 光通 DSP 全球 #1）。比 AVGO 更聚焦光通訊的專精玩家，AI 網路 Ethernet 化的最大受惠者。<span class="cm-conc lo">集中度 低</span></div>
+        <div style="margin-top:8px"><span class="cm-stock" data-goto="compute" data-stock="MRVL">🔍 算力 tab</span> <span class="cm-stock" data-goto="optical" data-stock="MRVL">🔍 光電 tab</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📊 公司 × 環節 跨鏈矩陣 <span class="meta">◎＝龍頭／獨家 · ○＝參與／追趕 · 集中度＝業務押注單一環節的程度</span></div>
+    <div class="tbl-wrap"><table class="cm-matrix">
+      <thead><tr><th>公司</th><th class="cm-ch">算力</th><th class="cm-ch">代工</th><th class="cm-ch">封裝</th><th class="cm-ch">記憶體</th><th class="cm-ch">光電</th><th class="cm-ch">PCB</th><th class="cm-ch">電力</th><th class="cm-ch">雲／模型</th><th>貫穿</th><th>集中度</th></tr></thead>
+      <tbody>
+        <tr><td class="cm-tk">NVIDIA<span class="csp">NVDA</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-n">5</span></td><td><span class="cm-conc-tag d1">高</span></td></tr>
+        <tr><td class="cm-tk">台積電<span class="csp">TSM / 2330</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">3</span></td><td><span class="cm-conc-tag d1">高</span></td></tr>
+        <tr><td class="cm-tk">三星<span class="csp">005930</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">3</span></td><td><span class="cm-conc-tag d2">低</span></td></tr>
+        <tr><td class="cm-tk">SK 海力士<span class="csp">000660</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">2</span></td><td><span class="cm-conc-tag d1">高</span></td></tr>
+        <tr><td class="cm-tk">美光<span class="csp">MU</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">2</span></td><td><span class="cm-conc-tag d1">高</span></td></tr>
+        <tr><td class="cm-tk">Intel<span class="csp">INTC</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">3</span></td><td><span class="cm-conc-tag d2">低</span></td></tr>
+        <tr><td class="cm-tk">AMD<span class="csp">AMD</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">3</span></td><td><span class="cm-conc-tag d2">低</span></td></tr>
+        <tr><td class="cm-tk">Broadcom<span class="csp">AVGO</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#0d9488;font-weight:800">◎</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">3</span></td><td><span class="cm-conc-tag d1">高</span></td></tr>
+        <tr><td class="cm-tk">Marvell<span class="csp">MRVL</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#64748b">○</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-cell" style="color:#cbd5e1">·</span></td><td><span class="cm-n">2</span></td><td><span class="cm-conc-tag d2">低</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cm-note">註：PCB 與電力散熱兩層沒有任何跨鏈巨頭——勝宏／臻鼎（PCB）、VRT／ETN（電力）皆單層純玩家。集中度＝公司業務押注單一環節的程度：紅「高」＝壟斷溢價強但單點風險大；綠「低」＝多元分散較穩健。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🔍 跨鏈關鍵發現</div>
+    <div class="cm-find">
+      <div class="fcard"><h4><span class="num">1</span>跨鏈王者＝NVIDIA</h4><p>貫穿 5 環，唯一由「設計 GPU」到「投資模型公司」全覆蓋。壟斷位不是代工（不自製），而是「CUDA 生態＋封裝綁定」——議價權貫穿全鏈。</p></div>
+      <div class="fcard"><h4><span class="num">2</span>製造層雙重壟斷</h4><p>台積電 代工 #1（約 60%）＋ CoWoS 封裝獨家——整個 AI 供應鏈最核心的「單點」。客戶黏度極高、定價權強勁；唯一風險是產能集中台灣。</p></div>
+      <div class="fcard"><h4><span class="num">3</span>記憶體三雄全部自製封裝</h4><p>海力士 MR-MUF、三星、美光 都自製 HBM 封裝——「記憶體霸主＝封裝獨攬」，外判封測（AMKR）只接到外圍測試。記憶體是 AI 供血系統，韓美三強壟斷 HBM。</p></div>
+      <div class="fcard"><h4><span class="num">4</span>兩個「無跨鏈」環節</h4><p>PCB 與電力散熱層零跨鏈巨頭——勝宏／臻鼎（PCB）、VRT／ETN（電力）全部單層純玩家。沒有壟斷溢價，但也無對手切入；是跟隨 AI 資本開支走的「工具股」。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📡 跨鏈投資信號</div>
+    <div class="cm-signal">
+      <div class="sig">◉ <b>台積電 · 製造樞紐</b>——全鏈唯一「通行證」，AI 資本開支的必經收費站。<b>逢低收集</b>、長期作為核心倉位；風險＝台灣地緣，事件型回調反而是機會。<span class="cm-stock" data-goto="foundry" data-stock="TSM">🔍 代工 tab</span></div>
+      <div class="sig">◉ <b>NVIDIA · 全鏈王者</b>——壟斷溢價最強但集中度最高（GPU 單一業務）。<b>高 beta</b>，波段操作優於死揸；長期留意 ASIC 侵蝕（AVGO／MRVL 分食雲端訂單）。<span class="cm-stock" data-goto="compute" data-stock="NVDA">🔍 算力 tab</span></div>
+      <div class="sig">◉ <b>記憶體三雄（海力士／三星／美光）</b>——HBM 是最強「週期＋成長」雙引擎，但本質是週期股。<b>用週期框架，不宜當作長期核心</b>；美光有額外「美國本土」溢價。<span class="cm-stock" data-goto="memory" data-stock="000660">🔍 記憶體 tab</span></div>
+      <div class="sig">◉ <b>設備商（ASML／AMAT／LRCX／KLAC）</b>——不在跨鏈名單但是「永恆鏟子」：無論哪間代工廠勝出都要買它們的設備。<b>跨週期核心</b>，最穩健的 AI 基建倉。<span class="cm-stock" data-goto="foundry" data-stock="ASML">🔍 代工 tab</span></div>
+    </div>
+    <div class="cm-note">教學性質，僅供參考，不構成投資建議。集中度／信號為定性示意，數據截至 2026-08，取自前 10 個 tab 已核實內容。</div>
+  </div>
+</section>
+
 
 <div class="foot"><span style="color:#1a73e8;font-weight:700">leungkathy</span> · All-in-One Financial Dashboard Suite — AI 半導體產業鏈投資圖譜（教學性質）· 整合 4 大 Gemini 主題 · 僅供參考，不構成投資建議</div>
 </div>
@@ -1993,7 +2238,7 @@ tr.flash{animation:rowflash 2.2s ease}
   var lastTab=null;
   var backBtn=document.createElement('button');
   backBtn.className='goback';backBtn.type='button';document.body.appendChild(backBtn);
-  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲',frontier:'模型雙雄生態圈'};
+  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲',frontier:'模型雙雄生態圈',chainmap:'跨鏈地圖'};
   function hideBack(){lastTab=null;backBtn.style.display='none';}
   backBtn.addEventListener('click',function(){if(lastTab)show(lastTab);hideBack();});
   function flashRow(id){
