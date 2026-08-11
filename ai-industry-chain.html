@@ -297,6 +297,25 @@ tr.flash{animation:rowflash 2.2s ease}
 .tocpanel .toc-reset{border:none;background:none;color:var(--blue);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;padding:0}
 .tocpanel .toc-reset:hover{text-decoration:underline}
 @media(max-width:640px){.tocpanel{left:12px;right:12px;width:auto;bottom:150px}}
+
+/* ===== Pie / donut charts（dataviz）===== */
+.pie-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:stretch}
+.pie-cell{flex:1 1 220px;min-width:200px;max-width:330px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px;box-shadow:var(--shadow)}
+.pie-cell .p-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.pie-cell .p-sub{font-size:10.5px;color:var(--muted);margin-bottom:6px}
+.pie-cell .pie{width:150px;height:150px;margin:0 auto}
+.pie-cell .p-note{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.55}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:10px;font-size:11px;color:#334155}
+.legend .lg{display:inline-flex;align-items:center;gap:5px}
+.legend .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* ===== Horizontal bar chart（設備營收比較）===== */
+.bar-chart{width:100%;max-width:600px;margin:6px auto 4px}
+.bar-chart .br{display:flex;align-items:center;gap:8px;margin:8px 0;font-size:12px}
+.bar-chart .b-lab{width:60px;text-align:right;font-weight:800;color:var(--ink);white-space:nowrap}
+.bar-chart .b-track{flex:1;background:#f1f5f9;border-radius:6px;height:20px;position:relative;overflow:hidden}
+.bar-chart .b-fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px 0 0 6px}
+.bar-chart .b-val{width:56px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#334155;white-space:nowrap}
 </style>
 </head>
 <body><div class="container">
@@ -458,6 +477,7 @@ tr.flash{animation:rowflash 2.2s ease}
     <div class="card-h">📌 投資標的</div>
     <div class="sub-sec">
       <div class="sub-h">上游 · EDA＋IP（賣鏟子）</div>
+      <div class="callout blue">💡 <b>EDA（Electronic Design Automation）</b>＝晶片設計的「專業設計軟體」：工程師畫 GPU／ASIC 藍圖全靠它，Synopsys 與 Cadence 雙寡頭壟斷（合計市占逾七成）。<b>為何抗週期？</b> 無論 NVDA／AMD／AVGO／MRVL 哪一家贏，都要付 EDA 授權費——是「賣水人」中最穩的現金流。</div>
       <div class="tbl-wrap"><table class="stocks">
         <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
@@ -501,6 +521,30 @@ tr.flash{animation:rowflash 2.2s ease}
         <tr><td>Intel</td><td>CPU＋GPU＋代工</td><td>美國製造 · 軍工訂單</td><td>製程落後 · 財務承壓</td></tr>
       </tbody>
     </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🍩 業務分佈：AVGO vs MRVL（最新財報約略）</div>
+    <div class="pie-row">
+      <div class="pie-cell">
+        <div class="p-title">Broadcom AVGO</div>
+        <div class="p-sub">FY2025 營收 ≈ $66B（半導體約六成＋軟體約四成）</div>
+        <div class="pie" data-slices='[{"label":"AI 客製晶片 XPU","pct":30,"color":"#2563eb"},{"label":"其他半導體（網通／儲存）","pct":30,"color":"#0d9488"},{"label":"基礎設施軟體","pct":40,"color":"#d97706"}]' data-aria="Broadcom 業務分佈"></div>
+        <div class="p-note">AI 半導體（XPU＋AI 網通）FY2025 約 $20B、逐季加速；VMware 併購後軟體成為穩定金流。</div>
+      </div>
+      <div class="pie-cell">
+        <div class="p-title">Marvell MRVL</div>
+        <div class="p-sub">FY2026 營收 ≈ $7.5B（數據中心已成絕對主體）</div>
+        <div class="pie" data-slices='[{"label":"數據中心","pct":75,"color":"#2563eb"},{"label":"企業網路","pct":10,"color":"#0d9488"},{"label":"電信／消費／其他","pct":15,"color":"#d97706"}]' data-aria="Marvell 業務分佈"></div>
+        <div class="p-note">數據中心由 AI 客製晶片（AWS Trainium、Meta MTIA）＋光電＋交換器拉動。</div>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="lg"><span class="sw" style="background:#2563eb"></span>數據中心／AI 半導體</span>
+      <span class="lg"><span class="sw" style="background:#0d9488"></span>其他半導體／企業網路</span>
+      <span class="lg"><span class="sw" style="background:#d97706"></span>軟體／電信與其他</span>
+    </div>
+    <div class="callout blue">💡 <b>分工口訣</b>：AVGO＝Google＋微軟（XPU 為主、軟體金流厚）；MRVL＝AWS＋Meta（高度押注數據中心、波動更大）。比例按最近期財報約略估算。</div>
   </div>
 
   <div class="card">
@@ -637,6 +681,28 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
+    <div class="card-h">⚖️ 設備四大金剛比較（AMAT／LRCX／KLAC／AMKR）</div>
+    <div class="explain">前道設備看「營收規模＋工序地位」；<b>AMKR 屬封測 OSAT（非前道設備）</b>，但它是 HBM 整合測試的關鍵外判夥伴，故一併列入比較。</div>
+    <div class="bar-chart">
+      <div class="br"><span class="b-lab">AMAT</span><span class="b-track"><span class="b-fill" style="width:100%;background:#2563eb"></span></span><span class="b-val">≈ $28B</span></div>
+      <div class="br"><span class="b-lab">LRCX</span><span class="b-track"><span class="b-fill" style="width:71%;background:#0d9488"></span></span><span class="b-val">≈ $20B</span></div>
+      <div class="br"><span class="b-lab">KLAC</span><span class="b-track"><span class="b-fill" style="width:41%;background:#d97706"></span></span><span class="b-val">≈ $11.5B</span></div>
+      <div class="br"><span class="b-lab">AMKR</span><span class="b-track"><span class="b-fill" style="width:33%;background:#be123c"></span></span><span class="b-val">≈ $9.3B</span></div>
+    </div>
+    <div class="explain" style="text-align:center;color:var(--muted);font-size:11px">FY2025 營收約略比較（AMAT＝設備營收全球 #1）</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>公司</th><th>代碼</th><th>工序／角色</th><th>全球地位</th><th>強項</th><th>風險</th></tr></thead>
+      <tbody>
+        <tr><td>Applied Materials</td><td>AMAT</td><td>沉積＋CMP 全能</td><td>設備營收全球 #1</td><td>薄膜沉積／CMP／量測一體</td><td>業務多元、增長分散</td></tr>
+        <tr><td>Lam Research</td><td>LRCX</td><td>蝕刻龍頭</td><td>蝕刻全球 #1（約 45%）</td><td>蝕刻＋ALD 沉積雙線</td><td>記憶體週期敏感</td></tr>
+        <tr><td>KLA</td><td>KLAC</td><td>量測／檢測</td><td>過程控制全球 #1</td><td>量檢測寡占、毛利率高</td><td>依賴晶圓廠擴產週期</td></tr>
+        <tr><td>Amkor</td><td>AMKR</td><td>封測 OSAT</td><td>全球封測 #2</td><td>HBM 整合測試＋與台積電合作</td><td>成熟封裝毛利率偏低</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 <b>四大金剛買哪一隻？</b> 賭「AI 晶片世代升級」→ <b>AMAT／LRCX</b>（沉積蝕刻量增）；賭「良率與 HBM 爬坡」→ <b>KLAC</b>（量檢測）＋<b>AMKR</b>（HBM 測試）。四者皆「賣水人」，不押單一設計公司。</div>
+  </div>
+
+  <div class="card">
     <div class="card-h">🎯 投資焦點</div>
     <ul class="focus">
       <li><b>台積電「高鐵通行證」：</b>3nm 良率＋CoWoS 產能全球唯一，客戶黏度極高、定價權強勁。</li>
@@ -663,7 +729,7 @@ tr.flash{animation:rowflash 2.2s ease}
         <div class="d">NVIDIA H100／B200 標配 · 矽中介層成本高但頻寬極致</div>
       </button>
       <button class="tech" data-tech="tsmc-soic">
-        <div class="t"><span class="tip" data-tip="<b>SoIC（3D 堆疊封裝）</b>：晶片與晶片以原子級銅對銅直接鍵合堆疊，傳輸間距最短、密度最高。">SoIC</span> (3D) <span class="pill">台積電 TSMC</span><span class="pill">原子級無凸塊</span></div>
+        <div class="t"><span class="tip" data-tip="<b>SoIC（3D 堆疊封裝）</b>：晶片與晶片以原子級銅對銅直接鍵合堆疊，傳輸間距最短、密度最高。">SoIC (3D)</span> <span class="pill">台積電 TSMC</span><span class="pill">原子級無凸塊</span></div>
         <div class="d">AMD MI300 採用 · 無凸塊直接鍵合，密度最高</div>
       </button>
       <button class="tech" data-tech="intel-emib">
@@ -743,6 +809,10 @@ tr.flash{animation:rowflash 2.2s ease}
         <tr><td>量產成熟度 (2026)</td><td class="ok">高度成熟、供不應求</td><td>良率拉升中</td><td class="ok">極高</td><td>商業化順暢</td></tr>
       </tbody>
     </table></div>
+    <div class="callout blue">🔬 <b>2.5D vs 3D 有何分別？</b><br>
+    <b>2.5D（CoWoS／EMIB）</b>＝晶片「並排」放在矽中介層／矽橋上——像兩座平房共用同一塊地基，靠中間層互連，面積大、頻寬靠中介層佈線。<br>
+    <b>3D（SoIC／Foveros）</b>＝晶片「垂直堆疊」直接鍵合——像起高樓，樓層之間用電梯直通，互連間距最短、密度最高。<br>
+    <b>成品分別：</b>2.5D 成品是「大而平」的整合體（GPU 旁圍滿 HBM）；3D 成品是「小而密」的立體結構（體積更細、頻寬更高，但散熱與良率更難控）。</div>
   </div>
 
   <div class="card">
@@ -942,6 +1012,93 @@ tr.flash{animation:rowflash 2.2s ease}
         <text x="390" y="436" fill="#64748b" font-size="9.5" text-anchor="middle" font-weight="bold">記憶體階梯：越上越快越貴（貼近 GPU），越落越平、容量越大 —— 上中游全被韓／美／日巨頭壟斷</text>
       </svg>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🍩 韓美三強＋CXMT：業務分佈比較（HBM／DRAM／NAND）</div>
+    <div class="pie-row">
+      <div class="pie-cell">
+        <div class="p-title">SK 海力士</div>
+        <div class="p-sub">HBM 全球 #1 · 2025 全年</div>
+        <div class="pie" data-slices='[{"label":"HBM","pct":28,"color":"#d97706"},{"label":"DRAM（一般）","pct":46,"color":"#2563eb"},{"label":"NAND","pct":26,"color":"#0d9488"}]' data-aria="SK 海力士業務分佈"></div>
+        <div class="p-note">HBM 佔 DRAM 逾四成，AI 最直接受惠者。</div>
+      </div>
+      <div class="pie-cell">
+        <div class="p-title">Samsung（記憶體部門）</div>
+        <div class="p-sub">DRAM 全球 #1 · 2025</div>
+        <div class="pie" data-slices='[{"label":"HBM","pct":20,"color":"#d97706"},{"label":"DRAM（一般）","pct":40,"color":"#2563eb"},{"label":"NAND","pct":40,"color":"#0d9488"}]' data-aria="Samsung 記憶體業務分佈"></div>
+        <div class="p-note">記憶體＋NAND 雙線齊重，HBM 市占追趕中。</div>
+      </div>
+      <div class="pie-cell">
+        <div class="p-title">Micron 美光</div>
+        <div class="p-sub">DRAM／HBM 全球 #3 · FY2025</div>
+        <div class="pie" data-slices='[{"label":"HBM","pct":7,"color":"#d97706"},{"label":"DRAM（一般）","pct":70,"color":"#2563eb"},{"label":"NAND","pct":23,"color":"#0d9488"}]' data-aria="Micron 業務分佈"></div>
+        <div class="p-note">美系唯一 HBM 供應商，HBM 比重正快速爬升。</div>
+      </div>
+      <div class="pie-cell">
+        <div class="p-title">長鑫科技 CXMT</div>
+        <div class="p-sub">中國 DRAM #1 · 只做 DRAM</div>
+        <div class="pie" data-slices='[{"label":"DRAM","pct":100,"color":"#2563eb"}]' data-aria="CXMT 業務分佈"></div>
+        <div class="p-note">⚪ 無 HBM、無 NAND——100% DRAM（低功耗 LPDDR／DDR 為主）。</div>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="lg"><span class="sw" style="background:#d97706"></span>HBM</span>
+      <span class="lg"><span class="sw" style="background:#2563eb"></span>DRAM（一般）</span>
+      <span class="lg"><span class="sw" style="background:#0d9488"></span>NAND</span>
+    </div>
+    <div class="callout blue">💡 比率按最近期財報（2025／FY2025）約略估算；「其他」小額項目已併入最大類別。韓美三強壟斷 HBM，CXMT 聚焦 DRAM 單一賽道。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🧱 DDR／DRAM 堆疊在一起 ＝ HBM</div>
+    <div class="svgbox">
+      <svg viewBox="0 0 780 322" style="width:100%;height:auto;display:block" role="img" aria-label="DRAM 堆疊成 HBM 概念圖">
+        <!-- 左：一粒 DRAM -->
+        <rect x="20" y="20" width="320" height="120" rx="10" fill="#eff6ff" stroke="#60a5fa"/>
+        <text x="40" y="46" font-size="13.5" font-weight="bold" fill="#1e40af">一粒 DRAM（DDR）＝「一格儲物櫃」</text>
+        <text x="40" y="66" font-size="11" fill="#2563eb">單粒記憶體，速度普通、容量細</text>
+        <rect x="60" y="84" width="120" height="40" rx="4" fill="#2563eb"/><text x="120" y="108" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">DRAM 晶粒（DDR）</text>
+        <rect x="208" y="84" width="112" height="40" rx="4" fill="#93c5fd" stroke="#60a5fa"/><text x="264" y="108" font-size="10" fill="#1e3a8a" text-anchor="middle">1 粒記憶體</text>
+        <!-- 中：堆疊＋TSV -->
+        <text x="410" y="52" font-size="12" font-weight="bold" fill="#92400e" text-anchor="middle">多層疊高 ＋ TSV 垂直打通</text>
+        <rect x="355" y="70" width="110" height="186" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+        <rect x="370" y="84" width="80" height="32" rx="3" fill="#fbbf24"/><text x="410" y="105" font-size="10" fill="#7c2d12" text-anchor="middle" font-weight="bold">DRAM 層 4</text>
+        <rect x="370" y="124" width="80" height="32" rx="3" fill="#fbbf24"/><text x="410" y="145" font-size="10" fill="#7c2d12" text-anchor="middle" font-weight="bold">DRAM 層 3</text>
+        <rect x="370" y="164" width="80" height="32" rx="3" fill="#fbbf24"/><text x="410" y="185" font-size="10" fill="#7c2d12" text-anchor="middle" font-weight="bold">DRAM 層 2</text>
+        <rect x="370" y="204" width="80" height="32" rx="3" fill="#fbbf24"/><text x="410" y="225" font-size="10" fill="#7c2d12" text-anchor="middle" font-weight="bold">DRAM 層 1</text>
+        <g fill="#fff">
+          <circle cx="390" cy="100" r="3"/><circle cx="410" cy="100" r="3"/><circle cx="430" cy="100" r="3"/>
+          <circle cx="390" cy="140" r="3"/><circle cx="410" cy="140" r="3"/><circle cx="430" cy="140" r="3"/>
+          <circle cx="390" cy="180" r="3"/><circle cx="410" cy="180" r="3"/><circle cx="430" cy="180" r="3"/>
+          <circle cx="390" cy="220" r="3"/><circle cx="410" cy="220" r="3"/><circle cx="430" cy="220" r="3"/>
+        </g>
+        <text x="410" y="274" font-size="10" fill="#b45309" text-anchor="middle">TSV＝垂直貫穿每一層的「電梯井」</text>
+        <!-- 箭頭 -->
+        <text x="492" y="150" font-size="26" fill="#94a3b8" text-anchor="middle">→</text>
+        <!-- 右：HBM -->
+        <rect x="520" y="20" width="240" height="120" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="2"/>
+        <text x="540" y="46" font-size="13.5" font-weight="bold" fill="#065f46">＝ HBM「記憶體大樓」</text>
+        <text x="540" y="66" font-size="11" fill="#047857">疊 8–12 層，緊貼 GPU 高速吞吐</text>
+        <rect x="536" y="80" width="108" height="48" rx="5" fill="#059669"/>
+        <rect x="544" y="88" width="92" height="32" rx="3" fill="#a7f3d0"/><text x="590" y="108" font-size="9.5" fill="#064e3b" text-anchor="middle" font-weight="bold">HBM Stack</text>
+        <rect x="662" y="80" width="88" height="48" rx="5" fill="#4f46e5"/><text x="706" y="108" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">GPU</text>
+        <text x="590" y="132" font-size="8.5" fill="#065f46" text-anchor="middle">微凸塊 ↓ 緊貼 GPU</text>
+        <!-- 底部講解 -->
+        <rect x="20" y="286" width="740" height="30" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+        <text x="40" y="306" font-size="11.5" font-weight="bold" fill="#92400e">💡 概念：DDR／DRAM 一粒粒是「平房」，堆疊在一起＋TSV 垂直打通＝「記憶體大樓」HBM。</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🇨🇳 CXMT 勝韓美三強的地方：低功耗 DDR 戰略</div>
+    <div class="explain"><b>長鑫科技 CXMT（688825.SH）</b>用<b>低功耗 LPDDR／DDR</b> 切入，先站穩「成熟＋低功耗」主流市場，再向上攻 HBM——<b>HBM 本質是高階 DRAM 堆疊，基本功仍是 DRAM 良率</b>。</div>
+    <ul class="focus">
+      <li><b>為何中國只需低功耗 DDR？</b>① <b>設備管制</b>：HBM 需先進堆疊＋高階機台（受出口管制），低功耗 DDR 用成熟製程即可量產；② <b>終端需求大</b>：中國伺服器／手機／物聯網市場量體龐大，低功耗 DDR 是「量大面廣」的主流；③ <b>戰略先後</b>：先搶占市占率最高的通用記憶體，再逐步攻高階。</li>
+      <li><b>本土替代受惠：</b>華為、聯想、阿里巴巴等本土終端採購優先，政策＋地緣保障令 CXMT 在中國市場有「主場優勢」。</li>
+      <li><b>不必綁 NVIDIA 認證：</b>HBM 要通過 NVIDIA 嚴格認證、難度高；CXMT 先做「地基」，避開正面硬碰韓美三強。</li>
+    </ul>
   </div>
 
   <div class="card">
@@ -2414,6 +2571,23 @@ tr.flash{animation:rowflash 2.2s ease}
   document.addEventListener('click',function(e){
     if(!panel.contains(e.target)&&!fab.contains(e.target))hideToc();
   });
+  // ===== 甜甜圈 pie chart（dataviz：按 data-slices 繪製，白色間隙＋直接標籤）=====
+  function renderPie(){
+    document.querySelectorAll('.pie[data-slices]').forEach(function(el){
+      var slices;try{slices=JSON.parse(el.getAttribute('data-slices'));}catch(e){return;}
+      var total=0;slices.forEach(function(s){total+=(+s.pct)||0;});
+      if(!total)return;
+      var R=60,C=2*Math.PI*R,off=0,s='';
+      slices.forEach(function(sl){
+        var len=C*sl.pct/total;
+        s+='<circle cx="75" cy="75" r="'+R+'" fill="none" stroke="'+sl.color+'" stroke-width="20"'
+          +' stroke-dasharray="'+(len-2)+' '+C+'" stroke-dashoffset="'+(-off)+'" transform="rotate(-90 75 75)"></circle>';
+        off+=len;
+      });
+      el.innerHTML='<svg viewBox="0 0 150 150" width="100%" height="100%" role="img" aria-label="'+el.getAttribute('data-aria')+'">'+s+'</svg>';
+    });
+  }
+  renderPie();
 })();
 </script>
 </body>
