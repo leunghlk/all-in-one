@@ -277,6 +277,26 @@ tr.flash{animation:rowflash 2.2s ease}
 .cm-stock[data-goto]{cursor:pointer;transition:all .15s}
 .cm-stock[data-goto]:hover{background:var(--blue-tint);border-color:#93c5fd;box-shadow:0 1px 4px rgba(26,115,232,.2)}
 @media(max-width:640px){.cm-grid{grid-template-columns:1fr}.cm-matrix{display:block;overflow-x:auto;white-space:nowrap}}
+/* ===== 內容導覽 FAB（仿 iPhone AssistiveTouch，可拖曳）===== */
+.tocfab{position:fixed;right:18px;bottom:112px;width:54px;height:54px;border-radius:50%;background:rgba(26,115,232,.94);color:#fff;border:none;font-size:23px;line-height:1;cursor:grab;z-index:1200;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(26,115,232,.45);user-select:none;-webkit-user-select:none;touch-action:none;transition:box-shadow .2s,transform .15s;font-family:inherit}
+.tocfab:hover{box-shadow:0 8px 24px rgba(26,115,232,.6)}
+.tocfab:active{cursor:grabbing;transform:scale(.94)}
+.tocfab.open{background:var(--blue-deep)}
+.tocpanel{position:fixed;right:84px;bottom:112px;width:302px;max-width:calc(100vw - 24px);max-height:min(68vh,540px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px rgba(15,23,42,.2);z-index:1100;padding:8px 0 0;font-family:inherit;display:none}
+.tocpanel.show{display:block}
+.tocpanel .toc-title{padding:6px 14px 8px;font-size:12.5px;font-weight:800;color:var(--ink);border-bottom:1px solid #eef2f7;display:flex;align-items:center;gap:6px}
+.tocpanel .toc-close{margin-left:auto;cursor:pointer;font-size:14px;color:#94a3b8;border:none;background:none;padding:2px 4px;line-height:1;font-family:inherit}
+.tocpanel .toc-close:hover{color:var(--ink)}
+.toc-item{display:flex;align-items:baseline;gap:7px;width:100%;text-align:left;border:none;background:none;cursor:pointer;padding:7px 14px;font-size:12.5px;line-height:1.5;color:#334155;font-family:inherit;border-left:3px solid transparent}
+.toc-item:hover{background:var(--blue-tint)}
+.toc-item.sub{padding-left:32px;font-size:12px;color:#64748b}
+.toc-item .toc-num{flex:0 0 auto;font-size:10px;font-weight:800;color:#94a3b8;min-width:16px}
+.toc-item:hover .toc-num{color:var(--blue)}
+.tocflash{animation:rowflash 2.2s ease;border-radius:10px}
+.tocpanel .toc-foot{padding:8px 14px;border-top:1px solid #eef2f7;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between;align-items:center}
+.tocpanel .toc-reset{border:none;background:none;color:var(--blue);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;padding:0}
+.tocpanel .toc-reset:hover{text-decoration:underline}
+@media(max-width:640px){.tocpanel{left:12px;right:12px;width:auto;bottom:150px}}
 </style>
 </head>
 <body><div class="container">
@@ -2282,6 +2302,117 @@ tr.flash{animation:rowflash 2.2s ease}
       const key=t.dataset.tech;
       document.querySelectorAll('.techview').forEach(function(v){v.classList.toggle('active',v.id==='tv-'+key);});
     });
+  });
+  // ===== 內容導覽 FAB（仿 iPhone AssistiveTouch：可拖曳，撳一下開當前頁內容）=====
+  var fab=document.createElement('button');
+  fab.className='tocfab';fab.type='button';fab.title='本頁內容';fab.setAttribute('aria-label','本頁內容');
+  fab.textContent='📑';document.body.appendChild(fab);
+  var panel=document.createElement('div');panel.className='tocpanel';document.body.appendChild(panel);
+  var FABW=54;
+  var suppressClick=false;
+  function hideToc(){panel.classList.remove('show');fab.classList.remove('open');}
+  function restoreFabPos(){
+    var s=null;try{s=JSON.parse(localStorage.getItem('tocfabpos')||'null');}catch(e){}
+    if(s&&typeof s.x==='number'&&typeof s.y==='number'){
+      fab.style.left=s.x+'px';fab.style.top=s.y+'px';fab.style.right='auto';fab.style.bottom='auto';
+    }
+  }
+  restoreFabPos();
+  function positionPanel(){
+    var r=fab.getBoundingClientRect();
+    var w=panel.offsetWidth||302;
+    var h=panel.offsetHeight;
+    var left=r.left-w-12;
+    if(left<8)left=r.left+r.width+12;
+    if(left+w>window.innerWidth-8)left=window.innerWidth-w-8;
+    if(left<8)left=8;
+    var top=r.top;
+    if(top+h>window.innerHeight-8)top=Math.max(8,window.innerHeight-h-8);
+    panel.style.left=left+'px';panel.style.top=top+'px';
+    panel.style.right='auto';panel.style.bottom='auto';
+  }
+  function buildToc(){
+    panel.innerHTML='';
+    var title=document.createElement('div');title.className='toc-title';
+    title.appendChild(document.createTextNode('📑 '));
+    var tt=document.createElement('span');tt.textContent='本頁內容';title.appendChild(tt);
+    var close=document.createElement('button');close.type='button';close.className='toc-close';close.textContent='✕';close.title='關閉';
+    close.addEventListener('click',hideToc);title.appendChild(close);panel.appendChild(title);
+    var cur=document.querySelector('.pane.active');
+    var heads=cur?cur.querySelectorAll('.card-h, .sec-h, .sub-h'):[];
+    var n=0;
+    heads.forEach(function(h){
+      if(!h.offsetParent)return;
+      var isCard=h.classList.contains('card-h');
+      var txt=h.textContent.replace(/\s+/g,' ').trim();
+      var meta=h.querySelector('.meta');
+      if(meta)txt=txt.replace(meta.textContent.replace(/\s+/g,' ').trim(),'').replace(/\s+/g,' ').trim();
+      txt=txt.replace(/^[①-⑳]/, '').trim();
+      if(!txt)return;
+      if(isCard)n++;
+      var b=document.createElement('button');b.type='button';
+      b.className='toc-item'+(isCard?'':' sub');
+      var num=document.createElement('span');num.className='toc-num';
+      num.textContent=isCard?(n+'.'):'·';
+      b.appendChild(num);
+      b.appendChild(document.createTextNode(txt));
+      b.addEventListener('click',function(){
+        h.scrollIntoView({behavior:'smooth',block:'start'});
+        setTimeout(function(){
+          h.classList.remove('tocflash');void h.offsetWidth;h.classList.add('tocflash');
+        },450);
+        hideToc();
+      });
+      panel.appendChild(b);
+    });
+    var foot=document.createElement('div');foot.className='toc-foot';
+    var cnt=document.createElement('span');cnt.textContent=n+' 個章節';
+    var reset=document.createElement('button');reset.type='button';reset.className='toc-reset';reset.textContent='↺ 重設位置';
+    reset.addEventListener('click',function(){
+      try{localStorage.removeItem('tocfabpos');}catch(e){}
+      fab.style.left='';fab.style.top='';fab.style.right='18px';fab.style.bottom='112px';
+    });
+    foot.appendChild(cnt);foot.appendChild(reset);panel.appendChild(foot);
+  }
+  fab.addEventListener('click',function(){
+    if(suppressClick){suppressClick=false;return;}
+    if(panel.classList.contains('show')){hideToc();return;}
+    buildToc();panel.classList.add('show');fab.classList.add('open');positionPanel();
+  });
+  window.addEventListener('resize',function(){if(panel.classList.contains('show'))positionPanel();});
+  // 拖曳（5px 閾值分 click/drag）
+  (function(){
+    var dragging=false,moved=false,sx=0,sy=0,ox=0,oy=0;
+    fab.addEventListener('pointerdown',function(e){
+      dragging=true;moved=false;sx=e.clientX;sy=e.clientY;
+      var r=fab.getBoundingClientRect();ox=r.left;oy=r.top;
+      try{fab.setPointerCapture(e.pointerId);}catch(err){}
+    });
+    fab.addEventListener('pointermove',function(e){
+      if(!dragging)return;
+      var dx=e.clientX-sx,dy=e.clientY-sy;
+      if(!moved&&(Math.abs(dx)>5||Math.abs(dy)>5))moved=true;
+      if(moved){
+        var nx=Math.max(0,Math.min(ox+dx,window.innerWidth-FABW));
+        var ny=Math.max(0,Math.min(oy+dy,window.innerHeight-FABW));
+        fab.style.left=nx+'px';fab.style.top=ny+'px';fab.style.right='auto';fab.style.bottom='auto';
+      }
+    });
+    function endDrag(){
+      if(!dragging)return;
+      dragging=false;
+      if(moved){
+        suppressClick=true;setTimeout(function(){suppressClick=false;},150);
+        var r=fab.getBoundingClientRect();
+        try{localStorage.setItem('tocfabpos',JSON.stringify({x:Math.round(r.left),y:Math.round(r.top)}));}catch(e){}
+      }
+    }
+    fab.addEventListener('pointerup',endDrag);
+    fab.addEventListener('pointercancel',function(){dragging=false;});
+  })();
+  tabs.forEach(function(t){t.addEventListener('click',hideToc);});
+  document.addEventListener('click',function(e){
+    if(!panel.contains(e.target)&&!fab.contains(e.target))hideToc();
   });
 })();
 </script>
