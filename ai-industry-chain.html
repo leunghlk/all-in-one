@@ -162,6 +162,14 @@ table.matrix .warn{color:#b45309;font-weight:700}
 .callout.amber{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
 .callout.blue{background:var(--blue-tint);border:1px solid #bfdbfe;color:#1e40af}
 
+/* ===== 分析報告（可摺疊） ===== */
+.report{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.report summary{padding:12px 16px;font-size:14px;font-weight:800;color:var(--ink);cursor:pointer;background:#f0f4ff;list-style:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.report[open] summary{border-bottom:1px solid var(--line)}
+.report .body{padding:12px 18px 6px;font-size:var(--fs-body);color:#334155;line-height:1.6}
+.report .body .tbl-wrap-matrix{margin:8px 0 12px}
+.report .body .focus{margin-bottom:12px}
+
 /* ===== Sub-section titles inside a card ===== */
 .sub-sec{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
 .sub-sec:first-of-type{margin-top:0;padding-top:0;border-top:none}
@@ -1198,7 +1206,7 @@ tr.flash{animation:rowflash 2.2s ease}
       <div class="tbl-wrap"><table class="stocks">
         <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
-          <tr><td class="co">Infineon 英飛凌</td><td class="tk">IFNNY / IFX.DE</td><td><span class="badge b-eu">EU</span></td><td><span class="pos g1">功率半導體全球 #1</span></td><td class="role">功率總龍頭（<span class="tip" data-tip="<b>IGBT</b>：高壓功率開關元件，電動車與工業電源的主力。">IGBT</b>＋<span class="tip" data-tip="<b>SiC（碳化矽）</b>：第三代半導體，用於電動車與工業高壓功率轉換，耐高溫、耐高壓。">SiC</span>）· 車＋工業市占第一｜比喻＝功率總龍頭：IGBT＋SiC 都全球第一</td></tr>
+          <tr><td class="co">Infineon 英飛凌</td><td class="tk">IFNNY / IFX.DE</td><td><span class="badge b-eu">EU</span></td><td><span class="pos g1">功率半導體全球 #1</span></td><td class="role">功率總龍頭（<span class="tip" data-tip="<b>IGBT</b>：高壓功率開關元件，電動車與工業電源的主力。">IGBT</span>＋<span class="tip" data-tip="<b>SiC（碳化矽）</b>：第三代半導體，用於電動車與工業高壓功率轉換，耐高溫、耐高壓。">SiC</span>）· 車＋工業市占第一｜比喻＝功率總龍頭：IGBT＋SiC 都全球第一</td></tr>
           <tr><td class="co">Onsemi 安森美</td><td class="tk">ON</td><td><span class="badge b-us">US</span></td><td><span class="pos g2">功率半導體全球 #2</span></td><td class="role">車用 SiC 領頭羊 · 車用營收占比最高｜比喻＝EV 電源轉換領頭羊</td></tr>
           <tr><td class="co">STMicroelectronics</td><td class="tk">STM</td><td><span class="badge b-eu">EU</span></td><td><span class="pos g3">功率半導體全球 #3</span></td><td class="role">SiC 先行者 · Tesla 早期供應商 · 車用 MCU 強勢｜比喻＝SiC 先行者：早年 Tesla 夥伴</td></tr>
           <tr><td class="co">Texas Instruments</td><td class="tk">TXN</td><td><span class="badge b-us">US</span></td><td><span class="pos g1">類比 IC 全球 #1</span></td><td class="role">類比電源之王 · 現金流穩定 · 防禦首選｜比喻＝類比電源巨無霸</td></tr>
@@ -1341,6 +1349,235 @@ tr.flash{animation:rowflash 2.2s ease}
         <tr><td>主要風險</td><td>單一客戶過度集中</td><td>規模細＋地緣敏感</td></tr>
       </tbody>
     </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📊 分析報告：CRWV × NBIS <span class="meta">華爾街資深分析師框架 · 兩份完整分析＋目標價＋催化劑＋操作結論 · 點擊展開</span></div>
+    <div class="report">
+      <details>
+        <summary>CRWV（CoreWeave）完整分析</summary>
+        <div class="body">
+          <div class="sub-h">① 商業模式與財務健康</div>
+          <div class="explain"><b>做咩生意</b>：GPU-aaS（GPU 即服務）——按 GPU 數量×時數向 AI 公司收租（H100／H200／B200）；出身加密礦機 → 2020 轉型 GPU 雲 → 2025/3 上市。收入極度集中：<b>Microsoft</b>（合約高達約 $125 億）歷史上佔營收 60–70%，後加 <b>OpenAI</b>（約 $119 億）、Meta、IBM、Cohere。</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>指標</th><th>2023</th><th>2024</th><th>2025E（指引）</th></tr></thead>
+            <tbody>
+              <tr><td>營收</td><td>$2.3 億</td><td>$19.2 億（+8.4 倍）</td><td>$80–90 億（+3–4 倍）</td></tr>
+              <tr><td>毛利率</td><td>約 73%</td><td>約 75–77%</td><td>約 78–80%</td></tr>
+              <tr><td>淨利</td><td>-$5.9 億</td><td>-$17 億（折舊＋利息）</td><td>仍虧、收窄中</td></tr>
+              <tr><td>自由現金流</td><td>極負</td><td>極負（資本開支 ~$45–50 億/年）</td><td>極負</td></tr>
+              <tr><td>總負債</td><td>~$25 億</td><td>~$50 億+</td><td>~$80 億+</td></tr>
+            </tbody>
+          </table></div>
+          <div class="sub-h">① 護城河／產業趨勢／風險／估值／情境／展望</div>
+          <ul class="focus">
+            <li><b>護城河 4/10</b>：規模＋NVIDIA 供貨優先權＋長期電力合約係真；但無轉換成本（GPU 可搬走）＋無自有專利。</li>
+            <li><b>產業趨勢</b>：AI 算力需求爆炸直接受惠；但三大雲（Azure／AWS／GCP）自己起 GPU 雲搶客。</li>
+            <li><b>關鍵風險</b>：Microsoft 單一客戶集中（曾 &gt;60%）、$80 億+ 高槓桿、NVIDIA 供貨依賴、商品化競爭、HBM／CoWoS 短缺。</li>
+            <li><b>估值</b>：P/S 約 3–5x（三大雲 3–6x、NBIS 8–15x）——合理區間。</li>
+            <li><b>情境</b>：🐂 多頭＝算力續爆＋OpenAI 放量；⚖️ 基本＝穩增＋客集中緩降；🐻 空頭＝三大雲低價搶＋GPU 過剩＋利率升。</li>
+            <li><b>12–24 月展望</b>：營收續強（Backlog 支撐），但股價跟 AI 情緒大波動；睇 Microsoft／OpenAI 續約＋客戶分散＋盈利拐點。</li>
+          </ul>
+          <div class="sub-h">② 5 年財務拆解</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>年度</th><th>營收</th><th>淨利</th><th>FCF</th><th>毛利率</th><th>負債</th></tr></thead>
+            <tbody>
+              <tr><td>2020–22</td><td>極細（礦機）</td><td>虧</td><td>負</td><td>—</td><td>微</td></tr>
+              <tr><td>2023</td><td>$2.3 億</td><td>-$5.9 億</td><td>極負</td><td>~73%</td><td>~$25 億</td></tr>
+              <tr><td>2024</td><td>$19.2 億</td><td>-$17 億</td><td>極負</td><td>~76%</td><td>~$50 億+</td></tr>
+              <tr><td>2025E</td><td>$80–90 億</td><td>仍虧</td><td>極負</td><td>~79%</td><td>~$80 億+</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout amber">💡 <b>判斷</b>：體質正由「燒錢」轉「規模化」——營收／毛利率／淨利率三線向好，但 FCF 仍深度為負＋槓桿急升＝增長引擎強、安全邊際薄。</div>
+          <div class="sub-h">③ 護城河評估</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>維度</th><th>強度</th><th>評論</th></tr></thead>
+            <tbody>
+              <tr><td>品牌影響力</td><td>★★☆☆☆</td><td>B2B 靠合約</td></tr>
+              <tr><td>網路效應</td><td>★☆☆☆☆</td><td>基本無</td></tr>
+              <tr><td>轉換成本</td><td>★★☆☆☆</td><td>GPU 可以搬走</td></tr>
+              <tr><td>成本優勢</td><td>★★★★☆</td><td>規模採購＋快速部署＋電力</td></tr>
+              <tr><td>專利／獨家技術</td><td>★★☆☆☆</td><td>優勢係 NVIDIA 關係</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout blue">🏰 <b>護城河強度：4/10</b>（vs 三大雲 7–8/10：佢地有自有晶片＋生態＋客戶黏性）</div>
+          <div class="sub-h">④ 未來成長潛力（5–10 年）</div>
+          <ul class="focus">
+            <li><b>市場規模</b>：AI 算力走向千億美元級（訓練＋推理）。</li>
+            <li><b>成長率</b>：雙位數至三位數；推理需求長遠大過訓練。</li>
+            <li><b>擴張</b>：國際擴張＋GPU 升級（B200）＋推理市場。</li>
+            <li><b>AI／技術</b>：本身係 AI 基建，AI 增長佢受惠；但受 NVIDIA 供貨制約。</li>
+            <li><b>評</b>：成長空間大，但可持續性受「客集中＋商品化＋負債」制約。</li>
+          </ul>
+          <div class="sub-h">⑤ 估值分析</div>
+          <ul class="focus">
+            <li><b>P/E</b>：無意義（虧損）→ 用 P/S：約 3–5x（同業 3–6x、NBIS 8–15x）。</li>
+            <li><b>DCF</b>：假設營收年均 +50%、終局淨利率 15–20%、WACC 12–14% → 內在價值對「客戶集中風險」折讓極敏感。</li>
+            <li><b>結論</b>：現價屬「高增長＋高風險」中間定價，<b>冇明顯低估或高估</b>——買嘅係想像力＋執行力。</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+    <div class="report">
+      <details>
+        <summary>NBIS（Nebius）完整分析</summary>
+        <div class="body">
+          <div class="sub-h">① 商業模式與財務健康</div>
+          <div class="explain"><b>做咩生意</b>：Yandex 拆分（2024）嘅國際資產，總部荷蘭；四條業務：<b>① Nebius AI</b>（歐洲最大 GPU 雲）<b>② Toloka</b>（數據標註眾包）<b>③ Avride</b>（自駕）<b>④ TripleTen</b>（科技教育）。<b>NVIDIA 入股 $7 億</b>＋簽約約 $20 億 GPU 多年期採購。</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>指標</th><th>2024</th><th>2025E</th></tr></thead>
+            <tbody>
+              <tr><td>營收</td><td>約 $4–5 億（H2 加速）</td><td>約 $10 億+</td></tr>
+              <tr><td>毛利率</td><td>中高（GPU 雲為主）</td><td>改善中</td></tr>
+              <tr><td>淨利</td><td>虧損（約 $1–2 億）</td><td>仍虧損（投資期）</td></tr>
+              <tr><td>自由現金流</td><td>負</td><td>負（資本開支）</td></tr>
+              <tr><td>負債</td><td>低（股權融資為主）</td><td>仍低（遠健康過 CRWV）</td></tr>
+            </tbody>
+          </table></div>
+          <div class="sub-h">① 護城河／產業趨勢／風險／估值／情境／展望</div>
+          <ul class="focus">
+            <li><b>護城河 5/10</b>：歐洲數據主權（GDPR「數據留歐」→ 歐洲企業要用本地算力）＋NVIDIA 股東身份＋多元化收入。</li>
+            <li><b>產業趨勢</b>：歐洲 AI 監管收緊（EU AI Act）→ 本地算力需求；NVIDIA 想搵歐盟夥伴對沖監管 → Nebius 係理想對象。</li>
+            <li><b>關鍵風險</b>：規模細（機群遠細過 CRWV）、三大雲歐洲區域競爭、創辦人俄國關聯（地緣 overhang）、業務雜純度低、仍未盈利。</li>
+            <li><b>估值</b>：P/S 約 8–15x——明顯貴過 CRWV，溢價來自「歐洲 GPU 雲稀缺龍頭＋NVIDIA 概念」。</li>
+            <li><b>情境</b>：🐂 多頭＝歐洲主權政策大贏家＋NVIDIA 加碼；⚖️ 基本＝需求穩增＋四業務規模化；🐻 空頭＝三大雲低價搶＋制裁升級＋規模無起色。</li>
+            <li><b>12–24 月展望</b>：營收快速增長（Nebius AI 為主），但估值已領先基本面；睇歐洲算力落地＋Toloka／Avride 變現＋地緣＋毛利率。</li>
+          </ul>
+          <div class="sub-h">② 財務拆解（上市後；拆分前屬 Yandex 內部）</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>年度</th><th>營收</th><th>淨利</th><th>FCF</th><th>毛利率</th><th>負債</th></tr></thead>
+            <tbody>
+              <tr><td>2023（概念）</td><td>極細</td><td>虧</td><td>負</td><td>—</td><td>微</td></tr>
+              <tr><td>2024</td><td>約 $4–5 億</td><td>虧 $1–2 億</td><td>負</td><td>中高</td><td>低</td></tr>
+              <tr><td>2025E</td><td>$10 億+</td><td>仍虧</td><td>負</td><td>改善</td><td>仍低</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout amber">💡 <b>判斷</b>：體質「正在變強」——營收高增長、負債低、股權融資為主；但純利同 FCF 仍負＝地基穩健、未自我造血。</div>
+          <div class="sub-h">③ 護城河評估</div>
+          <div class="tbl-wrap-matrix"><table class="matrix">
+            <thead><tr><th>維度</th><th>強度</th><th>評論</th></tr></thead>
+            <tbody>
+              <tr><td>品牌影響力</td><td>★★★☆☆</td><td>Yandex 血統</td></tr>
+              <tr><td>網路效應</td><td>★★☆☆☆</td><td>Toloka 工人網絡有少少</td></tr>
+              <tr><td>轉換成本</td><td>★★★☆☆</td><td>歐洲合規＋長期合約</td></tr>
+              <tr><td>成本優勢</td><td>★★★☆☆</td><td>北歐電費平；規模細限制議價</td></tr>
+              <tr><td>專利／獨家技術</td><td>★★★☆☆</td><td>優勢係監管位置＋NVIDIA 關係</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout blue">🏰 <b>護城河強度：5/10</b>（數據主權＋NVIDIA 係核心；多元化添穩但唔深）</div>
+          <div class="sub-h">④ 未來成長潛力（5–10 年）</div>
+          <ul class="focus">
+            <li><b>市場規模</b>：歐洲 AI 算力＋數據標註＋自駕，三個市場都雙位數增長。</li>
+            <li><b>成長率</b>：監管推動下歐洲 AI 基建或快過美國（低基數）。</li>
+            <li><b>擴張</b>：美國算力擴建＋更多歐洲數據中心＋Toloka 國際化。</li>
+            <li><b>新產品</b>：AI 平台、自駕商業化、教育成熟。</li>
+            <li><b>AI／技術</b>：食正 AI 全鏈；NVIDIA 係戰略股東。</li>
+            <li><b>評</b>：成長空間大，成敗在「規模化速度」＋「地緣風險」。</li>
+          </ul>
+          <div class="sub-h">⑤ 估值分析</div>
+          <ul class="focus">
+            <li><b>P/E</b>：無意義（虧損）→ 用 P/S：約 8–15x（明顯高於三大雲 3–6x 同 CRWV 3–5x）。</li>
+            <li><b>DCF</b>：假設 5 年營收年均 +60%、終局淨利率 15–20%、WACC 13–15% → 內在價值對「終局歐洲市占」極敏感。</li>
+            <li><b>結論</b>：估值偏貴但唔荒謬——市場已定價「歐洲 AI 基建龍頭」預期；增長兌現唔到就回撤。</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+    <div class="tbl-wrap-matrix" style="margin-top:6px"><table class="matrix">
+      <thead><tr><th>維度</th><th>CRWV（CoreWeave）</th><th>NBIS（Nebius）</th></tr></thead>
+      <tbody>
+        <tr><td>主業</td><td>純 GPU 算力租賃</td><td>多元化 AI 集團</td></tr>
+        <tr><td>規模</td><td>大（美國）</td><td>細（歐洲為主）</td></tr>
+        <tr><td>客戶</td><td>Microsoft／OpenAI 集中</td><td>歐洲初創／研究／NVIDIA</td></tr>
+        <tr><td>護城河</td><td>4/10</td><td>5/10</td></tr>
+        <tr><td>財務</td><td>高槓桿、燒錢兇</td><td>低負債、燒錢溫和</td></tr>
+        <tr><td>估值（P/S）</td><td>3–5x（合理）</td><td>8–15x（偏貴）</td></tr>
+        <tr><td>最大風險</td><td>單一客戶＋高負債</td><td>規模細＋地緣</td></tr>
+        <tr><td>性格</td><td>高風險高回報純算力 play</td><td>歐洲 AI 基建成長型期權</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout amber" style="margin-top:12px">💡 <b>一句話：</b>想「純 AI 算力 Beta、增長最直接」→ CRWV（但要承受高波動＋負債風險）；想「歐洲監管順風＋財務穩健＋多元化」→ NBIS（但估值較貴＋地緣不確定）。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 目標價情境推演 <span class="meta">Bull／Base／Bear 三情境 · 12–24 個月 · 教學示意估算</span></div>
+    <div class="explain" style="margin-bottom:12px">計法：<b>目標價 = 2026E 營收 × 情境 P/S ÷ 股數</b>（股數為示意）。現價／市值係教學示意、非即時報價；高增長股票盈利未定型，<b>P/S（市銷率）係主流估價尺</b>。</div>
+
+    <div class="sub-h">CRWV（CoreWeave）— 基準現價約 $70・市值約 $350 億・現 P/S 約 4x</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>情境</th><th>2026E 營收</th><th>情境 P/S</th><th>目標市值</th><th>目標價</th><th>vs 現價</th></tr></thead>
+      <tbody>
+        <tr><td>🐂 多頭</td><td>$140 億（+65%）</td><td>6x</td><td>$840 億</td><td>$168</td><td class="ok">+140%</td></tr>
+        <tr><td>⚖️ 基本</td><td>$125 億（+47%）</td><td>4.5x</td><td>$563 億</td><td>$113</td><td class="ok">+61%</td></tr>
+        <tr><td>🐻 空頭</td><td>$85 億（持平）</td><td>2.5x</td><td>$213 億</td><td>$43</td><td class="warn">-39%</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout amber" style="margin-top:4px">💡 <b>CRWV 估值最大變數唔係營收增長，而係 P/S 會唔會因「客戶集中＋高負債」長期折讓</b>——多頭定 6x、空頭得 2.5x，同一個生意差成倍。</div>
+
+    <div class="sub-h" style="margin-top:16px">NBIS（Nebius）— 基準現價約 $120・市值約 $180 億・現 P/S 約 15x</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>情境</th><th>2026E 營收</th><th>情境 P/S</th><th>目標市值</th><th>目標價</th><th>vs 現價</th></tr></thead>
+      <tbody>
+        <tr><td>🐂 多頭</td><td>$26 億（+117%）</td><td>15x</td><td>$390 億</td><td>$260</td><td class="ok">+117%</td></tr>
+        <tr><td>⚖️ 基本</td><td>$20 億（+67%）</td><td>11x</td><td>$220 億</td><td>$147</td><td class="ok">+22%</td></tr>
+        <tr><td>🐻 空頭</td><td>$14 億（+17%）</td><td>6x</td><td>$84 億</td><td>$56</td><td class="warn">-53%</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 <b>對比讀法：</b>唔好用「目標價」當保證回報——兩者回報分佈都極端（±40% 以上），最緊要問「<b>市場依家喺定邊個情境嘅價</b>」：CRWV 現價 P/S 4x 偏基本情境，NBIS 15x 已偏多頭——買 NBIS 就等於預先信咗「歐洲 AI 龍頭」故事成真。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📅 催化劑日曆 <span class="meta">未來 6–12 個月關鍵事件 · 唔係全部都會發生</span></div>
+    <div class="grid2">
+      <div>
+        <div class="sec-h">CRWV（CoreWeave）</div>
+        <ul class="focus">
+          <li><b>季度業績（8 月／11 月）</b>：睇 OpenAI 收入有冇如期放量——最直接催化劑。</li>
+          <li><b>新大客簽約公告</b>：客戶分散（Cohere／IBM 等）係估值重估關鍵。</li>
+          <li><b>NVIDIA B300 供貨節點</b>：新一代 GPU 上量決定 2027 營收能見度。</li>
+          <li><b>Microsoft 續約／擴大</b>：最大合約（約 $125 億）任何更新都震動股價。</li>
+          <li><b>再融資／發債公告</b>：$80 億+ 負債 → 利率環境直接影響財務成本。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sec-h">NBIS（Nebius）</div>
+        <ul class="focus">
+          <li><b>季度業績</b>：Nebius AI 營收係估值支柱，睇加速符唔符預期。</li>
+          <li><b>歐洲數據中心落地</b>：芬蘭／瑞典等擴建公告＝產能兌現見證。</li>
+          <li><b>NVIDIA 加碼投資／採購</b>：戰略股東動向係市場風向球。</li>
+          <li><b>EU AI Act 執行細節</b>：監管收緊 → 歐洲企業本地算力需求上升。</li>
+          <li><b>地緣新聞（俄國關聯）</b>：任何制裁／創辦人相關消息都係 overhang 或 relief。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout amber">💡 <b>催化劑點用：</b>唔好等業績先決定——事前 mark 低日期，跌市就係買入機會、升市就係收割窗口；催化劑密集期（業績前後）波動必然放大，倉位要留緩衝。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">✅ 操作結論卡 <span class="meta">RM 向客落位用 · 倉位＝組合比例示意</span></div>
+    <div class="roles">
+      <div class="role">
+        <div class="r-top"><span class="r-tk">CRWV</span><span class="r-co">CoreWeave</span><span class="r-tag">高風險 · 高回報</span></div>
+        <div class="r-d">
+          <b>定位</b>：純 AI 算力 Beta——想對 AI 題材最直接暴露就係佢。<br>
+          <b>倉位</b>：組合 0–3%（高波動，最多做衛星倉）。<br>
+          <b>買入區</b>：P/S 跌返 3x 以下，或大客續約確認之後。<br>
+          <b>退出條件</b>：Microsoft 佔比冇改善、負債再急升、GPU 過剩訊號。<br>
+          <b>適合邊位客</b>：年輕、可承受 -50% 回撤、信 AI 長期故事。
+        </div>
+      </div>
+      <div class="role">
+        <div class="r-top"><span class="r-tk">NBIS</span><span class="r-co">Nebius</span><span class="r-tag">穩健 · 歐洲期權</span></div>
+        <div class="r-d">
+          <b>定位</b>：歐洲 AI 基建成長型期權——低負債＋多元化＋地緣折讓。<br>
+          <b>倉位</b>：組合 1–4%（比 CRWV 可稍重）。<br>
+          <b>買入區</b>：P/S 跌返 8–10x，或歐洲政策催化後回調。<br>
+          <b>退出條件</b>：地緣事件惡化、規模遲遲無起色、估值泡沫化（&gt;20x P/S）。<br>
+          <b>適合邊位客</b>：想押注 AI 但怕美股集中風險、對歐洲監管順風有信念。
+        </div>
+      </div>
+    </div>
+    <div class="callout blue">💡 <b>一句話落位：</b>兩隻都係「唔好 all-in 嘅期權倉」——想搏 Beta 揀 CRWV、想穩啲揀 NBIS；兩隻都唔揀都完全可以，因為<b>三大雲先係成個故事最大贏家</b>。</div>
   </div>
 
   <div class="card">
