@@ -1348,6 +1348,24 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
+    <div class="card-h">🔬 點解唔係「淨係出租算力」咁簡單？<span class="meta">Neocloud vs 傳統算力租賃 · 架構差異</span></div>
+    <div class="explain">開場白將 Neocloud 稱為「算力租賃」——但<b>傳統出租算力</b>（機房代管、CPU 雲、租部伺服器畀你自己搞）同 <b>Neocloud</b> 其實係兩門唔同嘅生意。分別唔係「租唔租」，而係「<b>租返嚟嘅，係咪為 AI 從頭打造嘅原生架構</b>」。</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>維度</th><th>傳統出租算力（機房／CPU 雲）</th><th>Neocloud 算力雲（CRWV／NBIS）</th></tr></thead>
+      <tbody>
+        <tr><td>核心硬件</td><td>CPU 伺服器為主</td><td>GPU 密集群簇（H100／H200／B200）</td></tr>
+        <tr><td>虛擬化</td><td>虛擬機層（VM）抽象，效能有損耗</td><td>裸機直連，冇虛擬化層，榨盡 GPU</td></tr>
+        <tr><td>互連網絡</td><td>普通以太網（Ethernet）</td><td><span class="tip" data-tip="<b>InfiniBand／RDMA</b>：超低延遲、高頻寬互連，令上萬張 GPU 行如一體——大模型分佈式訓練嘅必需品，傳統以太網根本撐唔起。">InfiniBand／RDMA</span> 高速互連（萬卡訓練必需）</td></tr>
+        <tr><td>交付方式</td><td>租部機畀你，自己管 OS／驅動／調度</td><td>GPU 即服務（GPU-aaS）連編排軟件，開箱即訓練</td></tr>
+        <tr><td>NVIDIA 關係</td><td>普通採購，排隊等貨</td><td>戰略夥伴／股東（優先供貨權）</td></tr>
+        <tr><td>適用場景</td><td>網站、資料庫、通用運算</td><td>LLM 訓練、大規模推理</td></tr>
+        <tr><td>一句比喻</td><td>租毛坯倉庫，自己搞水電裝修</td><td>精裝 AI 工廠，插電即開工</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout amber">💡 <b>最妙嘅例子就係 CoreWeave 自己</b>——佢前身係加密礦機公司（「出租算力」挖礦＝租 hashpower 畀人），2020 轉型做 GPU 雲。同一個「租算力」嘅 DNA，架構卻由「<b>單機各自挖礦</b>」升級到「<b>InfiniBand 萬卡互連訓練 LLM</b>」。呢個轉型本身就證明：Neocloud 同傳統出租算力，係兩門完全唔同嘅生意。</div>
+  </div>
+
+  <div class="card">
     <div class="card-h">📌 投資標的：Neocloud 龍頭二強</div>
     <div class="tbl-wrap"><table class="stocks">
       <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
@@ -1604,11 +1622,75 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
+    <div class="card-h">⚔️ Hyperscaler 賣算力：Neocloud 嘅最大外患 <span class="meta">Meta 雙重身份 ·「窗口期」生意</span></div>
+    <div class="explain">對投資者嚟講，最大嘅競爭唔係 CRWV vs NBIS，而係<b>成個 neocloud 行業 vs 三大雲（AWS／Azure／GCP）——而家仲新加入咗 Meta</b>。核心問題：當超大客自己都變成算力「賣家」，neocloud 仲有冇生存空間？下圖係最撲朔迷離嘅一幕：<b>Meta 同時係 neocloud 嘅大客又係競爭對手</b>。</div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 290" style="max-width:760px;display:block;margin:0 auto" role="img" aria-label="Meta 雙重身份：同時係 neocloud 大客同競爭對手">
+        <defs>
+          <marker id="arrG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#10b981"/></marker>
+          <marker id="arrR" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#dc2626"/></marker>
+        </defs>
+        <!-- 左：Neocloud -->
+        <rect x="8" y="68" width="172" height="98" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+        <text x="94" y="100" font-size="15" font-weight="bold" fill="#1e40af" text-anchor="middle">Neocloud</text>
+        <text x="94" y="122" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">CRWV／NBIS</text>
+        <text x="94" y="144" font-size="9.5" fill="#64748b" text-anchor="middle">賣 GPU 算力</text>
+        <!-- 中：Meta（雙重身份） -->
+        <rect x="304" y="68" width="172" height="98" rx="12" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+        <text x="390" y="98" font-size="15" font-weight="bold" fill="#92400e" text-anchor="middle">Meta</text>
+        <text x="390" y="118" font-size="10" fill="#b45309" text-anchor="middle">① 大客：買 $21B 算力</text>
+        <text x="390" y="136" font-size="10" fill="#b45309" text-anchor="middle">② 對手：自起 Meta Compute</text>
+        <text x="390" y="155" font-size="9" fill="#64748b" text-anchor="middle">Hyperion 數據中心（目標 5GW）</text>
+        <!-- 右：AI 客戶市場 -->
+        <rect x="600" y="68" width="172" height="98" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+        <text x="686" y="100" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">AI 客戶市場</text>
+        <text x="686" y="122" font-size="10" fill="#64748b" text-anchor="middle">OpenAI／初創／研究</text>
+        <text x="686" y="144" font-size="9.5" fill="#64748b" text-anchor="middle">兩邊都想搶嘅客</text>
+        <!-- 箭頭 1：Meta → Neocloud（買，綠，向左） -->
+        <line x1="300" y1="100" x2="188" y2="100" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrG)"/>
+        <text x="244" y="90" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">🤝 買算力（客）</text>
+        <text x="244" y="116" font-size="9.5" fill="#065f46" text-anchor="middle">$21B 合約·至 2032</text>
+        <!-- 箭頭 2：Meta → 市場（賣，紅，向右） -->
+        <line x1="480" y1="100" x2="592" y2="100" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrR)"/>
+        <text x="536" y="90" font-size="10.5" font-weight="bold" fill="#991b1b" text-anchor="middle">⚔️ 賣算力（敵）</text>
+        <text x="536" y="116" font-size="9.5" fill="#991b1b" text-anchor="middle">Meta Compute 租 GPU</text>
+        <!-- 底部金句 -->
+        <text x="390" y="208" font-size="11.5" fill="#0f172a" text-anchor="middle" font-weight="bold">同一間 Meta：左手做 neocloud 最大新客、右手同 neocloud 爭客</text>
+        <text x="390" y="230" font-size="10.5" fill="#991b1b" text-anchor="middle">「Meta Compute」消息傳出當日，neocloud 股價應聲下跌——市場即刻為競爭威脅定價。</text>
+        <text x="390" y="262" font-size="10" fill="#64748b" text-anchor="middle">註：AWS／Azure／GCP 早已自營 GPU 雲；Meta 係最新加入嘅算力賣家，令競爭白熱化。</text>
+      </svg>
+    </div>
+    <div class="grid2">
+      <div>
+        <div class="sec-h">🛡️ Neocloud 嘅盾（點解唔會即刻被消滅）</div>
+        <ul class="focus">
+          <li><b>三大雲應接不暇：</b>AI 算力需求爆炸，AWS／Azure／GCP 起極都唔夠，<b>反而要向 neocloud 買產能</b>（競爭對手同時係大客）。</li>
+          <li><b>專用萬卡群簇：</b>最大型訓練任務要 InfiniBand 互連上萬張 GPU，hyperscaler 嘅通用雲架構做唔到呢種密度同低延遲。</li>
+          <li><b>避免鎖死：</b>AI 公司唔想將命脈綁死喺 AWS／Azure（被綁＝定價權被人掐住）→ 寧可分散去 neocloud。</li>
+          <li><b>部署快幾年：</b>neocloud 由礦場／綠地數據中心起，落地速度遠快過 hyperscaler 嘅官僚流程。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sec-h">⚔️ Hyperscaler 嘅矛（點解仍係致命威脅）</div>
+        <ul class="focus">
+          <li><b>自研晶片：</b>Google TPU、AWS Trainium、Meta MTIA——自家芯片成本遠低過買 NVIDIA，長線可壓價搶客。</li>
+          <li><b>規模＋捆綁：</b>儲存、網絡、數據庫、AI 平台一條龍；neocloud 得算力一項，冇得捆綁。</li>
+          <li><b>財力深厚：</b>hyperscaler 現金流強、可長期燒錢搶客；neocloud 個個高負債燒錢，捱唔起價格戰。</li>
+          <li><b>產能回流風險：</b>一旦 hyperscaler 起夠產能，會把工作量拉返自己——neocloud 嘅優勢有<b>時限</b>。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout blue">💡 <b>投資啟示：</b>Neocloud 唔係「永續贏家」，而係「<b>窗口期生意</b>」——贏在 hyperscaler 應接不暇嘅幾年空檔。長期生存要靠建立軟件生態／客戶黏性（<b>NBIS 正正用多元化＋軟件搏呢條路</b>，所以估值貴過 CRWV）；若只靠「賣 NVIDIA 算力」而冇差異化，遲早被 hyperscaler 吞食。<b>Meta Compute 嘅出現＝呢個窗口開始倒數嘅第一個明確訊號。</b></div>
+    <div class="callout amber">⚠️ <b>但短期反而係利好：</b>Meta 一邊起 Meta Compute，一邊同 CoreWeave 簽 <b>$21B 合約</b>——即係連 Meta 自己都判斷「短期內自己起唔夠，要靠 neocloud」。所以未來 2–3 年 neocloud 生意仍然爆發；真正嘅風險喺 <b>3–5 年後</b>嘅「產能過剩＋hyperscaler 自給自足」。</div>
+  </div>
+
+  <div class="card">
     <div class="card-h">🎯 投資焦點</div>
     <ul class="focus">
       <li><b>Neocloud 係「算力嘅水電煤」：</b>AI 公司唔想自己買 GPU，租算力成主流——CRWV／NBIS 食正呢個趨勢。</li>
       <li><b>CRWV＝純正度高、增長快：</b>但營收極度集中 Microsoft／OpenAI，波動大、高負債。</li>
       <li><b>NBIS＝多元化＋歐洲角度：</b>數據主權（GDPR）係歐企必須，NVIDIA 入股背書；但規模細、地緣風險要留意。</li>
+      <li><b>最大外患唔係彼此，而係 hyperscaler 賣算力：</b>Meta 一邊做 CoreWeave $21B 大客、一邊自起「Meta Compute」租 GPU——neocloud 係「<b>窗口期生意</b>」，贏在 hyperscaler 應接不暇嘅幾年空檔；邊個建立到軟件生態，邊個先捱得過。</li>
     </ul>
   </div>
 </section>
