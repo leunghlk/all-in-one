@@ -1437,6 +1437,61 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
+    <div class="card-h">📊 資本成本一圖睇晒：同樣買 GPU 收租，息口差成 3–7 倍<span class="meta">融資成本對比 · 9.25% vs 1.25–2.75% · 資本結構決定抗息口能力</span></div>
+    <div class="explain">上面兩間都係「買 GPU 出租收租」，但籌錢嘅成本（息口）差天共地——呢個差距直接決定佢哋對加息／再融資嘅承受力。綠（Nebius）＝三條近零息管道；琥珀（CoreWeave）＝GPU 抵押重債＋高息可轉債。<b>長條愈長＝利息成本愈高，抗週期能力愈差。</b></div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 300" style="max-width:780px;display:block;margin:0 auto" role="img" aria-label="資本成本對比：Nebius 可轉債息口 1.25–2.75%，淨現金約 9 億美元；CoreWeave 可轉債息口 9.25%，另加 GPU 抵押債約 180 億美元，總負債逾 200 億美元。">
+        <!-- gridlines #cbd5e1 opacity .55 1px (baseline x=160, 58px/1%) -->
+        <g stroke="#cbd5e1" stroke-opacity=".55" stroke-width="1">
+          <line x1="276" y1="92" x2="276" y2="230"/>
+          <line x1="392" y1="92" x2="392" y2="230"/>
+          <line x1="508" y1="92" x2="508" y2="230"/>
+          <line x1="624" y1="92" x2="624" y2="230"/>
+          <line x1="740" y1="92" x2="740" y2="230"/>
+        </g>
+        <!-- baseline x=160 y=92→230 -->
+        <line x1="160" y1="92" x2="160" y2="230" stroke="#94a3b8" stroke-width="1"/>
+        <!-- x ticks muted font11 middle y=248 -->
+        <g font-size="11" fill="#64748b" text-anchor="middle" font-family="'PingFang HK',-apple-system,sans-serif">
+          <text x="160" y="248">0%</text>
+          <text x="276" y="248">2%</text>
+          <text x="392" y="248">4%</text>
+          <text x="508" y="248">6%</text>
+          <text x="624" y="248">8%</text>
+          <text x="740" y="248">10%</text>
+        </g>
+        <!-- legend: CRWV 高息重債 -->
+        <rect x="500" y="16" width="18" height="18" rx="4" fill="#d97706"/>
+        <text x="524" y="29" font-size="12" font-weight="700" fill="#0f172a" font-family="'PingFang HK',-apple-system,sans-serif">CRWV 高息重債</text>
+        <!-- legend: NBIS 近零息 -->
+        <rect x="630" y="16" width="18" height="18" rx="4" fill="#10b981"/>
+        <text x="654" y="29" font-size="12" font-weight="700" fill="#0f172a" font-family="'PingFang HK',-apple-system,sans-serif">NBIS 近零息</text>
+        <!-- bar CRWV: 9.25% ×58 = 537 → 160→697 -->
+        <path d="M160,102 H693 q4,0 4,4 v14 q0,4 -4,4 H160 z" fill="#d97706"/>
+        <!-- bar NBIS: 2.75% ×58 = 160 → 160→320 -->
+        <path d="M160,192 H316 q4,0 4,4 v14 q0,4 -4,4 H160 z" fill="#10b981"/>
+        <!-- row labels anchor-end -->
+        <text x="148" y="117" font-size="13" font-weight="800" fill="#0f172a" text-anchor="end" font-family="'PingFang HK',-apple-system,sans-serif">⚠️ CoreWeave（CRWV）</text>
+        <text x="148" y="207" font-size="13" font-weight="800" fill="#0f172a" text-anchor="end" font-family="'PingFang HK',-apple-system,sans-serif">💚 Nebius（NBIS）</text>
+        <!-- value labels -->
+        <text x="705" y="117" font-size="13.5" font-weight="800" fill="#0f172a" font-family="'PingFang HK',-apple-system,sans-serif">9.25%</text>
+        <text x="328" y="207" font-size="13.5" font-weight="800" fill="#0f172a" font-family="'PingFang HK',-apple-system,sans-serif">1.25–2.75%</text>
+        <!-- annotations -->
+        <text x="160" y="146" font-size="12" fill="#64748b" font-family="'PingFang HK',-apple-system,sans-serif">GPU 抵押債（DDTL ~$180億）＋可轉債 9.25% · 總負債 ~$200億+ → 淨利息開支數以億計</text>
+        <text x="160" y="236" font-size="12" fill="#64748b" font-family="'PingFang HK',-apple-system,sans-serif">可轉債 1.25–2.75% ＋ MSFT/Meta 預付款 ＋ NVDA $20億 → 淨現金（現金 $94億＞債 $85億）</text>
+        <!-- hover hit rects with native <title> -->
+        <rect x="158" y="98" width="560" height="30" fill="#fff" fill-opacity="0" cursor="pointer">
+          <title>CoreWeave（CRWV）：可轉債息口 9.25%（2031 到期）＋GPU 抵押債 DDTL 累計約 $180 億（Blackstone／Magnetar 領投）；總負債 ~$200 億+，淨利息開支數以億計 → 息口反彈或 GPU 跌價都會觸發追加擔保</title>
+        </rect>
+        <rect x="158" y="188" width="200" height="30" fill="#fff" fill-opacity="0" cursor="pointer">
+          <title>Nebius（NBIS）：可轉債息口僅 1.25–2.75%（$37.5 億）；客戶預付款（MSFT $174 億合約、Meta $270 億合約）＋NVDA 投資 $20 億（持 9.3%）；現金 ~$94 億＞債 ~$85 億＝淨現金，抗息口能力強</title>
+        </rect>
+      </svg>
+    </div>
+    <div class="callout amber">💡 <b>量化睇：</b>9.25% ÷ 2.75% ≈ 3.4 倍（對比最高端可轉債）；÷ 1.25% ≈ 7.4 倍。呢個息口差距乘落 ~$200 億負債，每年利息開支差可以係<b>數以億計 vs 數千萬</b>——同樣跑一單 GPU 生意，CRWV 要先還息先有得賺，NBIS 幾乎冇利息包袱。<b>所以「估值倍數」嘅分歧（NBIS 15x vs CRWV 4x）由融資成本率先解釋咗一半。</b></div>
+  </div>
+
+  <div class="card">
     <div class="card-h">🧮 兩套財報框架：點解毛利率唔可以直接比<span class="meta">Daloopa 框架 · own-vs-lease 令報表變「兩套語言」</span></div>
     <div class="explain">因為資產模式（上上張卡）同融資結構（上張卡）唔同，<b>CRWV 同 NBIS 嘅財報根本用緊兩套唔同會計框架</b>——直接比毛利率／capex／ROIC 會被誤導。下表係「表面數字」vs「背後真相」：</div>
     <div class="tbl-wrap-matrix"><table class="matrix">
