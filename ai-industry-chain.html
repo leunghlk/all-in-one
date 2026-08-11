@@ -1308,92 +1308,94 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
-    <div class="card-h">🔗 上中下游：InP 基板 → 光晶片／交換機／模組 → 光纖基建</div>
-    <div class="stages">
-      <div class="sg"><span class="sl up">上游 · 材料與光晶片</span><h4>💡 InP 基板 → 雷射晶片</h4><p>光的「起點」</p><div class="tg"><span>AXTI</span><span>5802</span><span>LITE</span><span>6503</span></div></div>
-      <div class="ar">→</div>
-      <div class="sg"><span class="sl mid">中游 · 晶片與模組</span><h4>📡 矽光子 · 交換機 · 光模組</h4><p>光的「中轉站」</p><div class="tg"><span>AVGO</span><span>MRVL</span><span>ANET</span><span>CRDO</span><span>300308</span></div></div>
-      <div class="ar">→</div>
-      <div class="sg"><span class="sl down">下游 · 光纖基礎建設</span><h4>🌐 光纖線纜</h4><p>光的「高速公路」</p><div class="tg"><span>GLW</span><span>6869.HK</span><span>600487</span></div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-h">🔍 光進銅退：O-E-O（光-電-光）傳輸鏈路</div>
-    <div class="steps">
-      <div class="st"><div class="big">🧠 運算晶片<br>GPU / ASIC</div><div class="sm">NVDA 計算產生數據</div></div>
-      <div class="ar">→</div>
-      <div class="st" style="border-color:#60a5fa"><div class="big">📡 網通晶片<br>Switch / <span class="tip" data-tip="<b>DSP（數位訊號處理器）</b>：光通訊中用於訊號修復與時序校正的晶片，讓高速訊號傳得更遠、更穩定。">DSP</span></div><div class="sm">Broadcom · Marvell 整理訊號</div></div>
-      <div class="ar">→</div>
-      <div class="st" style="border-color:#a855f7"><div class="big">💡 光電轉換<br>矽光子 <span class="tip" data-tip="<b>PIC（光子積體電路）</b>：把多個光學元件整合在單一晶片上，是矽光子的載體。">PIC</span></div><div class="sm">Intel · 台積電 電轉光</div></div>
-      <div class="ar">→</div>
-      <div class="st" style="border-color:#eab308"><div class="big">🌐 光纖傳輸</div><div class="sm">光走「高速公路」</div></div>
-      <div class="ar">→</div>
-      <div class="st" style="border-color:#a855f7"><div class="big">📥 光模組<br>(接收端)</div><div class="sm">中際旭創 · Fabrinet 光轉電</div></div>
-    </div>
-    <div class="callout blue">* <b>O-E-O＝訊號電→光→電。</b>CPO 將「光電轉換」與網通晶片封裝在同一載板，消滅高損耗銅線；矽光子用半導體製程造光學元件——大廠解決 AI「缺電」的終極方案。</div>
-  </div>
-
-  <div class="card">
-    <div class="card-h">🪞 光學互連一圖看清：光收發模組＝「數位翻譯官」（CPO 核心概念）</div>
+    <div class="card-h">🪞 光學互連一圖看清：電 ↔ 光全鏈路＋硬件分工（CPO 核心）</div>
     <div class="svgbox">
-      <svg width="100%" viewBox="0 0 780 460" style="max-width:760px;display:block;margin:0 auto" role="img" aria-label="光學互連概念圖：光收發模組即數位翻譯官">
+      <svg width="100%" viewBox="0 0 780 612" style="max-width:760px;display:block;margin:0 auto" role="img" aria-label="光學互連全鏈路：電轉光光轉電流程與公司分工">
         <!-- ① 術語釐清 -->
         <text x="40" y="18" font-size="11" font-weight="bold" fill="#64748b">① 術語釐清</text>
-        <rect x="40" y="26" width="700" height="52" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
-        <text x="390" y="47" font-size="13.5" font-weight="bold" fill="#92400e" text-anchor="middle">光收發模組（Optical Transceiver）＝ 電 ↔ 光的「數位翻譯官」</text>
-        <text x="390" y="66" font-size="9.5" fill="#b45309" text-anchor="middle">在高達 AI 網絡語境下：收發模組把 GPU 的電訊號翻譯成光訊號，才可走上光纖</text>
+        <rect x="40" y="26" width="700" height="36" rx="9" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+        <text x="390" y="49" font-size="12.5" font-weight="bold" fill="#92400e" text-anchor="middle">光收發模組（Optical Transceiver）＝ 電 ↔ 光的「數位翻譯官」｜發射端電轉光、接收端光轉電</text>
 
-        <!-- ② 核心功能形象化：數位翻譯官 -->
-        <text x="40" y="102" font-size="11" font-weight="bold" fill="#64748b">② 核心功能形象化：數位翻譯官</text>
-        <rect x="40" y="114" width="180" height="84" rx="10" fill="#eff6ff" stroke="#2563eb"/>
-        <text x="130" y="142" font-size="12.5" font-weight="bold" fill="#1e40af" text-anchor="middle">⚡ 電訊號</text>
-        <text x="130" y="162" font-size="9.5" fill="#1e40af" text-anchor="middle">GPU／ASIC 高速輸出</text>
-        <text x="130" y="180" font-size="9" fill="#3b82f6" text-anchor="middle">快但耗電、發熱（銅線）</text>
-        <text x="235" y="152" font-size="24" fill="#94a3b8" text-anchor="middle">→</text>
-        <rect x="262" y="114" width="256" height="84" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2.5"/>
-        <text x="390" y="142" font-size="13" font-weight="bold" fill="#92400e" text-anchor="middle">💡 光收發模組「數位翻譯官」</text>
-        <text x="390" y="162" font-size="9.5" fill="#b45309" text-anchor="middle">DSP 電轉光｜CPO 核心</text>
-        <text x="390" y="180" font-size="9" fill="#b45309" text-anchor="middle">MRVL · AVGO · 中際旭創</text>
-        <text x="532" y="152" font-size="24" fill="#94a3b8" text-anchor="middle">→</text>
-        <rect x="560" y="114" width="180" height="84" rx="10" fill="#f0fdf4" stroke="#059669"/>
-        <text x="650" y="142" font-size="12.5" font-weight="bold" fill="#065f46" text-anchor="middle">🌐 光訊號</text>
-        <text x="650" y="162" font-size="9.5" fill="#065f46" text-anchor="middle">走上「光纖公路」</text>
-        <text x="650" y="180" font-size="9" fill="#047857" text-anchor="middle">快 · 省電 · 不發熱</text>
-        <rect x="40" y="210" width="700" height="30" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
-        <text x="390" y="229" font-size="11" font-weight="bold" fill="#991b1b" text-anchor="middle">極速光互換，解決 AI 算力傳輸瓶頸（O-E-O 鏈路核心）</text>
+        <!-- ② 發射路徑 電→光 -->
+        <text x="40" y="92" font-size="11" font-weight="bold" fill="#64748b">② 發射路徑 · 電 → 光（Transmit）</text>
+        <rect x="35" y="102" width="160" height="64" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+        <text x="115" y="124" font-size="11.5" font-weight="bold" fill="#1e40af" text-anchor="middle">⚡ GPU／ASIC</text>
+        <text x="115" y="140" font-size="9.5" fill="#3b82f6" text-anchor="middle">電訊號源</text>
+        <text x="115" y="156" font-size="9.5" font-weight="bold" fill="#1e40af" text-anchor="middle">NVDA</text>
+        <text x="205" y="134" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="215" y="102" width="160" height="64" rx="10" fill="#eef2ff" stroke="#4f46e5"/>
+        <text x="295" y="124" font-size="11.5" font-weight="bold" fill="#4338ca" text-anchor="middle">🧠 Switch ASIC</text>
+        <text x="295" y="140" font-size="9.5" fill="#6366f1" text-anchor="middle">交換晶片（電域）</text>
+        <text x="295" y="156" font-size="9.5" font-weight="bold" fill="#4338ca" text-anchor="middle">AVGO（#1）</text>
+        <text x="385" y="134" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="395" y="102" width="160" height="64" rx="10" fill="#fffbeb" stroke="#d97706"/>
+        <text x="475" y="124" font-size="11.5" font-weight="bold" fill="#92400e" text-anchor="middle">🔧 DSP 訊號整形</text>
+        <text x="475" y="140" font-size="9.5" fill="#b45309" text-anchor="middle">光通訊 DSP（電轉光前）</text>
+        <text x="475" y="156" font-size="9.5" font-weight="bold" fill="#92400e" text-anchor="middle">MRVL（#1）</text>
+        <text x="565" y="134" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="575" y="102" width="160" height="64" rx="10" fill="#f0fdf4" stroke="#059669"/>
+        <text x="655" y="124" font-size="11.5" font-weight="bold" fill="#065f46" text-anchor="middle">💡 光發射器</text>
+        <text x="655" y="140" font-size="9.5" fill="#047857" text-anchor="middle">EML 雷射＋驅動</text>
+        <text x="655" y="156" font-size="9.5" font-weight="bold" fill="#065f46" text-anchor="middle">LITE · COHR</text>
+        <line x1="655" y1="170" x2="655" y2="198" stroke="#94a3b8" stroke-width="2"/>
+        <polygon points="651,196 659,196 655,204" fill="#94a3b8"/>
 
-        <!-- ③ 公司價值鏈與角色 -->
-        <text x="40" y="272" font-size="11" font-weight="bold" fill="#64748b">③ 公司價值鏈與角色</text>
-        <rect x="40" y="284" width="220" height="136" rx="10" fill="#f0fdf4" stroke="#0d9488"/>
-        <text x="150" y="306" font-size="11" font-weight="bold" fill="#0f766e" text-anchor="middle">上游 · 晶片（光的「心臟」）</text>
-        <rect x="60" y="316" width="180" height="24" rx="5" fill="#fff" stroke="#0d9488"/>
-        <text x="150" y="332" font-size="9.5" font-weight="bold" fill="#334155" text-anchor="middle">DSP／ASIC 晶片</text>
-        <text x="150" y="360" font-size="9" fill="#0f766e" text-anchor="middle">電訊號的源頭</text>
-        <text x="150" y="378" font-size="9" fill="#0f766e" text-anchor="middle">MRVL · AVGO</text>
-        <text x="150" y="396" font-size="9" fill="#0f766e" text-anchor="middle">台積電（代工）</text>
-        <text x="150" y="412" font-size="8.5" fill="#64748b" text-anchor="middle">網通晶片設計與製造</text>
-        <text x="275" y="350" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
-        <rect x="300" y="284" width="180" height="136" rx="10" fill="#eff6ff" stroke="#2563eb"/>
-        <text x="390" y="306" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">中游 · 模組整合</text>
-        <rect x="320" y="316" width="140" height="24" rx="5" fill="#fff" stroke="#2563eb"/>
-        <text x="390" y="332" font-size="9.5" font-weight="bold" fill="#334155" text-anchor="middle">光收發模組</text>
-        <text x="390" y="360" font-size="9" fill="#1e40af" text-anchor="middle">把電轉光做成「成品」</text>
-        <text x="390" y="378" font-size="9" fill="#1e40af" text-anchor="middle">中際旭創 · 新易盛</text>
-        <text x="390" y="396" font-size="9" fill="#1e40af" text-anchor="middle">AAOI · Fabrinet</text>
-        <text x="390" y="412" font-size="8.5" fill="#64748b" text-anchor="middle">光模組出貨量全球前五</text>
-        <text x="495" y="350" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
-        <rect x="520" y="284" width="220" height="136" rx="10" fill="#f5f3ff" stroke="#7c3aed"/>
-        <text x="630" y="306" font-size="11" font-weight="bold" fill="#5b21b6" text-anchor="middle">下游 · 系統與終端</text>
-        <rect x="540" y="316" width="180" height="24" rx="5" fill="#fff" stroke="#7c3aed"/>
-        <text x="630" y="332" font-size="9.5" font-weight="bold" fill="#334155" text-anchor="middle">交換機／GPU 叢集</text>
-        <text x="630" y="360" font-size="9" fill="#5b21b6" text-anchor="middle">光纖公路的「用戶」</text>
-        <text x="630" y="378" font-size="9" fill="#5b21b6" text-anchor="middle">Arista（交換機）</text>
-        <text x="630" y="396" font-size="9" fill="#5b21b6" text-anchor="middle">NVDA（GPU 叢集）</text>
-        <text x="630" y="412" font-size="8.5" fill="#64748b" text-anchor="middle">資料中心網絡設備</text>
+        <!-- 光纖 -->
+        <rect x="35" y="204" width="700" height="26" rx="9" fill="#f8fafc" stroke="#64748b"/>
+        <text x="390" y="221" font-size="10.5" font-weight="bold" fill="#334155" text-anchor="middle">🌐 光纖（光訊號傳輸）· GLW 康寧 · 長飛 6869 · 亨通 600487</text>
+        <line x1="115" y1="234" x2="115" y2="262" stroke="#94a3b8" stroke-width="2"/>
+        <polygon points="111,260 119,260 115,268" fill="#94a3b8"/>
+
+        <!-- ③ 接收路徑 光→電 -->
+        <text x="40" y="292" font-size="11" font-weight="bold" fill="#64748b">③ 接收路徑 · 光 → 電（Receive）</text>
+        <rect x="35" y="302" width="160" height="64" rx="10" fill="#f0fdf4" stroke="#059669"/>
+        <text x="115" y="324" font-size="11.5" font-weight="bold" fill="#065f46" text-anchor="middle">📥 光接收器</text>
+        <text x="115" y="340" font-size="9.5" fill="#047857" text-anchor="middle">PIN 光偵測＋TIA</text>
+        <text x="115" y="356" font-size="9.5" font-weight="bold" fill="#065f46" text-anchor="middle">COHR · AAOI</text>
+        <text x="205" y="334" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="215" y="302" width="160" height="64" rx="10" fill="#fffbeb" stroke="#d97706"/>
+        <text x="295" y="324" font-size="11.5" font-weight="bold" fill="#92400e" text-anchor="middle">🔧 DSP</text>
+        <text x="295" y="340" font-size="9.5" fill="#b45309" text-anchor="middle">訊號整形（光轉電後）</text>
+        <text x="295" y="356" font-size="9.5" font-weight="bold" fill="#92400e" text-anchor="middle">MRVL</text>
+        <text x="385" y="334" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="395" y="302" width="160" height="64" rx="10" fill="#eef2ff" stroke="#4f46e5"/>
+        <text x="475" y="324" font-size="11.5" font-weight="bold" fill="#4338ca" text-anchor="middle">🖧 Switch 整機</text>
+        <text x="475" y="340" font-size="9.5" fill="#6366f1" text-anchor="middle">交換機（收光轉電）</text>
+        <text x="475" y="356" font-size="9.5" font-weight="bold" fill="#4338ca" text-anchor="middle">ANET</text>
+        <text x="565" y="334" font-size="22" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="575" y="302" width="160" height="64" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+        <text x="655" y="324" font-size="11.5" font-weight="bold" fill="#1e40af" text-anchor="middle">⚡ GPU／ASIC</text>
+        <text x="655" y="340" font-size="9.5" fill="#3b82f6" text-anchor="middle">電訊號終端</text>
+        <text x="655" y="356" font-size="9.5" font-weight="bold" fill="#1e40af" text-anchor="middle">NVDA</text>
+
+        <!-- ④ 電連接晶片 -->
+        <text x="40" y="400" font-size="11" font-weight="bold" fill="#64748b">④ 電連接晶片（銅線段，GPU ↔ 交換機之間短距互連）</text>
+        <rect x="35" y="408" width="240" height="52" rx="9" fill="#f5f3ff" stroke="#7c3aed"/>
+        <text x="155" y="429" font-size="11" font-weight="bold" fill="#5b21b6" text-anchor="middle">🔌 Retimer 時序重定</text>
+        <text x="155" y="447" font-size="9.5" font-weight="bold" fill="#5b21b6" text-anchor="middle">ALAB（Astera Labs）</text>
+        <rect x="310" y="408" width="240" height="52" rx="9" fill="#f5f3ff" stroke="#7c3aed"/>
+        <text x="430" y="429" font-size="11" font-weight="bold" fill="#5b21b6" text-anchor="middle">🔀 SerDes／AEC 主動銅纜</text>
+        <text x="430" y="447" font-size="9.5" font-weight="bold" fill="#5b21b6" text-anchor="middle">CRDO（Credo）</text>
+        <text x="570" y="434" font-size="9.5" fill="#64748b" text-anchor="middle">電訊號走銅線時需要，可雙向</text>
+
+        <!-- ⑤ 上游材料 -->
+        <text x="40" y="492" font-size="11" font-weight="bold" fill="#64748b">⑤ 上游材料與代工</text>
+        <rect x="35" y="500" width="170" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488"/>
+        <text x="120" y="518" font-size="10" font-weight="bold" fill="#0f766e" text-anchor="middle">InP 基板</text>
+        <text x="120" y="533" font-size="9" font-weight="bold" fill="#0f766e" text-anchor="middle">AXTI · 住友 · JX</text>
+        <text x="215" y="524" font-size="18" fill="#94a3b8" text-anchor="middle">→</text>
+        <rect x="230" y="500" width="200" height="40" rx="9" fill="#f0fdf4" stroke="#059669"/>
+        <text x="330" y="518" font-size="10" font-weight="bold" fill="#065f46" text-anchor="middle">雷射／光偵測晶片</text>
+        <text x="330" y="533" font-size="9" font-weight="bold" fill="#065f46" text-anchor="middle">LITE · COHR</text>
+        <text x="445" y="524" font-size="9.5" fill="#64748b" text-anchor="middle">｜ 台積電：矽光子／CPO 封裝代工</text>
+
+        <!-- ⑥ 模組整合 -->
+        <text x="40" y="572" font-size="11" font-weight="bold" fill="#64748b">⑥ 光收發模組「數位翻譯官」整合（把 DSP＋光學引擎裝成成品）</text>
+        <rect x="35" y="580" width="700" height="28" rx="9" fill="#fff7ed" stroke="#ea580c"/>
+        <text x="390" y="599" font-size="10" font-weight="bold" fill="#9a3412" text-anchor="middle">中際旭創 300308 · COHR · AAOI · Fabrinet FN · 新易盛 300502</text>
       </svg>
     </div>
-    <div class="callout blue">💡 <b>一句話記住：</b>光收發模組（Optical Transceiver）＝電與光之間的「數位翻譯官」——GPU 的電訊號經它翻譯成光訊號，走上光纖公路，解決 AI 算力傳輸的耗電與發熱瓶頸。</div>
+    <div class="callout blue">💡 <b>一句話記住：</b>光收發模組＝電↔光的「數位翻譯官」——發射端「電轉光」（Switch ASIC→DSP→EML 雷射）、接收端「光轉電」（PIN／TIA→DSP→交換機）；銅線段靠 <b>Retimer（ALAB）／SerDes（CRDO）</b>；材料與代工由 <b>AXTI（InP 基板）＋台積電（矽光子）</b> 把關。CPO 更把光引擎直接封進交換晶片同一載板（光進銅退）。</div>
   </div>
 
   <div class="card">
@@ -2633,20 +2635,47 @@ tr.flash{animation:rowflash 2.2s ease}
   document.addEventListener('click',function(e){
     if(!panel.contains(e.target)&&!fab.contains(e.target))hideToc();
   });
-  // ===== 甜甜圈 pie chart（dataviz：按 data-slices 繪製，白色間隙＋直接標籤）=====
+  // ===== 甜甜圈 pie chart（dataviz：按 data-slices 繪製，白色間隙＋直接標籤＋hover 顯示 segment／佔比）=====
+  var pieTip=null;
+  function pieTipMove(ev){
+    if(!pieTip)return;
+    var x=ev.clientX+16,y=ev.clientY+14;
+    if(x+140>window.innerWidth)x=ev.clientX-150;
+    if(y+36>window.innerHeight)y=ev.clientY-36;
+    pieTip.style.left=x+'px';pieTip.style.top=y+'px';
+  }
   function renderPie(){
+    if(!pieTip){
+      pieTip=document.createElement('div');pieTip.id='pieTip';
+      pieTip.style.cssText='position:fixed;z-index:99999;display:none;pointer-events:none;background:#0f172a;color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.35);white-space:nowrap';
+      document.body.appendChild(pieTip);
+    }
     document.querySelectorAll('.pie[data-slices]').forEach(function(el){
       var slices;try{slices=JSON.parse(el.getAttribute('data-slices'));}catch(e){return;}
       var total=0;slices.forEach(function(s){total+=(+s.pct)||0;});
       if(!total)return;
       var R=60,C=2*Math.PI*R,off=0,s='';
       slices.forEach(function(sl){
-        var len=C*sl.pct/total;
-        s+='<circle cx="75" cy="75" r="'+R+'" fill="none" stroke="'+sl.color+'" stroke-width="20"'
-          +' stroke-dasharray="'+(len-2)+' '+C+'" stroke-dashoffset="'+(-off)+'" transform="rotate(-90 75 75)"></circle>';
+        var pct=(+sl.pct)||0,share=Math.round(pct/total*100),len=C*pct/total;
+        s+='<g class="pie-slice" data-label="'+sl.label+'" data-share="'+share+'" style="cursor:pointer">'
+          +'<circle cx="75" cy="75" r="'+R+'" fill="none" stroke="'+sl.color+'" stroke-width="20"'
+          +' stroke-dasharray="'+(len-2)+' '+C+'" stroke-dashoffset="'+(-off)+'" transform="rotate(-90 75 75)"></circle></g>';
         off+=len;
       });
       el.innerHTML='<svg viewBox="0 0 150 150" width="100%" height="100%" role="img" aria-label="'+el.getAttribute('data-aria')+'">'+s+'</svg>';
+    });
+    document.querySelectorAll('.pie-slice').forEach(function(g){
+      var circle=g.querySelector('circle');
+      g.addEventListener('mouseenter',function(ev){
+        pieTip.textContent=g.getAttribute('data-label')+' · '+g.getAttribute('data-share')+'%';
+        pieTip.style.display='block';pieTipMove(ev);
+        if(circle){circle.style.strokeWidth='27';circle.style.filter='brightness(1.15)';}
+      });
+      g.addEventListener('mousemove',function(ev){pieTipMove(ev);});
+      g.addEventListener('mouseleave',function(){
+        pieTip.style.display='none';
+        if(circle){circle.style.strokeWidth='20';circle.style.filter='';}
+      });
     });
   }
   renderPie();
