@@ -1393,13 +1393,76 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
+    <div class="card-h">🏢 資產模式：CoreWeave「二房東」 vs Nebius「自建廠」<span class="meta">own-vs-lease · 決定折舊／capex／你真正擁有咩</span></div>
+    <div class="explain">呢個係分析師（Daloopa、TradingKey）點分兩間嘅核心軸，舊版 dashboard 完全漏咗。兩間嘅「<b>擁有權模式</b>」截然相反——而呢個分別會穿透成個財務報表。</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>維度</th><th>CoreWeave（CRWV）＝ 二房東</th><th>Nebius（NBIS）＝ 自建廠</th></tr></thead>
+      <tbody>
+        <tr><td>廠房／數據中心</td><td><b>租返嚟</b>：向 APLD（400MW／~$70億／15 年）、Equinix、Digital Realty、QTS 租</td><td><b>自建自擁</b>：芬蘭 Mäntsälä（75→310MW）、美國 Vineland NJ 等</td></tr>
+        <tr><td>GPU 硬件</td><td>自有（重債買）</td><td>自有（股權＋預付款融資）</td></tr>
+        <tr><td>廠房成本點入帳</td><td><b>經營租賃</b>→ 入 opex（毛利線之下）</td><td><b>資產＋折舊</b>→ 入資產負債表，分 15–30 年攤</td></tr>
+        <tr><td>表面毛利率</td><td>靚（75–80%）——廠房租金唔計入毛利</td><td>較低——自建廠房折舊壓住毛利</td></tr>
+        <tr><td>資本密度</td><td>輕（物業）——簽約即擴張，幾個月起機</td><td>重（物業）——自建要 1–3 年，但擁有資產</td></tr>
+        <tr><td>彈性 vs 鎖定</td><td>擴張快；但 lease obligation 長期鎖死、租金永遠要交</td><td>擴張慢；但資產入帳、可抵押、可回收廢熱</td></tr>
+        <tr><td>比喻</td><td>租舖開網吧——開得快，但業主隨時加租</td><td>買地自建廠——起得慢，但塊地係你</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout amber">💡 <b>所以「CoreWeave 輕資產」呢句要小心</b>——輕嘅只係<b>廠房</b>（租），GPU 仍然重（借錢買）。真正嘅分別唔係「輕 vs 重」，而係「<b>租廠房＋重債買機</b>」vs「<b>自建廠房＋股權買機</b>」兩種資本結構。睇埋下一張卡：融資點嚟，息口差天共地。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">💰 融資結構：點解 Nebius 息口近零、CoreWeave 要 9.25%？<span class="meta">資金從邊度嚟 · 決定利息／攤薄／抗息口能力</span></div>
+    <div class="explain">兩間都要海量資金買 GPU，但<b>籌錢方式完全相反</b>——呢個先係「財務模型」最大嘅分水嶺。CoreWeave 用 GPU 抵押借重債（息口高、越借越多）；Nebius 用三條近乎免息嘅管道。</div>
+    <div class="grid2">
+      <div>
+        <div class="sec-h">CoreWeave（CRWV）＝ GPU 抵押重債</div>
+        <ul class="focus">
+          <li><b>主要融資</b>：GPU 資產抵押債（DDTL）——Blackstone／Magnetar 領投，累計逾 <b>$180 億</b>，包括業界首單<b>投資級</b> GPU 抵押債（$85 億）。</li>
+          <li><b>息口</b>：可轉債 <b>9.25%</b>（2031 到期）；總負債 ~<b>$200 億+</b>。</li>
+          <li><b>後果</b>：利息越滾越大 → 淨利息開支數以億計，FCF 被利息食甩。</li>
+          <li><b>死穴</b>：息口反彈或再融資環境轉差→壓力極大；GPU 跌價→抵押品縮水→觸發追加擔保。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sec-h">Nebius（NBIS）＝ 三條近零息管道</div>
+        <ul class="focus">
+          <li><b>① 可轉債（向股東伸手）</b>：$37.5 億可轉債，息口僅 <b>1.25–2.75%</b>——代價係攤薄，唔係利息。</li>
+          <li><b>② 客戶預付款（向義父伸手）</b>：Microsoft $174 億合約（20-F 披露含大筆預付款，報道指約 $70 億分批支付）；Meta $270 億合約（$120 億專用＋最多 $150 億額外）。<b>即係客出錢幫佢起機</b>。</li>
+          <li><b>③ NVIDIA 乾爸爸</b>：NVDA 投资 <b>$20 億</b>（持 9.3%）＋供應商融資（先買後付）。</li>
+          <li><b>後果</b>：淨利息開支僅 ~$5000–6000 萬；現金 ~$94 億＞負債 ~$85 億＝<b>淨現金</b>。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout blue">💡 <b>同一門「買 GPU 收租」嘅生意，融資結構決定生死</b>：CRWV 係「高息借錢買機、用租金還息」——息口敏感、槓桿放大；NBIS 係「客出錢＋乾爸爸出錢＋低息可轉債」——近零息、抗週期。<b>所以唔好淨係睇毛利率，要睇「買機嘅錢從邊度嚟、息口幾多」。</b></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🧮 兩套財報框架：點解毛利率唔可以直接比<span class="meta">Daloopa 框架 · own-vs-lease 令報表變「兩套語言」</span></div>
+    <div class="explain">因為資產模式（上上張卡）同融資結構（上張卡）唔同，<b>CRWV 同 NBIS 嘅財報根本用緊兩套唔同會計框架</b>——直接比毛利率／capex／ROIC 會被誤導。下表係「表面數字」vs「背後真相」：</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>指標</th><th>CoreWeave（CRWV）</th><th>Nebius（NBIS）</th><th>點解唔可以直接比</th></tr></thead>
+      <tbody>
+        <tr><td>表面毛利率</td><td>~78–80%（靚）</td><td>較低</td><td>CRWV 廠房租金入 opex（線下）；NBIS 自建折舊入毛利（線上）→ <b>CRWV 表面毛利被租賃會計抬高</b></td></tr>
+        <tr><td>「80%＋」真意</td><td><b>折舊前</b>毛利</td><td>—</td><td>計埋 GPU 折舊（真成本）就冇咁靚；FCF 深度為負就係鐵證</td></tr>
+        <tr><td>capex／MW</td><td>較低（廠房租）</td><td>較高（自建）</td><td>CRWV 將租金承諾藏喺表外 lease liability；NBIS capex 換返實體資產</td></tr>
+        <tr><td>折舊年限爭議</td><td>GPU 折舊 6 年（空軍話應 3 年報廢）</td><td>GPU 類似＋廠房 15–30 年</td><td>GPU 迭代快→若 B300 上市、H100 要加速減值，直接衝擊損益表</td></tr>
+        <tr><td>息口</td><td>可轉債 9.25%</td><td>可轉債 1.25–2.75%</td><td>同樣借錢，CRWV 利息成本係 NBIS 嘅數倍</td></tr>
+        <tr><td>現金 vs 負債</td><td>淨負債（~$200 億債）</td><td>淨現金（~$94 億現金＞$85 億債）</td><td>抗息口＋抗週期能力相反</td></tr>
+        <tr><td>SBC 調整</td><td>回撥 100% 股權酬金</td><td>只回撥部分（~$3500 萬）</td><td>CRWV「調整後」盈利更靚，但有會計化妝成分</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout amber">💡 <b>讀法</b>：CRWV 嘅「高毛利＋高增長」一部分係<b>租賃會計＋折舊前計法＋100% SBC 回撥</b>撐出嚟嘅；NBIS 表面數字冇咁靚，但資產＋現金係真嘅。<b>邊個「靚」係會計選擇，邊個「穩」先係財務真相。</b></div>
+    <div class="callout blue">📈 <b>一個反駁「GPU 三年報廢」空軍論嘅數據</b>：H100 一年期租金由 2025/10 嘅 $1.70/小時，升至 2026/3 嘅 <b>$2.35/小時（+40%，SemiAnalysis）</b>——空軍話應報廢嘅舊卡，租金不跌反升，因為新 GPU 全被搶光、客退而求其次租 H100。<b>即係算力仍嚴重供不應求</b>，短期對 neocloud 係利多（但長期仍要睇折舊政策）。</div>
+  </div>
+
+  <div class="card">
     <div class="card-h">📊 分析報告：CRWV × NBIS <span class="meta">華爾街資深分析師框架 · 兩份完整分析＋目標價＋催化劑＋操作結論 · 點擊展開</span></div>
     <div class="report">
       <details>
         <summary>CRWV（CoreWeave）完整分析</summary>
         <div class="body">
           <div class="sub-h">① 商業模式與財務健康</div>
-          <div class="explain"><b>做咩生意</b>：GPU-aaS（GPU 即服務）——按 GPU 數量×時數向 AI 公司收租（H100／H200／B200）；出身加密礦機 → 2020 轉型 GPU 雲 → 2025/3 上市。收入極度集中：<b>Microsoft</b>（合約高達約 $125 億）歷史上佔營收 60–70%，後加 <b>OpenAI</b>（約 $119 億）、Meta、IBM、Cohere。</div>
+          <div class="explain"><b>做咩生意</b>：GPU-aaS（GPU 即服務）——按 GPU 數量×時數向 AI 公司收租（H100／H200／B200）；出身加密礦機 → 2020 轉型 GPU 雲 → 2025/3 上市。歷史上收入極度集中於 <b>Microsoft</b>（曾佔 60–70%），但 <b>2025–26 已結構性分散</b>：加簽 <b>Meta（$142 億→擴至 $210 億）</b>、<b>Anthropic（數十億）</b>、OpenAI（~$119 億）、IBM、Cohere；總積存合約（backlog）衝至 <b>近 $1000 億</b>（2026Q1）。⚠️ 配合上面「資產模式／融資結構」兩張卡睇：CRWV 嘅高增長靠 <b>GPU 抵押重債（~$200 億、息口 9.25%）＋租廠房</b>撐——毛利靚但 FCF 深度為負、息口敏感。</div>
           <div class="tbl-wrap-matrix"><table class="matrix">
             <thead><tr><th>指標</th><th>2023</th><th>2024</th><th>2025E（指引）</th></tr></thead>
             <tbody>
@@ -1464,7 +1527,7 @@ tr.flash{animation:rowflash 2.2s ease}
         <summary>NBIS（Nebius）完整分析</summary>
         <div class="body">
           <div class="sub-h">① 商業模式與財務健康</div>
-          <div class="explain"><b>做咩生意</b>：Yandex 拆分（2024）嘅國際資產，總部荷蘭；四條業務：<b>① Nebius AI</b>（歐洲最大 GPU 雲）<b>② Toloka</b>（數據標註眾包）<b>③ Avride</b>（自駕）<b>④ TripleTen</b>（科技教育）。<b>NVIDIA 入股 $7 億</b>＋簽約約 $20 億 GPU 多年期採購。</div>
+          <div class="explain"><b>做咩生意</b>：Yandex 拆分（2024）嘅國際資產，總部荷蘭；四條業務：<b>① Nebius AI</b>（歐洲最大 GPU 雲）<b>② Toloka</b>（數據標註眾包）<b>③ Avride</b>（自駕）<b>④ TripleTen</b>（科技教育）。<b>NVIDIA 累計投資 $20 億（持 9.3%）</b>＋供應商融資。<b>積存合約爆發</b>：Microsoft $174 億（5 年）＋Meta $270 億（$120 億專用＋最多 $150 億額外）——兩大客合共近 $450 億。⚠️ 配合上面兩張卡睇：NBIS <b>自建廠房（Mäntsälä 310MW）</b>＋<b>三條近零息管道</b>（低息可轉債 1.25–2.75%＋客戶預付款＋NVDA 投資）→ 淨利息僅 ~$5000–6000 萬、淨現金。另收購 <b>Eigen AI（~$6.4 億，MIT HAN Lab）</b>強化推理層 Token Factory——靠<b>軟件＋推理效率</b>築第二道護城河（同「算力二房東」走相反路）。</div>
           <div class="tbl-wrap-matrix"><table class="matrix">
             <thead><tr><th>指標</th><th>2024</th><th>2025E</th></tr></thead>
             <tbody>
@@ -1565,6 +1628,8 @@ tr.flash{animation:rowflash 2.2s ease}
       </tbody>
     </table></div>
     <div class="callout blue">💡 <b>對比讀法：</b>唔好用「目標價」當保證回報——兩者回報分佈都極端（±40% 以上），最緊要問「<b>市場依家喺定邊個情境嘅價</b>」：CRWV 現價 P/S 4x 偏基本情境，NBIS 15x 已偏多頭——買 NBIS 就等於預先信咗「歐洲 AI 龍頭」故事成真。</div>
+    <div class="callout amber">💰 <b>P/S 點解 NBIS 配 15x、CRWV 配 4x？因為資產模式＋融資結構</b>（見上面三張卡）：NBIS <b>自建廠房＝擁有資產</b>、淨現金＋低息＝抗週期、靠 Eigen AI 軟件築推理護城河→市場肯俾溢價；CRWV <b>租廠房＋GPU 抵押重債 9.25%＋表外 lease obligation</b>→折讓合理。<b>同一門生意，資本結構決定估值倍數。</b></div>
+    <div class="callout blue">⚠️ <b>數字時效</b>：上面現價／2026E 營收係建表時點嘅示意基準；<b>兩股 2026 均大幅炒上</b>，而且 backlog（NBIS：MSFT $174 億＋Meta $270 億；CRWV：近 $1000 億）已令實際營收基數遠高於表中 2026E——情境目標價當「<b>框架</b>」睇，唔好當精確預測。</div>
   </div>
 
   <div class="card">
@@ -1574,10 +1639,10 @@ tr.flash{animation:rowflash 2.2s ease}
         <div class="sec-h">CRWV（CoreWeave）</div>
         <ul class="focus">
           <li><b>季度業績（8 月／11 月）</b>：睇 OpenAI 收入有冇如期放量——最直接催化劑。</li>
-          <li><b>新大客簽約公告</b>：客戶分散（Cohere／IBM 等）係估值重估關鍵。</li>
-          <li><b>NVIDIA B300 供貨節點</b>：新一代 GPU 上量決定 2027 營收能見度。</li>
-          <li><b>Microsoft 續約／擴大</b>：最大合約（約 $125 億）任何更新都震動股價。</li>
-          <li><b>再融資／發債公告</b>：$80 億+ 負債 → 利率環境直接影響財務成本。</li>
+          <li><b>新大客簽約公告</b>：客戶分散——<b>Meta $210 億、Anthropic</b> 已落地，再添新客＝估值重估。</li>
+          <li><b>NVIDIA B300 供貨節點</b>：新一代 GPU 上量決定 2027 營收能見度；同時若 H100 因迭代要加速減值，會衝擊損益表。</li>
+          <li><b>Meta／Microsoft 合約動態</b>：Meta（$210 億，現最大客）同 MSFT 任何續約／擴大／縮減都震動股價。</li>
+          <li><b>再融資／發債公告</b>：~<b>$200 億 GPU 抵押債</b>（息口 9.25%）→ 利率環境直接影響財務成本。</li>
         </ul>
       </div>
       <div>
@@ -1600,17 +1665,17 @@ tr.flash{animation:rowflash 2.2s ease}
       <div class="role">
         <div class="r-top"><span class="r-tk">CRWV</span><span class="r-co">CoreWeave</span><span class="r-tag">高風險 · 高回報</span></div>
         <div class="r-d">
-          <b>定位</b>：純 AI 算力 Beta——想對 AI 題材最直接暴露就係佢。<br>
+          <b>定位</b>：純 AI 算力 Beta——<b>租廠房＋GPU 抵押重債</b>模式，增長最直接但息口敏感。<br>
           <b>倉位</b>：組合 0–3%（高波動，最多做衛星倉）。<br>
           <b>買入區</b>：P/S 跌返 3x 以下，或大客續約確認之後。<br>
-          <b>退出條件</b>：Microsoft 佔比冇改善、負債再急升、GPU 過剩訊號。<br>
+          <b>退出條件</b>：backlog 增長停滯、<b>再融資息口急升／GPU 抵押品跌價</b>、GPU 過剩訊號。<br>
           <b>適合邊位客</b>：年輕、可承受 -50% 回撤、信 AI 長期故事。
         </div>
       </div>
       <div class="role">
         <div class="r-top"><span class="r-tk">NBIS</span><span class="r-co">Nebius</span><span class="r-tag">穩健 · 歐洲期權</span></div>
         <div class="r-d">
-          <b>定位</b>：歐洲 AI 基建成長型期權——低負債＋多元化＋地緣折讓。<br>
+          <b>定位</b>：<b>自建廠房＋淨現金＋近零息融資</b>嘅 AI 基建期權——Eigen AI 軟件護城河＋多元化＋地緣折讓。<br>
           <b>倉位</b>：組合 1–4%（比 CRWV 可稍重）。<br>
           <b>買入區</b>：P/S 跌返 8–10x，或歐洲政策催化後回調。<br>
           <b>退出條件</b>：地緣事件惡化、規模遲遲無起色、估值泡沫化（&gt;20x P/S）。<br>
@@ -1688,9 +1753,10 @@ tr.flash{animation:rowflash 2.2s ease}
     <div class="card-h">🎯 投資焦點</div>
     <ul class="focus">
       <li><b>Neocloud 係「算力嘅水電煤」：</b>AI 公司唔想自己買 GPU，租算力成主流——CRWV／NBIS 食正呢個趨勢。</li>
-      <li><b>CRWV＝純正度高、增長快：</b>但營收極度集中 Microsoft／OpenAI，波動大、高負債。</li>
-      <li><b>NBIS＝多元化＋歐洲角度：</b>數據主權（GDPR）係歐企必須，NVIDIA 入股背書；但規模細、地緣風險要留意。</li>
+      <li><b>CRWV＝純算力 Beta、增長最直接：</b>客戶已由 Microsoft 分散到 <b>Meta（$210 億）／Anthropic</b>，backlog 近千億；但<b>租廠房＋GPU 抵押重債（~$200 億、息口 9.25%）</b>→ 息口敏感、FCF 深度為負。</li>
+      <li><b>NBIS＝自建＋淨現金＋軟件：</b>數據主權（GDPR）、NVDA $20 億入股；<b>三條近零息管道（低息可轉債＋客戶預付款＋NVDA）→ 淨現金、抗週期</b>，Eigen AI 築推理護城河；但規模細、地緣風險要留意。</li>
       <li><b>最大外患唔係彼此，而係 hyperscaler 賣算力：</b>Meta 一邊做 CoreWeave $21B 大客、一邊自起「Meta Compute」租 GPU——neocloud 係「<b>窗口期生意</b>」，贏在 hyperscaler 應接不暇嘅幾年空檔；邊個建立到軟件生態，邊個先捱得過。</li>
+      <li><b>行業共性死穴（三條）：</b>① <b>重資產重槓桿</b>——不斷買新 GPU 轉租，融資環境轉差即壓力爆燈（CRWV 尤甚）；② <b>GPU 減值風險</b>——B300 等新卡一出，H100 可能要加速提列減值（反證：H100 租金 2025/10→2026/3 升 40% 至 $2.35，短期仍供不應求）；③ <b>客戶自研晶片</b>——Meta MTIA／Google TPU 若成熟，外租算力需求萎縮。</li>
     </ul>
   </div>
 </section>
