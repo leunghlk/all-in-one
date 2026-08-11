@@ -212,6 +212,28 @@ table.matrix .warn{color:#b45309;font-weight:700}
 tr.flash{animation:rowflash 2.2s ease}
 @keyframes rowflash{0%,55%{background:#fef3c7}100%{background:transparent}}
 
+/* ===== 模型雙雄生態圈：關連度排名（條形） ===== */
+.ranklist{display:flex;flex-direction:column;gap:8px}
+.rank{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;box-shadow:var(--shadow)}
+.rank .rk{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#fff;background:#94a3b8}
+.rank .rk.gold{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.rank .rk.sil{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
+.rank .rk.brz{background:linear-gradient(135deg,#0d9488,#2dd4bf)}
+.rank .rbody{flex:1;min-width:0}
+.rank .rco{font-weight:800;font-size:13px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.rank .rco .amt{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--blue-deep);font-weight:800;white-space:nowrap}
+.rank .rco .amt.sm{color:#94a3b8;font-weight:700}
+.rank .rnote{font-size:11px;color:var(--muted);margin-top:1px}
+.rank .rbar{height:6px;background:#eef2f7;border-radius:4px;margin-top:6px;overflow:hidden}
+.rank .rbar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#94a3b8,#cbd5e1)}
+.rank .rbar i.an{background:linear-gradient(90deg,#be123c,#fb7185)}
+.rank .rbar i.op{background:linear-gradient(90deg,#0d9488,#5eead4)}
+.rank .rbar i.gold{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.rank .rbar i.dash{background:repeating-linear-gradient(90deg,#94a3b8 0 7px,transparent 7px 12px)}
+/* 陣營 badge：Anthropic=rose／OpenAI=teal */
+.b-an{display:inline-block;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:800;border:1px solid;background:#fff1f2;color:#be123c;border-color:#fecdd3}
+.b-op{display:inline-block;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:800;border:1px solid;background:#ecfdf5;color:#0f766e;border-color:#99f6e4}
+
 @media(max-width:640px){.card{padding:14px}.pitch{font-size:var(--fs-body)}}
 </style>
 </head>
@@ -237,6 +259,7 @@ tr.flash{animation:rowflash 2.2s ease}
     <button class="tab" data-tab="optical"><i>💡</i>光通訊與互連</button>
     <button class="tab" data-tab="power"><i>⚡</i>電力散熱與終端</button>
     <button class="tab" data-tab="neocloud"><i>☁️</i>Neocloud 算力雲</button>
+    <button class="tab" data-tab="frontier"><i>🦾</i>模型雙雄生態圈</button>
   </div>
 </nav>
 
@@ -1590,6 +1613,166 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 </section>
 
+<!-- ============ 10. 模型雙雄生態圈（Anthropic × OpenAI） ============ -->
+<section class="pane" id="pane-frontier">
+  <div class="card">
+    <div class="card-h"><span class="sec-num">⑩</span>RM 銷售話術</div>
+    <div class="pitch"><span class="tag">開場白</span>「AI 大模型世界而家係兩大陣營對決——<b>Anthropic（Claude）</b> vs <b>OpenAI（ChatGPT）</b>。佢地背後各自有一班科技巨頭撐腰：Anthropic 有 <b>Amazon 投資 $80 億</b>＋Google TPU 算力；OpenAI 有 <b>Microsoft 累計 $130 億＋</b>，仲有 <b>Amazon $500 億、SoftBank $300 億、NVIDIA $300 億</b>喺 2026 年豪擲搶閘，再加 <b>Oracle $3000 億</b>算力合同。呢個 tab 帶你睇清兩大陣營嘅『朋友圈』——邊個投資最多、邊個合作最深。」</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🗺️ 兩大陣營生態圈戰圖 <span class="meta">金額＝投資／合作規模 · 數據截至 2026-08</span></div>
+    <div class="svgbox">
+      <svg width="100%" viewBox="0 0 780 430" style="max-width:760px;display:block;margin:0 auto">
+        <!-- ===== 左：Anthropic 生態圈 ===== -->
+        <rect x="8" y="14" width="372" height="404" rx="14" fill="#f8fafc" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="194" y="38" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">Anthropic 生態圈（Claude）</text>
+        <!-- 連線 -->
+        <line x1="194" y1="220" x2="115" y2="100" stroke="#93c5fd" stroke-width="1.5"/>
+        <line x1="194" y1="220" x2="310" y2="100" stroke="#93c5fd" stroke-width="1.5"/>
+        <line x1="194" y1="220" x2="111" y2="352" stroke="#93c5fd" stroke-width="1.5"/>
+        <line x1="194" y1="220" x2="308" y2="350" stroke="#93c5fd" stroke-width="1.5"/>
+        <!-- hub -->
+        <rect x="120" y="192" width="148" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="194" y="214" font-size="12.5" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Anthropic（Claude）</text>
+        <text x="194" y="234" font-size="10" fill="#1d4ed8" text-anchor="middle">估值 $9650 億（2026-05）</text>
+        <!-- 節點 -->
+        <rect x="46" y="76" width="138" height="48" rx="9" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+        <text x="115" y="95" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">Amazon</text>
+        <text x="115" y="113" font-size="9.5" fill="#1d4ed8" text-anchor="middle">$80 億 · 主雲＋Bedrock</text>
+        <rect x="262" y="76" width="96" height="48" rx="9" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+        <text x="310" y="95" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">Google</text>
+        <text x="310" y="113" font-size="9.5" fill="#1d4ed8" text-anchor="middle">~$30 億 · TPU 雲</text>
+        <rect x="46" y="326" width="130" height="52" rx="9" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+        <text x="111" y="344" font-size="10" font-weight="bold" fill="#1e40af" text-anchor="middle">NVIDIA × Microsoft</text>
+        <text x="111" y="360" font-size="9" fill="#991b1b" text-anchor="middle">最多 $150 億（已公布）</text>
+        <text x="111" y="372" font-size="8.5" fill="#64748b" text-anchor="middle">＋$300 億 Azure 算力</text>
+        <rect x="262" y="326" width="92" height="48" rx="9" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5"/>
+        <text x="308" y="345" font-size="11" font-weight="bold" fill="#b91c1c" text-anchor="middle">Palantir</text>
+        <text x="308" y="363" font-size="9.5" fill="#991b1b" text-anchor="middle">國防合作</text>
+        <!-- ===== 右：OpenAI 生態圈 ===== -->
+        <rect x="400" y="14" width="372" height="404" rx="14" fill="#f0fdfa" stroke="#10b981" stroke-width="1.5"/>
+        <text x="586" y="38" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">OpenAI 生態圈（ChatGPT）</text>
+        <!-- 連線 -->
+        <line x1="586" y1="220" x2="477" y2="64" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="615" y2="56" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="720" y2="64" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="467" y2="274" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="720" y2="274" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="487" y2="356" stroke="#99f6e4" stroke-width="1.5"/>
+        <line x1="586" y1="220" x2="720" y2="356" stroke="#99f6e4" stroke-width="1.5"/>
+        <!-- hub -->
+        <rect x="512" y="192" width="148" height="56" rx="12" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="586" y="214" font-size="12.5" font-weight="bold" fill="#064e3b" text-anchor="middle">OpenAI（ChatGPT）</text>
+        <text x="586" y="234" font-size="10" fill="#047857" text-anchor="middle">估值 $8520 億（2026-04）</text>
+        <!-- 節點 -->
+        <rect x="412" y="40" width="130" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="477" y="59" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">Microsoft</text>
+        <text x="477" y="77" font-size="9" fill="#047857" text-anchor="middle">$130 億＋ · 27% 股權</text>
+        <rect x="560" y="32" width="110" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="615" y="51" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">Amazon</text>
+        <text x="615" y="69" font-size="9" fill="#047857" text-anchor="middle">$500 億 · 領投</text>
+        <rect x="676" y="40" width="88" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="720" y="59" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">SoftBank</text>
+        <text x="720" y="77" font-size="9" fill="#047857" text-anchor="middle">$300 億</text>
+        <rect x="412" y="250" width="110" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="467" y="269" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">NVIDIA</text>
+        <text x="467" y="287" font-size="9" fill="#047857" text-anchor="middle">$300 億 · GPU</text>
+        <rect x="676" y="250" width="88" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="720" y="269" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">Apple</text>
+        <text x="720" y="287" font-size="9" fill="#047857" text-anchor="middle">整合 · 未公開</text>
+        <rect x="412" y="330" width="150" height="52" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="487" y="351" font-size="10.5" font-weight="bold" fill="#065f46" text-anchor="middle">Oracle</text>
+        <text x="487" y="369" font-size="9" fill="#047857" text-anchor="middle">$3000 億算力合同</text>
+        <rect x="676" y="330" width="88" height="48" rx="9" fill="#ecfdf5" stroke="#99f6e4" stroke-width="1.5"/>
+        <text x="720" y="351" font-size="10" font-weight="bold" fill="#065f46" text-anchor="middle">Broadcom</text>
+        <text x="720" y="369" font-size="9" fill="#047857" text-anchor="middle">晶片 · 未公開</text>
+      </svg>
+    </div>
+    <div class="callout amber">💡 <b>一句話：</b>兩大陣營都係『雲巨頭＋晶片巨頭』撐腰——<b>Amazon 兩邊落注</b>（Anthropic $80 億＋OpenAI $500 億）、<b>NVIDIA 兩邊賺錢</b>（GPU 供應兩者＋入股兩者）。投資者要睇嘅唔止邊個模型好，而係<b>邊個陣營嘅『金主組合』更強</b>。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">📋 關連公司一覽 <span class="meta">陣營 · 公司 · 關係 · 金額 · 亮點</span></div>
+    <div class="tbl-wrap"><table class="stocks">
+      <thead><tr><th>陣營</th><th>公司</th><th>代碼</th><th>關係</th><th>金額</th><th>亮點</th></tr></thead>
+      <tbody>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">Amazon</td><td class="tk">AMZN</td><td>最大投資者＋主雲</td><td>$80 億</td><td>AWS 主雲＋<span class="tip" data-tip="<b>Amazon Bedrock</b>：AWS 生成式 AI 平台，第三方模型（包括 Claude）可喺上面部署。">Bedrock</span>上架＋<span class="tip" data-tip="<b>Trainium</b>：AWS 自研 AI 訓練晶片，Anthropic 大規模採用。">Trainium</span>深度合作</td></tr>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">Google</td><td class="tk">GOOGL</td><td>戰略投資＋算力</td><td>~$30 億</td><td>雲合作：最多 1M 粒 <span class="tip" data-tip="<b>TPU（張量處理單元）</b>：Google 自研 AI 晶片，Anthropic 借佢起超算，2026 年最多 1M 粒。">TPU</span>（1GW+）</td></tr>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">NVIDIA</td><td class="tk">NVDA</td><td>投資＋GPU 供應</td><td>最多 $150 億（已公布）</td><td>與 Microsoft 合計；GPU 係兩大陣營共同「鏟仔」<span class="tag-stock" data-goto="compute" data-stock="NVDA">🔍 去算力tab</span></td></tr>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">Microsoft</td><td class="tk">MSFT</td><td>投資＋雲算力</td><td>最多 $150 億（已公布）</td><td>Anthropic 承諾買 $300 億 Azure／NVIDIA 算力</td></tr>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">Palantir</td><td class="tk">PLTR</td><td>國防合作</td><td>金額未公開</td><td>Claude 整合入 <span class="tip" data-tip="<b>Maven Smart System</b>：Palantir 嘅國防情報平台，美國國防／情報部門用。">Maven</span>，軍方場景</td></tr>
+<tr><td><span class="b-an">Anthropic</span></td><td class="co">Snowflake</td><td class="tk">SNOW</td><td>分銷合作</td><td>$2 億（多年）</td><td>2025-12 簽約：Claude 透過 Snowflake 平台提供企業客戶</td></tr>
+        <tr><td><span class="b-an">Anthropic</span></td><td class="co">財務投資者</td><td class="tk">—</td><td>股權輪</td><td>Series E–H 累計 $120 億+</td><td>Lightspeed／Iconiq／Fidelity／QIA／Coatue／GIC／Altimeter／Dragoneer／Sequoia；估值 $615 億→$9650 億</td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Microsoft</td><td class="tk">MSFT</td><td>歷史最大投資者＋Azure</td><td>$130 億+（持 27%）</td><td>2019–2023 累計；2025 重組後持 27%（市值 ~$1350 億）；2026-04 改協議：Azure 唔再獨家、保留優先權</td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Amazon</td><td class="tk">AMZN</td><td>2026-02 領投</td><td>$500 億</td><td>單輪最大投資者；連同 Anthropic $80 億＝「兩邊落注」</td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">SoftBank</td><td class="tk">9984.T</td><td>戰略投資＋<span class="tip" data-tip="<b>Stargate（星門計畫）</b>：2025-01 OpenAI＋Oracle＋SoftBank＋MGX 嘅 AI 基建合資，4 年 $5000 億起美國數據中心。">Stargate</span></td><td>$300 億（2026-02 那輪）</td><td>日本電信巨頭，長年重注 OpenAI</td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">NVIDIA</td><td class="tk">NVDA</td><td>投資＋GPU 供應</td><td>$300 億（2026-02 那輪）</td><td>≥10GW 系統 MoU；OpenAI 同時自研晶片減依賴<span class="tag-stock" data-goto="compute" data-stock="NVDA">🔍 去算力tab</span></td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Oracle</td><td class="tk">ORCL</td><td>算力供應＋Stargate</td><td>$3000 億（5 年算力合同）</td><td>2025-09 簽約；Stargate 合資夥伴，建美國數據中心</td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Apple</td><td class="tk">AAPL</td><td>產品整合</td><td>金額未公開</td><td>2024-06 簽約：ChatGPT 內建 <span class="tip" data-tip="<b>Apple Intelligence</b>：Apple 自家 AI 系統，2024 起整合 ChatGPT 做進階查詢。">Apple Intelligence</span></td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Broadcom</td><td class="tk">AVGO</td><td>自研晶片</td><td>金額未公開</td><td>合作設計 <span class="tip" data-tip="<b>Jalapeño</b>：OpenAI＋Broadcom 自研 AI 晶片（2026-06 公布），TSMC 3nm 代工，2026 底量產。">Jalapeño</span> 晶片<span class="tag-stock" data-goto="optical">🔍 去光通訊tab</span></td></tr>
+        <tr><td><span class="b-op">OpenAI</span></td><td class="co">Anduril</td><td class="tk">—</td><td>國防合作</td><td>金額未公開</td><td>2024-12 合夥：國安任務 AI 部署</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout blue">💡 <b>金額定義：</b>「投資」＝入股股權；「算力合同」＝採購協議（唔係股權，但係最重要嘅商業關係）。未公開金額嘅合作（Apple／Broadcom／Anduril）戰略價值唔輸明碼標價嗰啲。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🏆 關連度排名：投資／合作金額最大嘅公司 <span class="meta">bar＝開方縮放・視覺示意</span></div>
+    <div class="grid2">
+      <div>
+        <div class="sec-h">Anthropic 陣營</div>
+        <div class="ranklist">
+          <div class="rank"><span class="rk gold">1</span><div class="rbody"><div class="rco"><span>NVIDIA × Microsoft（合計）</span><span class="amt">最多 $150 億 ※已公布</span></div><div class="rnote">GPU＋Azure 算力；Anthropic 另承諾買 $300 億雲算力</div><div class="rbar"><i class="dash" style="width:100%"></i></div></div></div>
+          <div class="rank"><span class="rk sil">2</span><div class="rbody"><div class="rco"><span>Amazon</span><span class="amt">$80 億 ✓</span></div><div class="rnote">主雲 AWS＋Bedrock＋Trainium</div><div class="rbar"><i class="an" style="width:73%"></i></div></div></div>
+          <div class="rank"><span class="rk brz">3</span><div class="rbody"><div class="rco"><span>Google</span><span class="amt">~$30 億 ✓</span></div><div class="rnote">雲合作：最多 1M 粒 TPU</div><div class="rbar"><i class="op" style="width:45%"></i></div></div></div>
+          <div class="rank"><span class="rk oth">4</span><div class="rbody"><div class="rco"><span>Palantir</span><span class="amt sm">金額未公開</span></div><div class="rnote">國防合作：Claude 入 Maven</div><div class="rbar"><i style="width:6%"></i></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-h">OpenAI 陣營</div>
+        <div class="ranklist">
+          <div class="rank"><span class="rk gold">1</span><div class="rbody"><div class="rco"><span>Oracle</span><span class="amt">$3000 億 ※算力合同</span></div><div class="rnote">5 年算力採購＋Stargate 合資</div><div class="rbar"><i class="gold" style="width:100%"></i></div></div></div>
+          <div class="rank"><span class="rk sil">2</span><div class="rbody"><div class="rco"><span>Amazon</span><span class="amt">$500 億</span></div><div class="rnote">2026-02 領投（股權）</div><div class="rbar"><i class="op" style="width:41%"></i></div></div></div>
+          <div class="rank"><span class="rk brz">3</span><div class="rbody"><div class="rco"><span>SoftBank</span><span class="amt">$300 億</span></div><div class="rnote">2026-02 那輪＋Stargate 合資</div><div class="rbar"><i class="op" style="width:32%"></i></div></div></div>
+          <div class="rank"><span class="rk oth">4</span><div class="rbody"><div class="rco"><span>NVIDIA</span><span class="amt">$300 億</span></div><div class="rnote">2026-02 那輪＋≥10GW GPU</div><div class="rbar"><i class="op" style="width:32%"></i></div></div></div>
+          <div class="rank"><span class="rk oth">5</span><div class="rbody"><div class="rco"><span>Microsoft</span><span class="amt">$130 億+（27%）</span></div><div class="rnote">歷史累計投資；Azure 雲</div><div class="rbar"><i class="an" style="width:21%"></i></div></div></div>
+          <div class="rank"><span class="rk oth">6</span><div class="rbody"><div class="rco"><span>Apple</span><span class="amt sm">金額未公開</span></div><div class="rnote">iPhone 預設入口：Apple Intelligence</div><div class="rbar"><i style="width:8%"></i></div></div></div>
+          <div class="rank"><span class="rk oth">7</span><div class="rbody"><div class="rco"><span>Broadcom</span><span class="amt sm">金額未公開</span></div><div class="rnote">自研晶片 Jalapeño（TSMC 3nm）</div><div class="rbar"><i style="width:8%"></i></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">⚖️ 兩陣營比較</div>
+    <div class="tbl-wrap-matrix"><table class="matrix">
+      <thead><tr><th>維度</th><th>Anthropic（Claude）</th><th>OpenAI（ChatGPT）</th></tr></thead>
+      <tbody>
+        <tr><td>旗艦模型</td><td>Claude（Opus／Sonnet）</td><td>GPT 系列</td></tr>
+        <tr><td>2026 估值</td><td>$9650 億（2026-05）</td><td>$8520 億（2026-04）</td></tr>
+        <tr><td>最大投資者</td><td>Amazon $80 億</td><td>Microsoft $130 億＋（27%）</td></tr>
+        <tr><td>主雲</td><td>AWS（主雲）</td><td>Azure（2026-04 後非獨家）</td></tr>
+        <tr><td>算力合作</td><td>Google TPU（1M 粒）＋Azure</td><td>Oracle $3000 億＋Stargate</td></tr>
+        <tr><td>自研晶片</td><td>未自研（用 NVIDIA）</td><td>Broadcom Jalapeño（TSMC 3nm）</td></tr>
+        <tr><td>消費端整合</td><td>較少（企業為主）</td><td>Apple Intelligence 內建</td></tr>
+        <tr><td>國防合作</td><td>Palantir＋AWS</td><td>Anduril＋DoD $2 億合同</td></tr>
+        <tr><td>金主組合特徵</td><td>雲（AWS）＋晶片＋搜尋</td><td>雲＋電信＋晶片＋數據中心</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🎯 投資焦點</div>
+    <ul class="focus">
+      <li><b>雲巨頭兩邊落注：</b>Amazon 同時投資 Anthropic（$80 億）同 OpenAI（$500 億）——雲廠商怕押錯邊，索性兩邊買保險；投資者唔應該「以單一公司代表成個 AI 陣營」。</li>
+      <li><b>NVIDIA 係最大贏家：</b>GPU 供應兩邊＋入股兩者（OpenAI $300 億、Anthropic 已公布）——「賣鏟仔嘅永遠贏」。</li>
+      <li><b>金額唔等於關係深度：</b>Oracle $3000 億係算力合同唔係股權；Apple 金額未公開但「iPhone 預設入口」嘅戰略價值可能更高。</li>
+      <li><b>終局觀察：</b>邊個先跑到 AGI＋邊個陣營『資金＋算力』組合最穩，決定 5 年後邊個係王者。</li>
+    </ul>
+  </div>
+</section>
+
 
 <div class="foot"><span style="color:#1a73e8;font-weight:700">leungkathy</span> · All-in-One Financial Dashboard Suite — AI 半導體產業鏈投資圖譜（教學性質）· 整合 4 大 Gemini 主題 · 僅供參考，不構成投資建議</div>
 </div>
@@ -1607,7 +1790,7 @@ tr.flash{animation:rowflash 2.2s ease}
   var lastTab=null;
   var backBtn=document.createElement('button');
   backBtn.className='goback';backBtn.type='button';document.body.appendChild(backBtn);
-  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲'};
+  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲',frontier:'模型雙雄生態圈'};
   function hideBack(){lastTab=null;backBtn.style.display='none';}
   backBtn.addEventListener('click',function(){if(lastTab)show(lastTab);hideBack();});
   function flashRow(id){
