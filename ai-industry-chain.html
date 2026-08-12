@@ -316,6 +316,40 @@ tr.flash{animation:rowflash 2.2s ease}
 .bar-chart .b-track{flex:1;background:#f1f5f9;border-radius:6px;height:20px;position:relative;overflow:hidden}
 .bar-chart .b-fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px 0 0 6px}
 .bar-chart .b-val{width:56px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#334155;white-space:nowrap}
+
+/* ===== 全站股票搜尋（subbar 搜尋列 + 結果 tab）===== */
+.search-row{position:relative;margin-bottom:8px}
+.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;opacity:.6}
+#searchInput{width:100%;padding:9px 34px 9px 33px;border:2px solid var(--line);border-radius:10px;font-size:13px;font-family:inherit;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;color:var(--ink)}
+#searchInput::placeholder{color:#94a3b8}
+#searchInput:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.12)}
+.search-clear{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:none;background:#eef2f7;color:#475569;width:20px;height:20px;border-radius:50%;font-size:11px;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;font-family:inherit;padding:0}
+.search-clear:hover{background:#e2e8f0;color:var(--ink)}
+.search-drop{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(15,23,42,.18);z-index:999;max-height:min(60vh,430px);overflow:auto;display:none}
+.search-drop.show{display:block}
+.sd-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:none;background:none;cursor:pointer;padding:10px 13px;font-family:inherit;font-size:12.5px;border-bottom:1px solid #f1f5f9}
+.sd-item:last-child{border-bottom:none}
+.sd-item:hover,.sd-item.hl{background:var(--blue-tint)}
+.sd-code{font-family:ui-monospace,Menlo,monospace;font-weight:800;color:var(--blue-deep);font-size:12px;flex:0 0 auto}
+.sd-name{color:var(--ink);font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sd-cnt{color:var(--muted);font-size:10.5px;white-space:nowrap}
+.sd-empty{padding:16px;text-align:center;color:var(--muted);font-size:12.5px}
+/* 搜尋結果 pane */
+.sr-summary{font-size:12.5px;color:#334155;background:var(--blue-tint);border:1px solid #bfdbfe;border-radius:10px;padding:10px 14px;margin-bottom:14px;line-height:1.6}
+.sr-summary b{color:var(--blue-deep);font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.sr-group{margin-bottom:18px}
+.sr-tabhead{font-size:12px;font-weight:800;color:var(--blue-deep);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sr-tabs-badge{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:var(--blue);border-radius:20px;padding:1px 9px}
+.sr-hit{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;margin-bottom:8px;cursor:pointer;font-family:inherit;transition:all .15s}
+.sr-hit:hover{border-color:#93c5fd;background:var(--blue-tint);box-shadow:var(--shadow)}
+.sr-hit .sr-card{flex:0 0 auto;max-width:38%;font-size:11px;font-weight:800;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sr-hit .sr-snip{flex:1;min-width:0;font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sr-hit .sr-go{flex:0 0 auto;color:var(--blue);font-size:10px;font-weight:800;white-space:nowrap;opacity:.7}
+.sr-hit:hover .sr-go{opacity:1}
+@media(max-width:640px){.sr-hit{flex-wrap:wrap}.sr-hit .sr-card{max-width:100%;width:100%}.sr-hit .sr-snip{width:100%}.sr-hit .sr-go{margin-left:auto}}
+.sr-empty{padding:26px 10px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+.fx{animation:fxflash 2.4s ease;border-radius:8px}
+@keyframes fxflash{0%,55%{box-shadow:0 0 0 3px rgba(245,158,11,.8)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}
 </style>
 </head>
 <body><div class="container">
@@ -330,6 +364,12 @@ tr.flash{animation:rowflash 2.2s ease}
 </div>
 
 <nav class="subbar">
+  <div class="search-row">
+    <span class="search-ico">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜尋股票代碼／名稱，如 NVDA、台積電、ASML、CoreWeave…" autocomplete="off" spellcheck="false" aria-label="搜尋股票">
+    <button type="button" class="search-clear" id="searchClear" title="清空搜尋" aria-label="清空搜尋">✕</button>
+    <div class="search-drop" id="searchDrop"></div>
+  </div>
   <div class="tabs" id="tabs">
     <button class="tab active" data-tab="ecosystem"><i>🏠</i>產業全景</button>
     <button class="tab" data-tab="compute"><i>🧠</i>算力與設計</button>
@@ -342,6 +382,7 @@ tr.flash{animation:rowflash 2.2s ease}
     <button class="tab" data-tab="neocloud"><i>☁️</i>Neocloud 算力雲</button>
     <button class="tab" data-tab="frontier"><i>🦾</i>模型雙雄生態圈</button>
     <button class="tab" data-tab="chainmap"><i>🕸️</i>跨鏈地圖</button>
+    <button class="tab" data-tab="search"><i>🔍</i>搜尋結果</button>
   </div>
 </nav>
 
@@ -2463,6 +2504,14 @@ tr.flash{animation:rowflash 2.2s ease}
 </section>
 
 
+<!-- ============ 12. 全站股票搜尋結果（由 subbar 搜尋列進入）============ -->
+<section class="pane" id="pane-search">
+  <div class="card">
+    <div class="card-h">🔍 股票搜尋結果 <span class="meta" id="srMeta">—</span></div>
+    <div id="srBody"></div>
+  </div>
+</section>
+
 <div class="foot"><span style="color:#1a73e8;font-weight:700">leungkathy</span> · All-in-One Financial Dashboard Suite — AI 半導體產業鏈投資圖譜（教學性質）· 整合 4 大 Gemini 主題 · 僅供參考，不構成投資建議</div>
 </div>
 
@@ -2479,7 +2528,7 @@ tr.flash{animation:rowflash 2.2s ease}
   var lastTab=null;
   var backBtn=document.createElement('button');
   backBtn.className='goback';backBtn.type='button';document.body.appendChild(backBtn);
-  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲',frontier:'模型雙雄生態圈',chainmap:'跨鏈地圖'};
+  var tabLabels={ecosystem:'產業全景',compute:'算力與設計',foundry:'晶圓代工與設備',packaging:'先進封裝與基板',memory:'記憶體與儲存',pcb:'高階PCB與材料',optical:'光通訊與互連',power:'電力散熱與終端',neocloud:'Neocloud 算力雲',frontier:'模型雙雄生態圈',chainmap:'跨鏈地圖',search:'搜尋結果'};
   function hideBack(){lastTab=null;backBtn.style.display='none';}
   backBtn.addEventListener('click',function(){if(lastTab)show(lastTab);hideBack();});
   function flashRow(id){
@@ -2678,6 +2727,250 @@ tr.flash{animation:rowflash 2.2s ease}
       });
     });
   }
+  // ===== 全站股票搜尋（代碼／名稱 → 全站出現位置，結果開喺「搜尋結果」tab）=====
+  (function(){
+    var tabOrder=['ecosystem','compute','foundry','packaging','memory','pcb','optical','power','neocloud','frontier','chainmap'];
+    var stocks={}, tokenMap={}, stockOrder=0;
+    function normTxt(s){return String(s==null?'':s).replace(/\s+/g,' ').trim();}
+    function escapeRx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+    function hasCJK(s){return /[一-鿿]/.test(s);}
+    function tokenPattern(t){return hasCJK(t)?escapeRx(t):'\\b'+escapeRx(t)+'\\b';}
+    function ensureStock(code,name){
+      code=normTxt(code);
+      if(!code||code==='—'||code==='-')return null;
+      var key=code.toUpperCase();
+      if(key==='—'||key==='-')return null;
+      var s=stocks[key];
+      if(!s){s=stocks[key]={code:key,nameDisp:'',tokens:[],hits:[],tabs:[],order:stockOrder++};}
+      if(name&&!s.nameDisp){name=normTxt(name);if(name&&name!==key)s.nameDisp=name;}
+      return s;
+    }
+    function addTokens(s,code,name){
+      var parts=[code].concat(normTxt(name).split(/[\s／\/、（()）·,，]+/)).filter(Boolean);
+      for(var i=0;i<parts.length;i++){
+        var p=parts[i].trim();
+        if(!p||p.length<2||p==='—'||p==='-')continue;
+        if(s.tokens.indexOf(p)<0)s.tokens.push(p);
+        var lc=p.toLowerCase();
+        (tokenMap[lc]=tokenMap[lc]||[]).push(s.code);
+      }
+    }
+    function cleanHead(h){
+      var cl=h.cloneNode(true);
+      var meta=cl.querySelector('.meta'); if(meta)meta.remove();
+      return normTxt(cl.textContent).replace(/^[①-⑳]\s*/,'');
+    }
+    var UNIT_SEL='table.stocks tbody tr,table.matrix tbody tr,svg text,.sig,.callout,.pitch,.qa,.g-step,.role,.rank,.cm-card,.cm-find .fcard,.focus li,.sub-h,.explain,.tech';
+    function addHit(s,el){
+      if(!s)return;
+      var pane=el.closest('.pane'), tab=pane?pane.id.replace('pane-',''):'';
+      if(!tab||tab==='search')return;
+      var card='',cardEl=el.closest('.card');
+      if(cardEl){var h=cardEl.querySelector('.card-h'); if(h)card=cleanHead(h);}
+      var snip=normTxt(el.textContent).replace(/🔍/g,'');
+      if(snip.length>56)snip=snip.slice(0,56)+'…';
+      for(var i=0;i<s.hits.length;i++){var hh=s.hits[i]; if(hh.tab===tab&&hh.card===card&&hh.snip===snip)return;}
+      s.hits.push({el:el,tab:tab,card:card,snip:snip});
+    }
+    function buildIndex(){
+      // A) 股票表格：主索引（代碼＋公司名 token）
+      document.querySelectorAll('table.stocks').forEach(function(tbl){
+        tbl.querySelectorAll('tbody tr').forEach(function(tr){
+          var tk=tr.querySelector('.tk'), co=tr.querySelector('.co');
+          if(!tk)return;
+          var code=normTxt(tk.textContent), name=co?normTxt(co.textContent):'';
+          var s=ensureStock(code,name);
+          if(s)addTokens(s,code,name);
+        });
+      });
+      // B) data-stock chips：補抽公司名 token（例如「<b>NVDA</b> NVIDIA」→ NVIDIA）
+      document.querySelectorAll('[data-stock]').forEach(function(el){
+        var code=normTxt(el.getAttribute('data-stock'));
+        var s=ensureStock(code);
+        if(!s)return;
+        var txt=normTxt(el.textContent);
+        var cleaned=txt.replace(new RegExp(escapeRx(code),'gi'),' ')
+          .replace(/(去|算力|光電|光通訊|代工|封裝|記憶體|跨鏈|生態|tab|map|首頁)/gi,' ')
+          .replace(/[^一-鿿A-Za-z0-9 .&()+\-·]/g,' ')
+          .replace(/\s+/g,' ').trim();
+        if(cleaned&&cleaned.length>=2&&cleaned.length<=28&&!/^[0-9.]+$/.test(cleaned)){
+          addTokens(s,code,cleaned);
+        }
+      });
+      // C) 掃描全 DOM：每隻股票收集所有出現位置
+      var allToks=[];
+      for(var key in stocks){stocks[key].tokens.forEach(function(t){if(allToks.indexOf(t)<0)allToks.push(t);});}
+      var master=new RegExp(allToks.map(tokenPattern).join('|'),'g');
+      var matchedUnits=[];
+      document.querySelectorAll(UNIT_SEL).forEach(function(el){
+        var txt=el.textContent||'';
+        if(!txt)return;
+        var codes={},n=0,m; master.lastIndex=0;
+        while((m=master.exec(txt))!==null){
+          var list=tokenMap[m[0].toLowerCase()];
+          if(list){for(var i=0;i<list.length;i++){var c=list[i]; if(!codes[c]){codes[c]=1;n++;}}}
+          if(m.index===master.lastIndex)master.lastIndex++;
+        }
+        if(n){matchedUnits.push({el:el,codes:codes});for(var c2 in codes){addHit(stocks[c2],el);}}
+      });
+      // D) data-stock chips：若所屬 unit 已覆蓋該股則略過，否則自成一個 hit
+      document.querySelectorAll('[data-stock]').forEach(function(el){
+        var s=ensureStock(normTxt(el.getAttribute('data-stock')));
+        if(!s)return;
+        var anc=el.closest(UNIT_SEL), covered=false;
+        if(anc){for(var i=0;i<matchedUnits.length;i++){if(matchedUnits[i].el===anc&&matchedUnits[i].codes[s.code]){covered=true;break;}}}
+        if(!covered)addHit(s,el);
+      });
+      // E) 統計每隻股票分佈嘅 tab
+      for(var k in stocks){
+        var st=stocks[k], seen={}; st.tabs=[];
+        st.hits.forEach(function(h){if(!seen[h.tab]){seen[h.tab]=1;st.tabs.push(h.tab);}});
+      }
+    }
+    function flashEl(el){
+      if(!el)return;
+      var t=el;
+      if(el.tagName==='TEXT'){t=el.closest('.svgbox')||el.ownerSVGElement||el;}
+      try{t.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){t.scrollIntoView();}
+      var cls=(t.tagName==='TR')?'flash':'fx';
+      t.classList.remove(cls);void t.offsetWidth;t.classList.add(cls);
+    }
+    function jumpToHit(h){
+      var to=h.tab, cur=document.querySelector('.pane.active');
+      if(cur&&cur.id!=='pane-'+to){lastTab=cur.id.replace('pane-','');backBtn.textContent='⬅ 回 '+(tabLabels[lastTab]||lastTab);backBtn.style.display='inline-block';}
+      show(to);
+      setTimeout(function(){flashEl(h.el);},90);
+    }
+    function renderResults(s){
+      var body=document.getElementById('srBody'), meta=document.getElementById('srMeta');
+      body.innerHTML='';
+      var sum=document.createElement('div');sum.className='sr-summary';
+      var b=document.createElement('b');b.textContent=s.code;sum.appendChild(b);
+      sum.appendChild(document.createTextNode('　'+(s.nameDisp||s.code)+'　—　共 '+s.hits.length+' 處提及，分佈 '+s.tabs.length+' 個 tab。'));
+      sum.appendChild(document.createElement('br'));
+      sum.appendChild(document.createTextNode('點擊任何一項即跳到對應位置；頂部「🔍 搜尋結果」tab 可隨時返回搜尋結果。'));
+      body.appendChild(sum);
+      var groups={};
+      s.hits.forEach(function(h){(groups[h.tab]=groups[h.tab]||[]).push(h);});
+      tabOrder.forEach(function(tab){
+        if(!groups[tab])return;
+        groups[tab].sort(function(a,b){var r=a.el.compareDocumentPosition(b.el);return (r&4)?1:(r&2)?-1:0;});
+        var g=document.createElement('div');g.className='sr-group';
+        var hd=document.createElement('div');hd.className='sr-tabhead';
+        var bg=document.createElement('span');bg.className='sr-tabs-badge';bg.textContent=tabLabels[tab]||tab;
+        hd.appendChild(bg);
+        hd.appendChild(document.createTextNode(' '+groups[tab].length+' 處'));
+        g.appendChild(hd);
+        groups[tab].forEach(function(h){
+          var btn=document.createElement('button');btn.type='button';btn.className='sr-hit';
+          var c=document.createElement('span');c.className='sr-card';c.textContent=h.card||'';
+          var sn=document.createElement('span');sn.className='sr-snip';sn.textContent=h.snip;
+          var go=document.createElement('span');go.className='sr-go';go.textContent='開啟 →';
+          btn.appendChild(c);btn.appendChild(sn);btn.appendChild(go);
+          btn.addEventListener('click',function(){jumpToHit(h);});
+          g.appendChild(btn);
+        });
+        body.appendChild(g);
+      });
+      meta.textContent=s.hits.length+' 處提及 · '+s.tabs.length+' 個 tab';
+    }
+    var searchInput=document.getElementById('searchInput');
+    var searchDrop=document.getElementById('searchDrop');
+    var searchClear=document.getElementById('searchClear');
+    var searchRow=document.querySelector('.search-row');
+    var curItems=[],hlIdx=-1;
+    function closeDrop(){searchDrop.classList.remove('show');}
+    function renderDrop(res,q){
+      searchDrop.innerHTML='';
+      searchDrop.classList.add('show');
+      hlIdx=-1;
+      if(!res.length){
+        var d=document.createElement('div');d.className='sd-empty';
+        d.textContent='無相符股票：'+q+'　（試試代碼如 NVDA／TSM，或名稱如 台積電／美光）';
+        searchDrop.appendChild(d);return;
+      }
+      res.forEach(function(item){
+        var s=item.s;
+        var btn=document.createElement('button');btn.type='button';btn.className='sd-item';
+        var c=document.createElement('span');c.className='sd-code';c.textContent=s.code;
+        var n=document.createElement('span');n.className='sd-name';n.textContent=s.nameDisp||s.code;
+        var cnt=document.createElement('span');cnt.className='sd-cnt';cnt.textContent=s.hits.length+' 處 · '+s.tabs.length+' tab';
+        btn.appendChild(c);btn.appendChild(n);btn.appendChild(cnt);
+        btn.addEventListener('mousedown',function(ev){ev.preventDefault();selectStock(s);});
+        searchDrop.appendChild(btn);
+      });
+    }
+    function runSearch(q){
+      q=(q||'').toLowerCase().trim();
+      if(!q){closeDrop();return;}
+      var res=[];
+      for(var k in stocks){
+        var s=stocks[k],score=-1,code=s.code.toLowerCase();
+        if(code===q)score=0;
+        else if(code.indexOf(q)===0)score=1;
+        else{
+          for(var i=0;i<s.tokens.length;i++){
+            var t=s.tokens[i].toLowerCase();
+            if(t===q){score=2;break;}
+            if(t.indexOf(q)===0){score=3;break;}
+          }
+        }
+        if(score<0){
+          if(code.indexOf(q)>=0)score=4;
+          else{for(var j=0;j<s.tokens.length;j++){if(s.tokens[j].toLowerCase().indexOf(q)>=0){score=5;break;}}}
+        }
+        if(score>=0)res.push({s:s,score:score});
+      }
+      res.sort(function(a,b){return a.score-b.score||a.s.order-b.s.order;});
+      renderDrop(res.slice(0,12),q);
+    }
+    function moveHl(d){
+      var items=searchDrop.querySelectorAll('.sd-item');
+      if(!items.length)return;
+      hlIdx+=d;
+      if(hlIdx>=items.length)hlIdx=0;
+      if(hlIdx<0)hlIdx=items.length-1;
+      items.forEach(function(it,i){it.classList.toggle('hl',i===hlIdx);});
+      if(items[hlIdx])try{items[hlIdx].scrollIntoView({block:'nearest'});}catch(e){}
+    }
+    function selectStock(s){
+      closeDrop();
+      searchInput.value=s.code;
+      searchClear.style.display='flex';
+      renderResults(s);
+      var cur=document.querySelector('.pane.active');
+      if(cur&&cur.id!=='pane-search'){lastTab=cur.id.replace('pane-','');backBtn.textContent='⬅ 回 '+(tabLabels[lastTab]||lastTab);backBtn.style.display='inline-block';}
+      show('search');
+      var st=document.querySelector('.tab[data-tab="search"]');
+      if(st)try{st.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}
+    }
+    function renderPlaceholder(){
+      var body=document.getElementById('srBody');
+      if(!body)return;
+      var d=document.createElement('div');d.className='sr-empty';
+      d.innerHTML='在頂部搜尋列輸入<b>股票代碼</b>或<b>名稱</b>（如 NVDA、台積電、ASML、CoreWeave），選擇後此處會列出<b>全站所有相關位置</b>；點擊任何一項即跳到該位置，頂部「🔍 搜尋結果」tab 可隨時返回。';
+      body.appendChild(d);
+    }
+    if(searchInput&&searchDrop){
+      buildIndex();
+      renderPlaceholder();
+      var dbTimer=null;
+      searchInput.addEventListener('input',function(){
+        searchClear.style.display=searchInput.value?'flex':'none';
+        clearTimeout(dbTimer);
+        var q=searchInput.value;
+        dbTimer=setTimeout(function(){runSearch(q);},120);
+      });
+      searchInput.addEventListener('keydown',function(e){
+        if(e.key==='ArrowDown'){e.preventDefault();if(!searchDrop.classList.contains('show'))runSearch(searchInput.value);else moveHl(1);}
+        else if(e.key==='ArrowUp'){e.preventDefault();if(searchDrop.classList.contains('show'))moveHl(-1);}
+        else if(e.key==='Enter'){e.preventDefault();if(searchDrop.classList.contains('show')){var it=curItems[hlIdx>=0?hlIdx:0];if(it)selectStock(it.s);}}
+        else if(e.key==='Escape'){closeDrop();searchInput.blur();}
+      });
+      searchClear.addEventListener('click',function(){searchInput.value='';searchClear.style.display='none';closeDrop();searchInput.focus();});
+      document.addEventListener('click',function(e){if(searchRow&&!searchRow.contains(e.target))closeDrop();});
+    }
+  })();
   renderPie();
 })();
 </script>
