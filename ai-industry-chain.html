@@ -58,6 +58,8 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
 .explain{font-size:var(--fs-body);color:#334155}
 .explain b{color:var(--ink)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2.phases{grid-template-columns:1fr 1fr}
+@media(max-width:820px){.grid2.phases{grid-template-columns:1fr}}
 @media(max-width:820px){.grid2{grid-template-columns:1fr}}
 .sec-h{font-size:var(--fs-sub);font-weight:800;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:7px}
 .focus{padding-left:18px;font-size:var(--fs-body);color:#334155}
@@ -1186,6 +1188,31 @@ tr.flash{animation:rowflash 2.2s ease}
       </table></div>
     </div>
     <div class="callout amber">💡 <b>投資觀點：</b>客製化 HBM ＝ 記憶體價值鏈「重新分配」——封裝／邏輯代工份額上升、記憶體廠份額略降但「綁定加深」。短期勝負仍取決於<b>誰先通過 NVIDIA 認證並拿到量產訂單</b>：SK 海力士領先、Samsung 反攻、Micron 伺機。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🛠️ 客製化 Base Die 供應鏈：設計＋代工分工 <span class="meta">HBM4 起的新玩家——誰畫藍圖、誰負責製造</span></div>
+    <div class="explain">承接上文的「客製化 Base Die」——HBM4 起，Base Die 不再由記憶體廠一條龍自製，而是拆給<b>邏輯晶片玩家</b>：誰負責設計、誰負責製造？</div>
+    <div class="grid2 phases">
+      <div style="border:1px solid #e9d5ff;background:#faf5ff;border-radius:12px;padding:14px">
+        <div class="sub-h" style="color:#7e22ce">① 設計與矽智財（Design &amp; IP）</div>
+        <p class="explain" style="font-size:12.5px;line-height:1.6">為雲端巨頭量身設計 Base Die 架構，並提供核心電路與傳輸協定的專利藍圖。</p>
+        <ul class="focus" style="font-size:12.5px">
+          <li><b>ASIC 設計總包（Fabless）</b>：Broadcom（博通）AVGO · Marvell（邁威爾）MRVL</li>
+          <li><b>矽智財與架構（IP）</b>：Arm（安謀）ARM —— 提供微控制器與通訊 IP</li>
+        </ul>
+      </div>
+      <div style="border:1px solid #fed7aa;background:#fff7ed;border-radius:12px;padding:14px">
+        <div class="sub-h" style="color:#c2410c">② 代工製造（Manufacturing）</div>
+        <p class="explain" style="font-size:12.5px;line-height:1.6">擁有先進邏輯製程（如 5nm／12nm）的晶圓廠，負責將設計圖實體化。</p>
+        <ul class="focus" style="font-size:12.5px">
+          <li><b>TSMC（台積電）</b>——「專業分工聯盟」：專注代工，與設計廠及記憶體廠完美配合。</li>
+          <li><b>Samsung Foundry（三星）</b>——「一站式服務（Turnkey）」：包辦設計、代工到記憶體生產。</li>
+          <li><b>Intel Foundry（英特爾）</b><span class="pos flag">潛在挑戰者</span>——「先進封裝與地緣牌」：憑藉頂尖 3D 封裝（Foveros）與歐美本土產能，爭取成為巨頭的第二供應商（Taiwan+1）。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout amber">💡 <b>一句話記住：</b>客製化 Base Die——<b>Broadcom／Marvell 畫圖、Arm 賣 IP、台積電／三星蓋樓</b>；Intel 以 Foveros 先進封裝＋美國本土產能伺機當「第二供應商」。</div>
   </div>
 
   <div class="card">
