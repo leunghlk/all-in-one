@@ -535,8 +535,12 @@ function payoffSVG(c,n){
   const x0=Math.min(S*0.5,K-prem*2),x1=Math.max(S*1.35,K+prem*2);
   const fn=px=>(prem-Math.max(0,K-px))*mult;
   const arr=[fn(x0),fn(x1),prem*mult,-(K-prem)*mult,0];
-  let y0=Math.min.apply(null,arr)*1.12,y1=Math.max.apply(null,arr)*1.15;
-  if(y0>=0)y0=-prem*mult*0.05; if(y1<=0)y1=prem*mult*0.05;
+  let y0=Math.min.apply(null,arr),y1=Math.max.apply(null,arr);
+  // ⭐ 2026-08-14: max gain 唔好貼住最頂——short put 個 loss 遠大過 gain，淨係 1.15x 乘落 max 會令
+  // gain 端零 headroom、條 curve 被壓扁。正常情況兩端各加 10% range；單邊情況特判。
+  if(y0>=0){y0=-prem*mult*0.08;y1=Math.max(y1,prem*mult)*1.15;}
+  else if(y1<=0){y1=prem*mult*0.08;y0=Math.min(y0,-(K-prem)*mult)*1.15;}
+  else{const rng=(y1-y0)*0.10;y0-=rng;y1+=rng;}
   const X=px=>padL+(px-x0)/(x1-x0)*(W-padL-padR);
   const Y=py=>padT+(y1-py)/(y1-y0)*(H-padT-padB);
   let h='';
@@ -611,16 +615,18 @@ async function loadChain(tk){
     renderChain(j,tk);
   }catch(e){cEl.innerHTML='<div class="muted">Futu 期權鏈載入失敗（bridge 是否連線 / 帳戶有無期權權限）。</div>';}
 }
-function setChainExp(tk,i){chainExpIdx[tk]=i;renderChain(chainCache[tk],tk);}
+function setChainExp(tk,i){chainExpIdx[tk]=i;chainScrollPending[tk]=false;renderChain(chainCache[tk],tk);}   // ⭐ 手動切 expiry 唔再 re-scroll
 function renderChain(chain,tk){
   const cEl=$('chainCard');if(!cEl)return;
   const idx=chainExpIdx[tk]||0;
   const exp=chain.expiries[idx]||chain.expiries[0];
   if(!exp){cEl.innerHTML='<div class="muted">冇期權到期日。</div>';return;}
-  const candStrike=findCandidate(tk)?findCandidate(tk).strike:null;
+  const cand=findCandidate(tk);
+  const candStrike=cand?cand.strike:null, candExp=cand?cand.expiry:null;   // ⭐ 建議只喺佢自己嗰個 expiry 度 highlight
   const spot=chain.spot;
   let h='<div style="margin-bottom:8px;font-size:12px">到期：';
-  chain.expiries.forEach((e,i)=>{h+='<button class="btn '+(i===idx?'btn-go':'btn-ghost')+'" style="margin-right:4px" onclick="setChainExp(\''+tk+'\','+i+')">'+e.expiry+'（'+e.days+'D）</button> ';});
+  chain.expiries.forEach((e,i)=>{const isCand=cand&&e.expiry===cand.expiry;
+    h+='<button class="btn '+(i===idx?'btn-go':'btn-ghost')+'" style="margin-right:4px" onclick="setChainExp(\''+tk+'\','+i+')">'+e.expiry+'（'+e.days+'D）'+(isCand?' ⭐':'')+'</button> ';});
   h+='<span class="muted small">· 正股 $'+px2(spot)+'</span></div>';
   h+='<div id="selReadout"></div>';   // ⭐ 揀咗 strike 之後嘅即時 readout
   // merge call/put by strike；只顯示正股 ±40% 內（deep ITM/OTM IV 無意義 + payload 細）
@@ -636,7 +642,7 @@ function renderChain(chain,tk){
     '</tr></thead><tbody>';
   keys.forEach(K=>{
     const cl=m[K].call||{}, pu=m[K].put||{};
-    const isRec=candStrike!=null&&Math.abs(Number(K)-candStrike)<0.01;
+    const isRec=candStrike!=null&&candExp===exp.expiry&&Math.abs(Number(K)-candStrike)<0.01;
     const star=isRec?(' '+pill('w','建議')):'';
     const hl=isRec?'style="background:#fffbeb"':'';
     // 點行使價行 → 揀呢個 strike（即時 update chart + payoff + OTM/ITM% + 回報%）
@@ -653,8 +659,8 @@ function renderChain(chain,tk){
   h+='</tbody></table></div>';
   h+='<div class="chart-note">賣出價 = bid（你實際收到）；買回價 = ask。點任何行使價行 → chart / payoff / OTM-ITM% / 回報% 即時更新。' + tip('premiumsrc') + '</div>';
   cEl.innerHTML=h;
-  // ⭐ auto-scroll 去建議 strike（首次 + 每次 refresh / 重入 tab 都做）
-  if(candStrike!=null&&(chainScrollPending[tk]||!chainSeen[tk])){
+  // ⭐ auto-scroll 去建議 strike（首次 + refresh / 重入 tab 都做；但淨係喺候選自己嗰個 expiry 先會）
+  if(candStrike!=null&&candExp===exp.expiry&&(chainScrollPending[tk]||!chainSeen[tk])){
     chainSeen[tk]=true;
     chainScrollPending[tk]=false;
     const r=document.getElementById('crow-'+candStrike);
