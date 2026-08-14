@@ -165,6 +165,8 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
       <div class="card-b" id="bestCard"></div></div>
     <div class="card"><div class="card-h"><span class="t">候選名單（按分數排序）</span><span class="meta" id="candMeta"></span></div>
       <div class="card-b" id="candBody"></div></div>
+    <div class="card"><div class="card-h"><span class="t">⚡ 賣 Call / 賣 Put 勝率排名</span><span class="meta">勝率 P(OTM) 由高至低 · 7D/14D · delta≈0.25 · 連動量減速</span></div>
+      <div class="card-b" id="winrankBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">📝 決定記錄</span><span class="meta">你揀咗乜、排緊隊、同埋「今日唔做」</span></div>
       <div class="card-b" id="decBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">已排除</span><span class="meta">業績窗口 / model veto / 槓桿 ETF</span></div>
@@ -331,7 +333,7 @@ async function loadLive(){
 function setLive(t){const el=$('liveBadge');if(el)el.textContent=t;}
 
 /* ════════════ render ════════════ */
-function renderAll(){renderOverview();renderBest();renderCandidates();renderPositions();renderNotes();renderDecisions();renderMethod();if(activeTk)renderDetail();}
+function renderAll(){renderOverview();renderBest();renderCandidates();renderWinRank();renderPositions();renderNotes();renderDecisions();renderMethod();if(activeTk)renderDetail();}
 
 function findCandidate(tk){
   const list=[].concat(rec.book||[],rec.best?[rec.best]:[],rec.candidates||[]);
@@ -434,6 +436,55 @@ function renderCandidates(){
   });
   h+='</tbody></table></div>';
   $('candBody').innerHTML=h;
+}
+
+/* ⭐ 2026-08-14: 賣 Call / 賣 Put 勝率排名（winrank：P(OTM) 由高到低，連動量減速） */
+function renderWinRank(){
+  const el=$('winrankBody');if(!el)return;
+  const w=(rec&&rec.winrank)||[];
+  if(!w.length){el.innerHTML='<div class="muted">勝率排名：等待盤前全宇宙掃描（每日更新）。</div>';return;}
+  let h='<div class="table-scroll"><table class="utable"><thead><tr>'+
+    '<th>訊號</th><th>標的</th><th class="r">現價</th><th class="r">行使價</th><th class="r">期權金/張</th><th class="r">抵押</th>'+
+    '<th class="r">總評分</th><th class="r">動量減速</th><th class="c">ITM / OTM</th><th class="r">周回報</th><th></th></tr></thead><tbody>';
+  w.forEach((x,i)=>{
+    const otm=Math.round(x.prob_otm||0), itm=Math.round(x.prob_itm||0);
+    const dec=x.decel!=null?x.decel:'—';
+    const dcol=(dec!=='—')?(dec<=-3?'#dc2626':dec<=-2?'#d97706':'#16a34a'):'#94a3b8';
+    const sig=x.signal==='SELL PUT'
+      ?'<span style="background:#dbeafe;color:#1d4ed8;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700">賣Put</span>'
+      :'<span style="background:#fef3c7;color:#92400e;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700">賣Call</span>';
+    const una=x.unaffordable?' <span style="color:#dc2626;font-weight:700" title="單倉超 90% 資本，執行唔到">⚠</span>':'';
+    h+='<tr>'+
+      '<td>'+sig+'</td><td><b>'+esc(x.ticker)+'</b>'+una+'</td>'+
+      '<td class="r">$'+px2(x.spot)+'</td><td class="r">$'+px2(x.strike)+'</td>'+
+      '<td class="r">$'+x.premium+'</td><td class="r">$'+Number(x.collateral||0).toLocaleString()+'</td>'+
+      '<td class="r"><b>'+(x.total!=null?Number(x.total).toFixed(2):'—')+'</b></td>'+
+      '<td class="r" style="color:'+dcol+';font-weight:700">'+dec+'</td>'+
+      '<td class="c"><span style="color:#16a34a;font-weight:700">'+otm+'%</span> / <span style="color:#dc2626">'+itm+'%</span></td>'+
+      '<td class="r">'+(x.yield_pct!=null?Number(x.yield_pct).toFixed(2):'—')+'%</td>'+
+      '<td><button class="btn btn-go" '+(x.unaffordable?'style="opacity:.4;pointer-events:none" title="單倉超 90% 資本，執行唔到"':'')+' onclick="execWinRank('+i+')">'+(x.unaffordable?'唔夠資本':'執行')+'</button> '+
+      '<button class="btn btn-ghost" onclick="showDetail(\''+x.ticker+'\')">詳情</button></td>'+
+      '</tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="muted" style="font-size:11px;margin-top:4px">排序 = 勝率 P(OTM) 由高到低。總評分 = 期權分數Ⓘ × 股票質素 × 動量健康；動量減速 ≤-2 琥珀、≤-3 紅。⚠ = 單倉超 90% 資本（執行唔到）。執行 → 攞實時 Futu bid 開執行視窗（賣 Put=CSP / 賣 Call=短 call，紙上）。</div>';
+  el.innerHTML=h;
+}
+
+/* ⭐ 2026-08-14: winrank 執行 —— side-aware（賣 Put→CSP / 賣 Call→短 call）＋ 攞實時 Futu bid */
+function winRankContracts(x){
+  const cap=(CAPITAL_HKD/HKD_USD)*0.9;   // ≈ USD 23k 可用（同 engine 兩輪 greedy 一致）
+  return Math.max(1,Math.min(3,Math.floor(cap/(x.collateral||1))));
+}
+function execWinRank(i){
+  const x=(rec&&rec.winrank||[])[i];if(!x)return;
+  const side=(x.signal==='SELL CALL')?'CALL':'PUT';
+  // winrank 行唔喺 book/best/candidates → 合成 candidate context，modal 先有齊 spot/mid/OTM 顯示
+  const ctx={ticker:x.ticker,name:x.ticker,expiry:x.expiry,dte:x.dte||0,strike:x.strike,spot:x.spot,mid:x.mid,
+    delta:x.delta,iv:x.iv,prob_otm:x.prob_otm,prob_itm:x.prob_itm,
+    contracts:winRankContracts(x),premium:x.premium,premium_total:x.premium,
+    premium_total_hkd:Math.round(x.premium*HKD_USD),collateral:x.collateral,fromChain:true,signal:x.signal};
+  execCandidate(x.ticker,x.expiry,x.strike,ctx.contracts,side,x.mid,ctx);
 }
 
 function renderNotes(){
@@ -644,10 +695,12 @@ function renderChain(chain,tk){
     const cl=m[K].call||{}, pu=m[K].put||{};
     const isRec=candStrike!=null&&candExp===exp.expiry&&Math.abs(Number(K)-candStrike)<0.01;
     const star=isRec?(' '+pill('w','建議')):'';
-    const hl=isRec?'style="background:#fffbeb"':'';
+    // ⭐ 2026-08-14: highlight 併入單一 style —— 之前行內「cursor」係第二個 style attribute，
+    // 瀏覽器淨係用最後一個 → background:#fffbeb 俾 cursor 覆蓋 → 建議 strike 冇黃底 highlight。
+    const hl=isRec?'background:#fffbeb;':'';
     // 點行使價行 → 揀呢個 strike（即時 update chart + payoff + OTM/ITM% + 回報%）
     const pick=pu.bid!=null?('onclick="selChain(\''+tk+'\',\''+exp.expiry+'\','+exp.days+','+K+','+pu.bid+','+pu.ask+','+(pu.iv||0)+','+(pu.delta||0)+','+(spot||0)+')"'):'';
-    h+='<tr id="crow-'+K+'" '+hl+' style="cursor:'+(pu.bid!=null?'pointer':'default')+'" '+pick+'><td class="r"><b>'+px2(K)+'</b>'+star+'</td>';
+    h+='<tr id="crow-'+K+'" style="'+hl+'cursor:'+(pu.bid!=null?'pointer':'default')+'" '+pick+'><td class="r"><b>'+px2(K)+'</b>'+star+'</td>';
     h+='<td class="r">'+(cl.bid!=null?px2(cl.bid):'—')+'</td><td class="r">'+(cl.ask!=null?px2(cl.ask):'—')+'</td>'+
        '<td class="r">'+(cl.iv!=null?Math.round(cl.iv*100)+'%':'—')+'</td><td class="r">'+(cl.delta!=null?cl.delta:'—')+'</td>'+
        '<td>'+(cl.bid!=null?'<button class="btn btn-no" onclick="event.stopPropagation();execChain(\''+tk+'\',\''+exp.expiry+'\','+K+',\'CALL\','+cl.bid+','+cl.ask+')">賣</button>':'')+'</td>';
@@ -672,7 +725,8 @@ function execChain(tk,exp,K,type,bid,ask){
   openExec(tk,exp,Number(K),1,bid,bid,ask,type);
 }
 /* ════════════ 執行：攞實時 Futu bid 先落單 ════════════ */
-async function execCandidate(tk,exp,K,contracts){
+async function execCandidate(tk,exp,K,contracts,side,fallbackMid,ctx){
+  // ⭐ 2026-08-14: side-aware（賣 Put→CSP / 賣 Call→短 call）；ctx = winrank 等非候選行嘅合成 candidate
   let bid=null,ask=null;
   if(!chainCache[tk]&&activeBridge){
     try{
@@ -682,14 +736,15 @@ async function execCandidate(tk,exp,K,contracts){
     }catch(e){}
   }
   const ch=chainCache[tk];
+  const want=(side==='CALL')?'CALL':'PUT';
   if(ch)for(const e of ch.expiries){
     if(e.expiry!==exp)continue;
     for(const row of e.rows){
-      if(row.type==='PUT'&&Math.abs(row.strike-K)<0.01&&row.bid!=null){bid=row.bid;ask=row.ask;break;}
+      if(row.type===want&&Math.abs(row.strike-K)<0.01&&row.bid!=null){bid=row.bid;ask=row.ask;break;}
     }
   }
-  const c=findCandidate(tk);
-  openExec(tk,exp,K,contracts||(c?c.contracts:1),bid||(c?c.mid:0),bid,ask,'PUT');
+  const c=ctx||findCandidate(tk);
+  openExec(tk,exp,K,contracts||(c?c.contracts:1),bid||(fallbackMid!=null?fallbackMid:(c?c.mid:0)),bid,ask,side||'PUT',ctx);
 }
 /* ════════════ 期權鏈揀 strike → 即時 update chart + payoff + OTM/ITM% + 回報% ════════════ */
 function erfA(x){const sign=x>=0?1:-1;x=Math.abs(x);const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
@@ -775,15 +830,17 @@ function drawChart(c){
 }
 
 /* ════════════ 執行 / 平倉 / skip（POST） ════════════ */
-function openExec(tk,exp,K,contracts,mid,bid,ask,side){
-  const c=findCandidate(tk);
+function openExec(tk,exp,K,contracts,mid,bid,ask,side,ctx){
+  const c=ctx||findCandidate(tk);
   const box=$('execBox');
   let n=contracts||1;
   const sellPx=(bid!=null&&bid>0)?bid:mid;   // 賣出價 = bid（真實成交）；冇 bid 用 mid
-  const sideTxt=(side==='CALL')?'SELL CALL':'SELL PUT';
+  const isCall=(side==='CALL');
+  const sideTxt=isCall?'SELL CALL':'SELL PUT';
+  window._lastExecCtx=c; window._lastExecSide=side;   // ⭐ confirmExec 要知 side + ctx（winrank 合成 candidate）
   const renderBox=()=>{
     const coll=K*100*n, prem=sellPx*100*n;
-    const maxLoss=(K-sellPx)*100*n, be=K-sellPx;
+    const maxLoss=(K-sellPx)*100*n, be=isCall?(K+sellPx):(K-sellPx);   // 短 call BE = K + 權利金（升穿先蝕）
     const locked=lockedHKD(), avail=availHKD(), need=coll*HKD_USD;
     const insufficient=need>avail+1;   // 唔夠抵押 → 紅警示 + 鎖確認掣
     box.innerHTML=
@@ -798,10 +855,10 @@ function openExec(tk,exp,K,contracts,mid,bid,ask,side){
       '<div class="row"><span class="k">權利金（全收）</span><span>'+money(prem)+' USD ≈ '+hkd(prem*HKD_USD)+'</span></div>'+
       '<div class="row"><span class="k">抵押（鎖住）</span><span>'+money(coll)+' USD ≈ '+hkd(coll*HKD_USD)+tip('collateral')+'</span></div>'+
       '<div class="row"><span class="k">最大利潤</span><span class="pos">+'+money(prem)+'</span></div>'+
-      '<div class="row"><span class="k">最大虧損（→0）</span><span class="neg">-'+money(maxLoss)+' ≈ '+hkd(maxLoss*HKD_USD)+tip('maxloss')+'</span></div>'+
-      '<div class="row"><span class="k">盈虧平衡</span><span>$'+be+tip('breakeven')+'</span></div>'+
+      '<div class="row"><span class="k">最大虧損</span><span class="neg">'+(isCall?'<span style="color:#dc2626">無上限（裸賣 call，股價飛升蝕無限）</span>':('-'+money(maxLoss)+' ≈ '+hkd(maxLoss*HKD_USD)+tip('maxloss')))+'</span></div>'+
+      '<div class="row"><span class="k">盈虧平衡</span><span>$'+be.toFixed(2)+(isCall?'<span class="muted small">（升穿先蝕）</span>':'')+tip('breakeven')+'</span></div>'+
       '<div class="row"><span class="k">OTM 機率</span><span style="color:#16a34a;font-weight:700">'+(c&&c.prob_otm!=null?c.prob_otm+'%':'—')+'</span></div>'+
-      '<div class="warn-note">⚠️ 紙上交易（未實際落盤）。確認後會排隊俾 engine 開倉；engine 用你揀嘅賣出價（bid）落賬。</div>'+
+      '<div class="warn-note">⚠️ 紙上交易（未實際落盤）。確認後會排隊俾 engine 開倉；engine 用你揀嘅賣出價（bid）落賬。'+(isCall?'<b style="color:#dc2626">裸賣 call 風險無上限</b>，執行前諗清楚。':'')+'</div>'+
       '<div class="modal-actions"><button class="btn btn-ghost" onclick="closeExec()">取消</button> <button class="btn btn-go" '+(insufficient?'style="opacity:.4;pointer-events:none"':'')+' onclick="confirmExec(\''+tk+'\',\''+exp+'\','+K+',\''+n+'\','+sellPx+')">✅ 確認執行</button></div>';
   };
   window.execStepper=function(d){n=Math.max(1,Math.min(5,n+d));renderBox();};
@@ -811,10 +868,13 @@ function openExec(tk,exp,K,contracts,mid,bid,ask,side){
 }
 function closeExec(){$('execModal').style.display='none';}
 async function confirmExec(tk,exp,K,n,premium){
-  recordDecision('queued',tk,exp,K,{contracts:Number(n),premium:Number(premium)});
+  const c=window._lastExecCtx||null;
+  const side=(window._lastExecSide==='CALL')?'CALL':'CSP';   // ⭐ 2026-08-14: 帶 side 俾 engine 開啱方向（賣 Call=短 call）
+  recordDecision('queued',tk,exp,K,{contracts:Number(n),premium:Number(premium),side:side});
   const r=await postJSON(activeBridge+'/options_action?secret='+encodeURIComponent(BRIDGE_SECRET),{
     action:'open',ticker:tk,expiry:exp,strike:Number(K),contracts:Number(n),premium:Number(premium),
-    delta:(findCandidate(tk)||{}).delta,iv:(findCandidate(tk)||{}).iv
+    delta:(c&&c.delta!=null)?c.delta:((findCandidate(tk)||{}).delta),iv:(c&&c.iv!=null)?c.iv:((findCandidate(tk)||{}).iv),
+    side:side
   });
   closeExec();
   if(r&&r.ok){toast('✅ 已排隊執行 '+tk+' ×'+n+'（engine 下個週期確認，price 到先落賬）');setTimeout(function(){loadRec();},4000);}
@@ -851,7 +911,7 @@ function renderDecisions(){
     h+='<div style="font-weight:700;margin-bottom:6px">🚀 已執行 / 排隊中（'+(queued.length)+'）</div><table class="utable"><thead><tr><th>股票</th><th class="r">行使價</th><th>到期</th><th class="r">張數</th><th class="r">每股權利金</th><th>狀態</th><th></th></tr></thead><tbody>';
     queued.slice().reverse().forEach(q=>{
       const done=posKeys.has(decKey(q.ticker,q.expiry,q.strike));
-      h+='<tr><td><b>'+esc(q.ticker)+'</b></td><td class="r">$'+px2(q.strike)+'</td><td>'+q.expiry+'</td><td class="r">'+(q.contracts||1)+'</td><td class="r">$'+px2(q.premium)+'</td><td>'+(done?'<span style="color:#16a34a;font-weight:700">✅ 已落賬</span>':'<span style="color:#d97706;font-weight:700">⏳ 排隊執行中</span>')+'</td>'+
+      h+='<tr><td><b>'+esc(q.ticker)+'</b>'+(q.side==='CALL'?' <span style="color:#92400e;font-size:10px;font-weight:700">賣Call</span>':' <span style="color:#1d4ed8;font-size:10px;font-weight:700">賣Put</span>')+'</td><td class="r">$'+px2(q.strike)+'</td><td>'+q.expiry+'</td><td class="r">'+(q.contracts||1)+'</td><td class="r">$'+px2(q.premium)+'</td><td>'+(done?'<span style="color:#16a34a;font-weight:700">✅ 已落賬</span>':'<span style="color:#d97706;font-weight:700">⏳ 排隊執行中</span>')+'</td>'+
         '<td>'+(done?'':('<button class="btn btn-ghost" onclick="editQueued(\''+q.ticker+'\',\''+q.expiry+'\','+q.strike+',\''+(q.contracts||1)+'\',\''+(q.premium||0)+'\')">改張數</button> <button class="btn btn-close" onclick="cancelQueued(\''+q.ticker+'\',\''+q.expiry+'\','+q.strike+')">取消</button>'))+'</td></tr>';
     });
     h+='</tbody></table>';
