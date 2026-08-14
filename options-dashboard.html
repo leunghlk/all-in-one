@@ -427,7 +427,7 @@ function renderCandidates(){
     h+='<td>'+c.expiry+'<br><span class="muted small">'+c.dte+'D</span></td>';
     h+='<td class="r">$'+(c.premium!=null?c.premium:'—')+'<br><span class="muted small">≈HKD '+(c.premium_hkd!=null?c.premium_hkd:'—')+'</span></td>';
     h+='<td class="r">'+(una?'—':(c.contracts||1))+'</td>';
-    h+='<td class="r">$'+c.collateral_total.toLocaleString()+'<br><span class="muted small">≈HKD '+Math.round(c.collateral_total*HKD_USD).toLocaleString()+'</span></td>';
+    h+='<td class="r">$'+Number(c.collateral_total||0).toLocaleString()+'<br><span class="muted small">≈HKD '+Math.round((c.collateral_total||0)*HKD_USD).toLocaleString()+'</span></td>';
     h+='<td class="c">'+gauge(c.prob_itm,c.prob_otm)+'</td>';
     h+='<td class="r">'+yp+'%</td>';
     h+='<td class="r">'+(c.score!=null?c.score.toFixed(2):'—')+'</td>';
@@ -562,7 +562,7 @@ function renderDetail(){
   m+='<tr><td class="c">Gamma</td><td class="r mono">'+c.gamma+'</td><td class="small">delta 變化率'+tip('gamma')+'</td></tr>';
   m+='<tr><td class="c">Theta（每日）</td><td class="r mono">'+c.theta+'</td><td class="small">每日時間衰減'+tip('theta')+'</td></tr>';
   m+='<tr><td class="c">Vega（每1% IV）</td><td class="r mono">'+c.vega+'</td><td class="small">IV+1%→權利金變動'+tip('vega')+'</td></tr>';
-  m+='<tr><td class="c">IV / IV Rank</td><td class="r mono">'+(c.iv*100).toFixed(0)+'% / '+c.iv_rank+'</td><td class="small">隱含波動率 / 歷史百分位'+tip('ivrank')+'</td></tr>';
+  m+='<tr><td class="c">IV / IV Rank</td><td class="r mono">'+((c.iv||0)*100).toFixed(0)+'% / '+(c.iv_rank!=null?c.iv_rank:'—')+'</td><td class="small">隱含波動率 / 歷史百分位'+tip('ivrank')+'</td></tr>';
   m+='</tbody></table>';
   $('detailMeta').innerHTML=m;
   drawChart(c);
@@ -678,7 +678,7 @@ function renderChain(chain,tk){
   let h='<div style="margin-bottom:8px;font-size:12px">到期：';
   chain.expiries.forEach((e,i)=>{const isCand=cand&&e.expiry===cand.expiry;
     h+='<button class="btn '+(i===idx?'btn-go':'btn-ghost')+'" style="margin-right:4px" onclick="setChainExp(\''+tk+'\','+i+')">'+e.expiry+'（'+e.days+'D）'+(isCand?' ⭐':'')+'</button> ';});
-  h+='<span class="muted small">· 正股 $'+px2(spot)+'</span></div>';
+  h+='<span class="muted small">· 正股 $'+px2(spot)+' · 來源：'+(chain.source==='yfinance'?'<b style="color:#d97706">Yahoo 兜底</b>（Futu 未有呢隻）':'<b style="color:#0d9488">Futu 實時</b>')+'</span></div>';
   h+='<div id="selReadout"></div>';   // ⭐ 揀咗 strike 之後嘅即時 readout
   // merge call/put by strike；只顯示正股 ±40% 內（deep ITM/OTM IV 無意義 + payload 細）
   const m={};
