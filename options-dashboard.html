@@ -129,7 +129,7 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
   <div><h1>💰 期權交易</h1><div class="sub">Sell Put → Covered Call（The Wheel）· 7-14 DTE · HKD 200,000 組合 · 紙上模式 · Futu 實時報價</div></div>
   <div class="appbar-right">
     <button class="btn-primary" id="refreshBtn" onclick="manualRefresh()">🔄 刷新實時</button>
-    <div class="status-bar"><span class="live-dot"></span><span id="liveBadge">連線中...</span></div>
+    <div class="status-bar"><span class="live-dot"></span><span id="liveBadge">v4_balanced · 連線中...</span></div>
   </div>
 </div></div>
 <div class="tabs">
@@ -137,7 +137,7 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
   <button data-pane="best">🎯 今日最佳</button>
   <button data-pane="detail">📈 個股詳情</button>
   <button data-pane="positions">📋 持倉管理</button>
-  <button data-pane="method">❓ 方法論</button>
+  <button data-pane="method">❓ v4_balanced 方法論</button>
 </div>
 <div class="container">
 
@@ -185,6 +185,131 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
       <div class="card-b" id="posBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">📒 交易紀錄（紙上）</span><span class="meta" id="ledMeta"></span></div>
       <div class="card-b" id="ledBody"></div></div>
+  </div>
+
+  <!-- ═══════════ v4 模型比較 ═══════════ -->
+  <div class="pane" id="pane-v4-compare">
+    <div class="card"><div class="card-h"><span class="t">🔄 v4 模型比較</span><span class="meta">goal｜steady｜mid｜robust｜balanced · HKD 200,000 組合 · 回測結果</span></div>
+      <div class="card-b">
+        <div style="margin-bottom:16px">
+          <button class="btn btn-go" onclick="loadV4Comparison()">🔄 刷新比較</button>
+          <span class="muted" style="margin-left:8px">更新時間：<span id="v4LastUpdate">—</span></span>
+        </div>
+        <div id="v4ProfileSelector" style="margin-bottom:16px">
+          <label style="font-weight:600; margin-right:8px">選擇模型：</label>
+          <select id="v4ProfileSelect" class="search-input" style="width:auto; max-width:200px">
+            <option value="balanced">balanced (推薦)</option>
+            <option value="goal">goal (高收益/高風險)</option>
+            <option value="steady">steady (穩健)</option>
+            <option value="mid">mid (中庸)</option>
+            <option value="robust">robust (抗跌)</option>
+          </select>
+          <button class="btn btn-primary" onclick="loadV4Profile()" style="margin-left:8px">查看詳情</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"><div class="card-h"><span class="t">📊 模型績效比較</span></div>
+      <div class="card-b">
+        <table class="utable">
+          <thead>
+            <tr>
+              <th>模型</th>
+              <th class="c">總交易</th>
+              <th class="c">最終權益</th>
+              <th class="c">回報率</th>
+              <th class="c">最大回撤</th>
+              <th class="c">月收入</th>
+              <th class="c">槓桿</th>
+              <th class="c">風險等級</th>
+            </tr>
+          </thead>
+          <tbody id="v4ComparisonTable">
+            <tr>
+              <td><span class="pill b">balanced</span></td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+            </tr>
+            <tr>
+              <td><span class="pill t">goal</span></td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+            </tr>
+            <tr>
+              <td><span class="pill w">steady</span></td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+            </tr>
+            <tr>
+              <td><span class="pill g">mid</span></td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+            </tr>
+            <tr>
+              <td><span class="pill r">robust</span></td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+              <td class="c">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card"><div class="card-h"><span class="t">📈 選擇模型詳情</span></div>
+      <div class="card-b" id="v4ProfileDetail">
+        <div class="kpi" style="margin-bottom:16px">
+          <div class="k"><div class="lbl">總交易次數</div><div class="val" id="v4TotalTrades">—</div></div>
+          <div class="k"><div class="lbl">最終權益 (USD)</div><div class="val" id="v4FinalEquityUSD">—</div></div>
+          <div class="k"><div class="lbl">最終權益 (HKD)</div><div class="val" id="v4FinalEquityHKD">—></div></div>
+          <div class="k"><div class="lbl">總回報率</div><div class="val" id="v4ReturnPct">—</div></div>
+          <div class="k"><div class="lbl">最大回撤</div><div class="val dn" id="v4MaxDD">—</div></div>
+          <div class="k"><div class="lbl">估算月收入</div><div class="val up" id="v4MonthlyIncome">—</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div>
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:8px">📋 當前持倉</h4>
+            <div id="v4CurrentPositions" style="font-size:12px">
+              <div class="muted">載入中...</div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:8px">⚙️ 模型配置</h4>
+            <div id="v4ConfigDetail" style="font-size:12px">
+              <div class="muted">載入中...</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:8px">📊 權益曲線</h4>
+          <div style="height:200px" id="v4EquityChart"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════════ 方法論 ═══════════ -->
@@ -984,10 +1109,182 @@ function switchPane(id){
   if(id==='best')renderBest();
   if(id==='overview')renderOverview();
   if(id==='positions')renderPositions();
+  if(id==='v4-compare')loadV4Comparison();
 }
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>switchPane(b.dataset.pane)));
 
-/* ════════════ 方法論 ════════════ */
+/* ════════════ v4 模型比較 ════════════ */
+let v4Data = null;
+
+async function loadV4Comparison() {
+  const btn = event.target;
+  btn.classList.add('loading');
+
+  try {
+    const response = await fetchTimeout('https://quant-api.leunghlk.workers.dev/api/options-v4?profile=balanced', 10000);
+    if (!response.ok) throw new Error('Failed to load v4 data');
+
+    v4Data = await response.json();
+    $('v4LastUpdate').textContent = new Date().toLocaleString('zh-HK');
+
+    // Render all profiles for comparison
+    const profiles = ['balanced', 'goal', 'steady', 'mid', 'robust'];
+    const comparisonData = {};
+
+    for (const profile of profiles) {
+      const profileData = await fetchTimeout(`https://quant-api.leunghlk.workers.dev/api/options-v4?profile=${profile}`, 10000);
+      if (profileData && !profileData.error) {
+        comparisonData[profile] = profileData;
+      }
+    }
+
+    renderV4ComparisonTable(comparisonData);
+
+  } catch (error) {
+    console.error('V4 comparison error:', error);
+    $('v4ComparisonTable').innerHTML = '<tr><td colspan="8" class="muted">載入失敗，請稍後再試</td></tr>';
+  } finally {
+    btn.classList.remove('loading');
+  }
+}
+
+async function loadV4Profile() {
+  const profile = $('v4ProfileSelect').value;
+
+  try {
+    const response = await fetchTimeout(`https://quant-api.leunghlk.workers.dev/api/options-v4?profile=${profile}`, 10000);
+    if (!response.ok) throw new Error('Failed to load v4 profile data');
+
+    const data = await response.json();
+    renderV4ProfileDetail(data);
+
+  } catch (error) {
+    console.error('V4 profile error:', error);
+    $('v4ProfileDetail').innerHTML = '<div class="muted">載入失敗，請稍後再試</div>';
+  }
+}
+
+function renderV4ComparisonTable(data) {
+  const profiles = ['balanced', 'goal', 'steady', 'mid', 'robust'];
+  const profileLabels = {
+    balanced: 'balanced (平衡)',
+    goal: 'goal (目標)',
+    steady: 'steady (穩健)',
+    mid: 'mid (中庸)',
+    robust: 'robust (抗跌)'
+  };
+
+  const riskLabels = {
+    balanced: '中等',
+    goal: '高',
+    steady: '低',
+    mid: '中低',
+    robust: '很低'
+  };
+
+  const rows = profiles.map(profile => {
+    const d = data[profile];
+    if (!d) return '<tr><td colspan="8" class="muted">載入中...</td></tr>';
+
+    const returnClass = d.summary.return_pct > 50 ? 'up' : d.summary.return_pct > 0 ? '' : 'dn';
+    const ddClass = d.summary.max_drawdown < -0.1 ? 'dn' : d.summary.max_drawdown < -0.05 ? 'w' : '';
+
+    return `
+      <tr>
+        <td><span class="pill ${profile === 'balanced' ? 'b' : profile === 'goal' ? 't' : profile === 'steady' ? 'w' : profile === 'mid' ? 'g' : 'r'}">${profileLabels[profile]}</span></td>
+        <td class="c">${d.summary.total_trades}</td>
+        <td class="c">${fmt(d.summary.final_equity_usd)}</td>
+        <td class="c ${returnClass}">${money(d.summary.return_pct)}%</td>
+        <td class="c ${ddClass}">${money(d.summary.max_drawdown * 100)}%</td>
+        <td class="c up">${hkd(d.summary.monthly_income_hkd)}</td>
+        <td class="c">${profile === 'goal' ? '4x' : profile === 'steady' ? '2x' : profile === 'robust' ? '2x' : '3x'}</td>
+        <td class="c">${riskLabels[profile]}</td>
+      </tr>
+    `;
+  }).join('');
+
+  $('v4ComparisonTable').innerHTML = rows;
+}
+
+function renderV4ProfileDetail(data) {
+  const ddClass = data.summary.max_drawdown < -0.1 ? 'dn' : data.summary.max_drawdown < -0.05 ? 'w' : '';
+  const returnClass = data.summary.return_pct > 50 ? 'up' : data.summary.return_pct > 0 ? '' : 'dn';
+
+  $('v4TotalTrades').textContent = data.summary.total_trades;
+  $('v4FinalEquityUSD').textContent = fmt(data.summary.final_equity_usd);
+  $('v4FinalEquityHKD').textContent = hkd(data.summary.final_equity_hkd);
+  $('v4ReturnPct').className = 'val ' + returnClass;
+  $('v4ReturnPct').textContent = money(data.summary.return_pct) + '%';
+  $('v4MaxDD').className = 'val ' + ddClass;
+  $('v4MaxDD').textContent = money(data.summary.max_drawdown * 100) + '%';
+  $('v4MonthlyIncome').textContent = hkd(data.summary.monthly_income_hkd);
+
+  // Render current positions
+  const positionsHtml = `
+    <div style="margin-bottom:8px">
+      <b>賣 Put (${data.current_positions.puts.length}個)</b><br>
+      ${data.current_positions.puts.map(p =>
+        `${p.ticker} ${p.strike} put (${p.dte}DTE, Δ${p.delta}, ROI${p.roi}%)`
+      ).join('<br>')}
+    </div>
+    <div>
+      <b>賣 Call (${data.current_positions.covered_calls.length}個)</b><br>
+      ${data.current_positions.covered_calls.map(cc =>
+        `${cc.ticker} ${cc.strike} call (${cc.dte}DTE, Δ${cc.delta})`
+      ).join('<br>')}
+    </div>
+  `;
+  $('v4CurrentPositions').innerHTML = positionsHtml;
+
+  // Render config
+  const config = data.profile_config;
+  const configHtml = `
+    <div style="margin-bottom:8px">按金利用率: ${(config.margin_util * 100).toFixed(0)}%</div>
+    <div style="margin-bottom:8px">最大 Put 數量: ${config.max_puts}</div>
+    <div style="margin-bottom:8px">目標 Delta: ${config.target_delta}</div>
+    <div>利潤平倉: ${(config.profit_take * 100).toFixed(0)}%</div>
+  `;
+  $('v4ConfigDetail').innerHTML = configHtml;
+
+  // Render equity curve chart
+  renderV4EquityChart(data.equity_curve);
+}
+
+function renderV4EquityCurve(data) {
+  if (!window.LightweightCharts) return;
+
+  const chart = LightweightCharts.createChart(document.getElementById('v4EquityChart'), {
+    width: document.getElementById('v4EquityChart').offsetWidth,
+    height: 200,
+    layout: {
+      backgroundType: 'solid',
+      background: '#ffffff'
+    },
+    grid: {
+      vertLines: { color: '#e2e8f0' },
+      horzLines: { color: '#e2e8f0' }
+    },
+    timeScale: {
+      borderColor: '#64748b',
+      timeVisible: true,
+      secondsVisible: false
+    }
+  });
+
+  const series = chart.addLineSeries({
+    color: '#1a73e8',
+    lineWidth: 2
+  });
+
+  series.setData(data.map(point => ({
+    time: point.date,
+    value: point.equity
+  })));
+
+  chart.timeScale().fitContent();
+}
+
+/* ═══════════　方法論 ════════════ */
 function renderMethod(){
   $('methodBest').innerHTML=
     '<p><b>兩層：硬性過濾 → 分數排序 → 資本配倉。</b></p>'+
