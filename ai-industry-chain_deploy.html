@@ -995,7 +995,7 @@ tr.flash{animation:rowflash 2.2s ease}
   <div class="card">
     <div class="card-h">🔍 記憶體四大類：一張圖看盡階梯</div>
     <div class="svgbox">
-      <svg width="100%" viewBox="0 0 780 444" style="max-width:760px;display:block;margin:0 auto">
+      <svg width="100%" viewBox="0 0 780 470" style="max-width:760px;display:block;margin:0 auto">
         <!-- GPU（記憶體的「老闆」） -->
         <rect x="270" y="14" width="240" height="46" rx="10" fill="#4f46e5" stroke="#4338ca"/>
         <text x="390" y="32" fill="#fff" font-size="13" text-anchor="middle" font-weight="bold">AI 運算核心 GPU</text>
@@ -1054,6 +1054,7 @@ tr.flash{animation:rowflash 2.2s ease}
         <rect x="248" y="391" width="88" height="18" rx="5" fill="#fff" stroke="#2563eb"/><text x="292" y="404" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">WD WDC</text>
         <rect x="344" y="391" width="88" height="18" rx="5" fill="#fff" stroke="#7c3aed"/><text x="388" y="404" font-size="8.5" font-weight="bold" fill="#334155" text-anchor="middle">Toshiba 6502</text>
         <text x="390" y="436" fill="#64748b" font-size="9.5" text-anchor="middle" font-weight="bold">記憶體階梯：越上越快越貴（貼近 GPU），越落越平、容量越大 —— 上中游全被韓／美／日巨頭壟斷</text>
+        <text x="390" y="460" fill="#0d9488" font-size="9.5" text-anchor="middle" font-weight="bold">🆕 2026 新層級 HBF（高頻寬快閃記憶體）插入 ① HBM 與 ③ NAND 之間——頻寬接近 HBM・容量最高 8 倍（詳見下方 HBF 專卡）</text>
       </svg>
     </div>
   </div>
@@ -1133,6 +1134,156 @@ tr.flash{animation:rowflash 2.2s ease}
         <text x="40" y="306" font-size="11.5" font-weight="bold" fill="#92400e">💡 概念：DDR／DRAM 一顆顆是「平房」，堆疊在一起＋TSV 垂直打通＝「記憶體大樓」HBM。</text>
       </svg>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">🆕 HBF 高頻寬快閃記憶體：HBM 與 NAND 之間的新層級 <span class="meta">2026-08 開放規格發布 · 專攻 AI 推理「容量牆」</span></div>
+    <div class="explain"><span class="tip" data-tip="<b>HBF（High Bandwidth Flash，高頻寬快閃記憶體）</b>：用 HBM 同款 TSV 垂直堆疊技術造的 NAND 快閃記憶體，底層同樣有控制晶片、以 UCIe 開放介面緊貼處理器——頻寬接近 HBM、容量最高 8 倍、每 GB 成本更低，而且斷電不失數據。">HBF（High Bandwidth Flash，高頻寬快閃記憶體）</span>＝把上文 HBM「記憶體大樓」的同一套堆疊手法，改用 <b>NAND 快閃記憶體</b>來興建：犧牲一點速度，換取<b>最高 8 倍的容量</b>與更低成本。它專解 AI <b>推理（Inference）</b>的痛點——模型動輒數百 GB 至 TB 級，HBM 塞不下、SSD 又太慢，HBF 正好插入兩者之間。</div>
+    <div class="svgbox">
+      <svg viewBox="0 0 780 412" style="width:100%;height:auto;display:block" role="img" aria-label="HBF 堆疊結構與記憶體階梯定位圖">
+        <!-- ═══════ 左：HBF 堆疊解剖 ═══════ -->
+        <text x="20" y="24" font-size="13.5" font-weight="bold" fill="#0f766e">① HBF 堆疊解剖——「NAND 版記憶體大樓」</text>
+        <text x="20" y="42" font-size="9.5" fill="#64748b">同款 TSV 堆疊手法 · 換上 NAND 晶粒 · 底層一樣有控制晶片</text>
+        <!-- 容量徽章 -->
+        <rect x="228" y="52" width="164" height="24" rx="12" fill="#ccfbf1" stroke="#0d9488"/>
+        <text x="310" y="68" font-size="10" font-weight="bold" fill="#0f766e" text-anchor="middle">單顆封裝最高 512GB</text>
+        <!-- 封裝外框 -->
+        <rect x="85" y="88" width="140" height="212" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-dasharray="5 3"/>
+        <!-- 8 層特製 NAND 晶粒 -->
+        <g>
+          <rect x="95" y="96" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="114" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="132" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="150" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="168" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="186" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="204" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+          <rect x="95" y="222" width="120" height="14" rx="2" fill="#99f6e4" stroke="#0d9488"/>
+        </g>
+        <!-- TSV 白點 -->
+        <g fill="#fff">
+          <circle cx="115" cy="103" r="2.5"/><circle cx="155" cy="103" r="2.5"/><circle cx="195" cy="103" r="2.5"/>
+          <circle cx="115" cy="121" r="2.5"/><circle cx="155" cy="121" r="2.5"/><circle cx="195" cy="121" r="2.5"/>
+          <circle cx="115" cy="139" r="2.5"/><circle cx="155" cy="139" r="2.5"/><circle cx="195" cy="139" r="2.5"/>
+          <circle cx="115" cy="157" r="2.5"/><circle cx="155" cy="157" r="2.5"/><circle cx="195" cy="157" r="2.5"/>
+          <circle cx="115" cy="175" r="2.5"/><circle cx="155" cy="175" r="2.5"/><circle cx="195" cy="175" r="2.5"/>
+          <circle cx="115" cy="193" r="2.5"/><circle cx="155" cy="193" r="2.5"/><circle cx="195" cy="193" r="2.5"/>
+          <circle cx="115" cy="211" r="2.5"/><circle cx="155" cy="211" r="2.5"/><circle cx="195" cy="211" r="2.5"/>
+          <circle cx="115" cy="229" r="2.5"/><circle cx="155" cy="229" r="2.5"/><circle cx="195" cy="229" r="2.5"/>
+        </g>
+        <!-- Base Die -->
+        <rect x="95" y="242" width="120" height="38" rx="4" fill="#ede9fe" stroke="#7c22ce" stroke-width="2"/>
+        <text x="155" y="260" font-size="10.5" font-weight="bold" fill="#6b21a8" text-anchor="middle">Base Die</text>
+        <text x="155" y="273" font-size="7.5" fill="#7c3aed" text-anchor="middle">UCIe 控制晶片</text>
+        <!-- 微凸塊 -->
+        <g fill="#94a3b8">
+          <rect x="110" y="284" width="10" height="6" rx="1"/><rect x="135" y="284" width="10" height="6" rx="1"/>
+          <rect x="160" y="284" width="10" height="6" rx="1"/><rect x="185" y="284" width="10" height="6" rx="1"/>
+        </g>
+        <!-- 右側註解 -->
+        <line x1="215" y1="150" x2="228" y2="150" stroke="#0d9488" stroke-width="1.5"/>
+        <text x="232" y="146" font-size="9" font-weight="bold" fill="#0f766e">特製 HBF 核心晶粒</text>
+        <text x="232" y="158" font-size="8" fill="#475569">（非一般 3D NAND）</text>
+        <text x="232" y="169" font-size="8" fill="#475569">內建大量並行讀寫路徑</text>
+        <line x1="215" y1="260" x2="228" y2="260" stroke="#7c22ce" stroke-width="1.5"/>
+        <text x="232" y="256" font-size="9" font-weight="bold" fill="#6b21a8">Base Die＝UCIe 控制</text>
+        <text x="232" y="268" font-size="8" fill="#475569">最高 64 GT/s × 64 lane</text>
+        <text x="232" y="279" font-size="8" fill="#475569">單顆頻寬可達 400+ GB/s</text>
+        <!-- 箭頭 → xPU -->
+        <line x1="155" y1="300" x2="155" y2="322" stroke="#94a3b8" stroke-width="2.5"/>
+        <polygon points="150,320 160,320 155,328" fill="#94a3b8"/>
+        <rect x="95" y="330" width="140" height="36" rx="6" fill="#4f46e5"/>
+        <text x="165" y="352" font-size="10.5" font-weight="bold" fill="#fff" text-anchor="middle">xPU／AI 加速器</text>
+        <text x="245" y="348" font-size="8.5" fill="#475569">UCIe 開放介面</text>
+        <text x="245" y="360" font-size="8.5" fill="#475569">（OCP 標準）</text>
+        <text x="20" y="398" font-size="9" font-weight="bold" fill="#0f766e">規格：8-Hi／16-Hi 堆疊 · 三檔頻寬 0.4–3.0 TB/s（圖示 8 層）</text>
+
+        <!-- 分隔線 -->
+        <line x1="398" y1="16" x2="398" y2="400" stroke="#e2e8f0" stroke-dasharray="4 4"/>
+
+        <!-- ═══════ 右：階梯定位 ═══════ -->
+        <text x="410" y="24" font-size="13.5" font-weight="bold" fill="#4338ca">② 階梯新排序——HBF 插入 HBM 與 NAND 之間</text>
+        <text x="410" y="42" font-size="9.5" fill="#64748b">容量柱示意（以 HBM4 單疊 64GB 為基準）</text>
+        <!-- HBM4 柱 -->
+        <rect x="436" y="294" width="76" height="36" rx="3" fill="#fbbf24" stroke="#d97706"/>
+        <text x="474" y="288" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="middle">64GB</text>
+        <!-- HBF 柱（8×） -->
+        <rect x="546" y="42" width="76" height="288" rx="3" fill="#0d9488" stroke="#115e59"/>
+        <text x="584" y="36" font-size="9.5" font-weight="bold" fill="#0f766e" text-anchor="middle">512GB（8×）</text>
+        <text x="584" y="180" font-size="12" font-weight="bold" fill="#ccfbf1" text-anchor="middle">🆕 HBF</text>
+        <text x="584" y="196" font-size="8.5" fill="#99f6e4" text-anchor="middle">新插入的一層</text>
+        <!-- NAND 柱（更高、截斷示意） -->
+        <rect x="656" y="52" width="76" height="278" rx="3" fill="#64748b"/>
+        <line x1="652" y1="88" x2="736" y2="72" stroke="#f1f5f9" stroke-width="4"/>
+        <text x="694" y="46" font-size="9.5" font-weight="bold" fill="#334155" text-anchor="middle">TB 級</text>
+        <text x="694" y="180" font-size="9.5" font-weight="bold" fill="#f1f5f9" text-anchor="middle">NAND／eSSD</text>
+        <!-- 基準線 -->
+        <line x1="424" y1="330" x2="748" y2="330" stroke="#cbd5e1" stroke-width="2"/>
+        <!-- 欄位資訊 -->
+        <text x="474" y="350" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">HBM4</text>
+        <text x="474" y="366" font-size="8.5" fill="#475569" text-anchor="middle">頻寬 2 TB/s · 延遲最低</text>
+        <text x="474" y="380" font-size="8.5" fill="#475569" text-anchor="middle">每 GB 最貴 · 緊貼 GPU</text>
+        <text x="474" y="394" font-size="8.5" fill="#475569" text-anchor="middle">訓練／高頻寬主力</text>
+        <text x="584" y="350" font-size="11" font-weight="bold" fill="#0f766e" text-anchor="middle">HBF</text>
+        <text x="584" y="366" font-size="8.5" fill="#475569" text-anchor="middle">最高 3 TB/s · 延遲較高</text>
+        <text x="584" y="380" font-size="8.5" fill="#475569" text-anchor="middle">每 GB 遠低於 HBM</text>
+        <text x="584" y="394" font-size="8.5" fill="#475569" text-anchor="middle">推理大容量分層</text>
+        <text x="694" y="350" font-size="11" font-weight="bold" fill="#334155" text-anchor="middle">NAND／eSSD</text>
+        <text x="694" y="366" font-size="8.5" fill="#475569" text-anchor="middle">≈0.01 TB/s · 延遲最高</text>
+        <text x="694" y="380" font-size="8.5" fill="#475569" text-anchor="middle">每 GB 最平</text>
+        <text x="694" y="394" font-size="8.5" fill="#475569" text-anchor="middle">海量儲存</text>
+      </svg>
+    </div>
+    <div class="sub-sec">
+      <div class="sub-h">📐 三個數字記住 HBF 第一代規格（2026-08 經 OCP 發布，開放標準）</div>
+      <ul class="focus">
+        <li><b>512GB：</b>單顆封裝最高容量——8-Hi 或 16-Hi 堆疊，採用「特製 HBF 核心晶粒」（非一般 3D NAND，內建大量並行讀寫路徑）。對比 HBM4 單疊最高 64GB → <b>容量 8 倍</b>。</li>
+        <li><b>0.4–3.0 TB/s：</b>三個頻寬等級——最高檔 3.0 TB/s 已超過單疊 HBM4（2 TB/s），但<b>延遲仍遠高於 HBM</b>（NAND 先天特性），故定位是互補而非取代。</li>
+        <li><b>UCIe：</b>開放介面（最高 64 GT/s × 64 lane）——便於與各家 xPU／加速器混合整合；規格經 OCP（開放運算項目）發布，並非封閉專利。</li>
+      </ul>
+    </div>
+    <div class="sub-sec">
+      <div class="sub-h">🏭 誰在造 HBF？</div>
+      <div class="tbl-wrap-matrix"><table class="matrix">
+        <thead><tr><th>陣營</th><th>成員</th><th>角色與進度</th></tr></thead>
+        <tbody>
+          <tr><td><b>規格主導聯盟</b></td><td>SK 海力士 000660 ＋ SanDisk SNDK</td><td>2025-08 簽 MoU 合作定義規格；2026-08 經 OCP 發布首個開放 HBF 規格——目前進度最快、話語權最大</td></tr>
+          <tr><td><b>自研路線</b></td><td>Samsung 005930</td><td>2025-10 據報已啟動概念設計與早期開發，走不同技術路線；目標 2026 下半年樣品、2027 初系統</td></tr>
+          <tr><td><b>間接受惠</b></td><td>Kioxia 285A</td><td>SanDisk 的 NAND 合資夥伴（共用晶圓廠）——HBF 量產時的產能協作者</td></tr>
+          <tr><td><b>已表態買家</b></td><td>Google、Tenstorrent</td><td>目前僅此兩家表態參與 HBF 聯盟；NVIDIA／AMD／Micron 等尚未表態——採用度是最大變數</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sub-sec">
+      <div class="sub-h">⚖️ 對 HBM 的影響：分流推理需求，不是取代</div>
+      <div class="explain">HBF 延遲遠高於 HBM，<b>訓練與高頻寬環節動搖不了 HBM</b>；它分流的是「推理端要大容量」的需求——SanDisk 測試稱部分推理負載效能與「無限容量 HBM」相差不足 3%。短期（2027 年首批系統前）HBM 出貨零影響；中長期若 Google 等自研晶片大規模採用，推理端的容量需求或逐步導向 NAND 陣營。</div>
+      <div class="tbl-wrap-matrix"><table class="matrix">
+        <thead><tr><th>公司</th><th>角色</th><th>HBF 帶來的影響</th><th>淨效果</th></tr></thead>
+        <tbody>
+          <tr><td>SK 海力士</td><td>HBM #1 ＋ HBF 規格共同主導</td><td>訓練／高頻寬需求仍用 HBM；同時以 HBF 打開 NAND 增值新賽道</td><td class="ok">✔ 兩邊布局</td></tr>
+          <tr><td>SanDisk</td><td>NAND #5 ＋ HBF 發起者</td><td>由大宗 NAND 廠升格「AI 記憶體新層級規格制定者」，卡位最早</td><td class="ok">✔ 最大翻身籌碼</td></tr>
+          <tr><td>Samsung</td><td>自研 HBF（未加入聯盟）</td><td>HBM 追趕之餘，多一條 NAND 技術增值路線</td><td class="ok">✔ 彈性大但火力分散</td></tr>
+          <tr><td>Kioxia</td><td>SanDisk NAND 合資夥伴</td><td>HBF 量產的產能／技術協作者，間接受惠</td><td class="ok">✔ 間接受惠</td></tr>
+          <tr><td>Micron</td><td>未表態</td><td>美系唯一 HBM 供應商地位不變；若 HBF 起量需追加投資追趕</td><td>⚠ 觀望</td></tr>
+          <tr><td>NVIDIA／AMD</td><td>HBM 最大買家 · 未表態</td><td>現階段推理仍靠「HBM＋eSSD」兩端各取所長；是否採用 HBF 是最大變數</td><td>⚠ 關鍵變數</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="sub-sec">
+      <div class="sub-h">📜 時間軸</div>
+      <ul class="focus">
+        <li><b>2025-08：</b>SK 海力士＋SanDisk 簽署 MoU，共同定義 HBF 技術規格。</li>
+        <li><b>2025-10：</b>業界報導 Samsung 啟動自研 HBF（概念設計＋早期開發）。</li>
+        <li><b>2026-08：</b>經 OCP 發布首個開放 HBF 規格（最高 512GB · 三檔 0.4–3.0 TB/s · UCIe）。</li>
+        <li><b>2026 下半年：</b>Samsung 目標 HBF 樣品送樣。</li>
+        <li><b>2027 初：</b>首批搭載 HBF 的 AI 推理系統問世（目前表態買家：Google、Tenstorrent）。</li>
+      </ul>
+    </div>
+    <div class="grid2">
+      <div class="callout blue">💡 <b>一句話記住：</b>HBF＝「HBM 的堆疊技術 × NAND 的容量」——訓練仍靠 HBM，推理的大容量分層交給 HBF；記憶體階梯由四層變五層。</div>
+      <div class="callout amber">⚠️ <b>投資觀點：</b>規格已出、買家未至——目前僅 Google 與 Tenstorrent 表態，2027 年初才有首批系統，落地前屬題材階段。受惠排序：<b>SanDisk</b>（規格主導者）＞<b>SK 海力士</b>（HBM＋HBF 兩邊布局）＞Kioxia（合資夥伴）；對 HBM 三強短期零損害。</div>
+    </div>
+    <div class="cm-note">規格數字據 OCP／SK hynix／SanDisk 2026-08-04 發布之 HBF 規格；Samsung 進度據 Digitimes／TrendForce 報導。HBF 尚未量產，商業化進度可能變動。</div>
   </div>
 
   <div class="card">
@@ -1425,8 +1576,8 @@ tr.flash{animation:rowflash 2.2s ease}
       <div class="tbl-wrap"><table class="stocks">
         <thead><tr><th>公司</th><th>代碼</th><th>地區</th><th>全球位置</th><th>亮點</th></tr></thead>
         <tbody>
-          <tr id="st-000660"><td class="co">SK 海力士</td><td class="tk">000660</td><td><span class="badge b-kr">KR</span></td><td><span class="pos g1">HBM 全球 #1</span></td><td class="role">HBM 技術＋產能領先 · NVIDIA 核心供應商（領先半代）</td></tr>
-          <tr><td class="co">Samsung</td><td class="tk">005930</td><td><span class="badge b-kr">KR</span></td><td><span class="pos g1">DRAM 全球 #1</span></td><td class="role">記憶體＋代工＋終端垂直整合 · HBM 市占追趕中</td></tr>
+          <tr id="st-000660"><td class="co">SK 海力士</td><td class="tk">000660</td><td><span class="badge b-kr">KR</span></td><td><span class="pos g1">HBM 全球 #1</span></td><td class="role">HBM 技術＋產能領先 · NVIDIA 核心供應商（領先半代）· 🆕 HBF 規格共同主導</td></tr>
+          <tr><td class="co">Samsung</td><td class="tk">005930</td><td><span class="badge b-kr">KR</span></td><td><span class="pos g1">DRAM 全球 #1</span></td><td class="role">記憶體＋代工＋終端垂直整合 · HBM 市占追趕中 · 自研 HBF 中</td></tr>
           <tr id="st-MU"><td class="co">Micron 美光</td><td class="tk">MU</td><td><span class="badge b-us">US</span></td><td><span class="pos g3">DRAM／HBM 全球 #3</span></td><td class="role">美系唯一 HBM 供應商 · 地緣政治受惠</td></tr>
           <tr><td class="co">長鑫科技 CXMT</td><td class="tk">688825.SH</td><td><span class="badge b-cn">CN</span></td><td><span class="pos g5">DRAM 全球 #4（中國 #1）</span></td><td class="role">國產 DRAM 龍頭 · 國產替代受惠（受設備出口管制）</td></tr>
         </tbody>
@@ -1441,7 +1592,7 @@ tr.flash{animation:rowflash 2.2s ease}
           <tr><td class="co">Kioxia 鎧俠</td><td class="tk">285A</td><td><span class="badge b-jp">JP</span></td><td><span class="pos g2">NAND 全球 #2</span></td><td class="role">日系 NAND 龍頭 · 高層數 3D NAND（與 WDC 合資）</td></tr>
           <tr><td class="co">SK Group（Solidigm）</td><td class="tk">000660</td><td><span class="badge b-kr">KR</span></td><td><span class="pos g3">NAND 全球 #3</span></td><td class="role">企業 SSD（Solidigm）· 併購 Intel NAND 後壯大</td></tr>
           <tr><td class="co">Micron 美光</td><td class="tk">MU</td><td><span class="badge b-us">US</span></td><td><span class="pos g5">NAND 全球 #4</span></td><td class="role">少數 DRAM／NAND 全線玩家</td></tr>
-          <tr><td class="co">SanDisk</td><td class="tk">SNDK</td><td><span class="badge b-us">US</span></td><td><span class="pos g5">NAND 全球 #5</span></td><td class="role">NAND 品牌廠 · 由 Western Digital 分拆獨立</td></tr>
+          <tr id="st-SNDK"><td class="co">SanDisk</td><td class="tk">SNDK</td><td><span class="badge b-us">US</span></td><td><span class="pos g5">NAND 全球 #5</span></td><td class="role">NAND 品牌廠 · 由 Western Digital 分拆獨立 · 🆕 HBF 規格共同主導（與 SK 海力士）</td></tr>
         </tbody>
       </table></div>
       <div class="callout blue">💡 中國本土：長江存儲 YMTC（未上市，NAND 全球 #6，追趕中）。</div>
@@ -1460,11 +1611,12 @@ tr.flash{animation:rowflash 2.2s ease}
   </div>
 
   <div class="card">
-    <div class="card-h">⚖️ 記憶體四大類比較</div>
+    <div class="card-h">⚖️ 記憶體四大類＋新層級 HBF 比較</div>
     <div class="tbl-wrap-matrix"><table class="matrix">
       <thead><tr><th>類別</th><th>用途</th><th>特性</th><th>龍頭</th></tr></thead>
       <tbody>
         <tr><td>HBM</td><td>AI 算力暫存</td><td>堆疊最快最貴，緊貼 GPU</td><td>SK 海力士 #1</td></tr>
+        <tr><td>🆕 HBF</td><td>AI 推理大容量分層</td><td>頻寬接近 HBM・容量最高 8 倍・斷電不失（2027 初首批系統）</td><td>SK 海力士＋SanDisk 主導</td></tr>
         <tr><td>DDR5</td><td>伺服器主記憶體</td><td>容量基石，速度為上代 2 倍</td><td>韓美三強</td></tr>
         <tr><td>NAND／eSSD</td><td>AI 資料倉庫</td><td>儲存海量資料、讀取快</td><td>Samsung、Kioxia</td></tr>
         <tr><td>HDD</td><td>冷儲存</td><td>大容量、成本最低</td><td>Seagate、WD</td></tr>
@@ -1477,6 +1629,7 @@ tr.flash{animation:rowflash 2.2s ease}
     <ul class="focus">
       <li><b>記憶體超級循環：</b>AI 海量數據吞吐，HBM 需求爆發式成長，<b>SK Hynix</b> 技術領先、掌握先機。</li>
       <li><b>HBM 供貨瓶頸＝投資機會：</b>HBM 爬坡需時，利好測試設備 <b>Advantest</b> 與封裝 <b>AMKR</b>（承接 HBM 整合測試）。</li>
+      <li><b>🆕 HBF 新賽道：</b>AI 推理「容量牆」催生 HBF（NAND 堆疊、單顆最高 512GB）——規格主導者 <b>SanDisk</b> 與 <b>SK 海力士</b> 最早卡位；2027 年初首批系統落地前屬題材階段。</li>
     </ul>
   </div>
 </section>
