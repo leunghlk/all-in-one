@@ -544,8 +544,15 @@ let portfolioPnlHidden=(function(){try{return localStorage.getItem('optdash_port
 function setPnlMode(m){pnlMode=m;try{localStorage.setItem('optdash_pnl_mode',m);}catch(e){}renderOverview();}
 function togglePortfolioPnl(){
   portfolioPnlHidden = !portfolioPnlHidden;
+  console.log('Toggling portfolio P&L, hidden:', portfolioPnlHidden);
   try{localStorage.setItem('optdash_portfolio_pnl_hidden', portfolioPnlHidden.toString());}catch(e){}
   renderOverview();
+
+  // Force update the button immediately
+  const toggleBtn = $('portfolio-pnl-toggle');
+  if (toggleBtn) {
+    toggleBtn.innerHTML = portfolioPnlHidden ? '👁️ 顯示總 P&L' : '👁️ 隱藏總 P&L';
+  }
 }
 function pnlBtnState(){
   const colors={real:['#fee2e2','#dc2626'],paper:['#e0e7ff','#4f46e5'],both:['#d1fae5','#059669']};
@@ -576,17 +583,20 @@ function renderPnlKpi(p){   // ⭐ 真倉/紙上/兩者 三段式 P&L（真倉=F
   // Update toggle button state
   const toggleBtn = $('portfolio-pnl-toggle');
   if (toggleBtn) {
-    if (portfolioPnlHidden) {
-      toggleBtn.innerHTML = '👁️ 顯示總 P&L';
-    } else {
-      toggleBtn.innerHTML = '👁️ 隱藏總 P&L';
-    }
+    toggleBtn.innerHTML = portfolioPnlHidden ? '👁️ 顯示總 P&L' : '👁️ 隱藏總 P&L';
+    console.log('Toggle button updated, hidden:', portfolioPnlHidden);
   }
 
   // Hide/show the KPI container
   const pnlContainer = document.querySelector('.kpi');
   if (pnlContainer) {
     pnlContainer.style.display = portfolioPnlHidden ? 'none' : 'flex';
+
+    // Also hide individual KPI items if needed
+    const kpiItems = pnlContainer.querySelectorAll('.k');
+    kpiItems.forEach(item => {
+      item.style.display = portfolioPnlHidden ? 'none' : 'block';
+    });
   }
 
   $('ovEquity').textContent=(eqV==null)?'—':hkd(eqV);
