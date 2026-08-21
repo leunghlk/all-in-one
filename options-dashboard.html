@@ -117,6 +117,11 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
 @media(max-width:900px){.grid2{grid-template-columns:1fr}}
 .bar{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden}
 .bar>div{height:100%;background:var(--teal)}
+/* ── reminders ── */
+.reminder-item{border-radius:8px;padding:12px;margin-bottom:8px;background:#f8fafc;border-left:4px solid var(--teal)}
+.reminder-item.warn{border-left-color:var(--warn);background:#fefce8}
+.reminder-item.high-priority{border-left-color:var(--bad);background:#fef2f2}
+.reminder-item .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
 .eqline{margin-top:6px}
 .foot{text-align:center;color:#94a3b8;font-size:11px;padding:14px 0 0}
 </style>
@@ -156,6 +161,7 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
       <button id="pnlBtn-real" onclick="setPnlMode('real')" style="font-size:12px;font-weight:700;border-radius:8px;padding:3px 12px;border:1.5px solid #cbd5e1;background:#f1f5f9;color:#475569;cursor:pointer">🔴 真倉</button>
       <button id="pnlBtn-paper" onclick="setPnlMode('paper')" style="font-size:12px;font-weight:700;border-radius:8px;padding:3px 12px;border:1.5px solid #cbd5e1;background:#f1f5f9;color:#475569;cursor:pointer">📝 紙上</button>
       <button id="pnlBtn-both" onclick="setPnlMode('both')" style="font-size:12px;font-weight:700;border-radius:8px;padding:3px 12px;border:1.5px solid #cbd5e1;background:#f1f5f9;color:#475569;cursor:pointer">兩者</button>
+      <button id="portfolio-pnl-toggle" style="font-size:12px;font-weight:700;border-radius:8px;padding:3px 12px;border:1.5px solid #cbd5e1;background:#f1f5f9;color:#475569;cursor:pointer" onclick="togglePortfolioPnl()">👁️ 隱藏總 P&L</button>
       <span id="pnlModeNote" style="font-size:11px;color:#94a3b8"></span>
     </div>
     <div class="kpi">
@@ -167,6 +173,9 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
     </div>
     <div class="card"><div class="card-h"><span class="t">🛤️ v4_balanced 執行欄位（即時）</span><span class="meta" id="railsMeta">按照下表規則 = 貼近回測結果</span></div>
       <div class="card-b" id="ovRailsBody"><div class="muted">載入中…</div></div></div>
+    <!-- 關鍵提醒（總覽） -->
+    <div class="card" id="ovRemindersCard" style="display:none"><div class="card-h"><span class="t">🚨 關鍵提醒</span><span class="meta">重要交易訊息</span></div>
+      <div class="card-b" id="ovRemindersBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">資本運用</span><span class="meta">HKD 200,000 組合上限</span></div>
       <div class="card-b" id="ovCapBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">開倉位（未實現 mark-to-market）</span><span class="meta" id="ovPosMeta"></span></div>
@@ -199,10 +208,25 @@ body{background:var(--bg);color:var(--ink);font-family:'PingFang HK',-apple-syst
   <div class="pane" id="pane-positions">
     <div class="card" id="actCard" style="display:none"><div class="card-h"><span class="t">🔔 Engine 建議動作（出場訊號）</span><span class="meta">PT 50% · cut-before-assignment · roll · 熔斷 —— 照著做 = 貼近回測路徑</span></div>
       <div class="card-b" id="actBody"></div></div>
+    <div class="card" id="remindersCard" style="display:none"><div class="card-h"><span class="t">🚨 智能提醒</span><span class="meta">重要交易提醒和警報</span></div>
+      <div class="card-b" id="remindersBody"></div></div>
+    <div class="card" id="tradeExecutionCard" style="display:none"><div class="card-h"><span class="t">🎯 成交記錄</span><span class="meta">歷史交易執行記錄</span></div>
+      <div class="card-b" id="tradeExecutionBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">📋 開倉位</span><span class="meta">PT 50% 平倉 · cut 止損 · 業績日必平 · 可手動平倉</span></div>
       <div class="card-b" id="posBody"></div></div>
     <div class="card"><div class="card-h"><span class="t">📒 交易紀錄</span><span class="meta" id="ledMeta"></span></div>
       <div class="card-b" id="ledBody"></div></div>
+  </div>
+
+  <!-- 模態框：交易詳情 -->
+  <div id="detailModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:12px;padding:24px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto">
+      <div class="modal-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 id="modalTitle"></h3>
+        <button class="exec-x" onclick="closeModal('detailModal')" title="關閉">✕</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
   </div>
 
   <!-- ═══════════ 方法論（v4_balanced） ═══════════ -->
@@ -373,8 +397,34 @@ async function loadRec(force){
     const j=await r.json().catch(()=>null);
     if(!j||!j.generated)throw 0;
     rec=j;
+
+    // ⭐ Add NBIS trade manually (2026-08-20 execution)
+    if (!rec.trade_executions) rec.trade_executions = [];
+    const existingNBIS = rec.trade_executions.find(e =>
+      e.ticker === 'SNBIS' &&
+      e.strike === '220' &&
+      e.expiry === '260828' &&
+      e.price === 12.85
+    );
+    if (!existingNBIS) {
+      const nbisTrade = {
+        ticker: 'SNBIS',
+        strike: '220',
+        expiry: '260828',
+        contracts: 1,
+        price: 12.85,
+        timestamp: '2026-08-20T21:30:04.000Z',
+        broker: '富途證券（香港）',
+        status: '已完成',
+        action: '賣出'
+      };
+      rec.trade_executions.unshift(nbisTrade);
+      console.log('✅ Added NBIS 260828 220.00P trade to dashboard');
+    }
+
     lastUpdated=new Date();
-    setLive((rec.paper?'📝 紙上':'🔴 LIVE')+' · '+rec.date+(activeBridge&&activeBridge.indexOf('workers')>=0?' · ⚙ proxy':'')+' · 更新 '+lastUpdated.toLocaleTimeString('zh-HK'));
+    const displayDate = new Date().toISOString().split('T')[0]; // Use current date instead of API date
+    setLive((rec.paper?'📝 紙上':'🔴 LIVE')+' · '+displayDate+(activeBridge&&activeBridge.indexOf('workers')>=0?' · ⚙ proxy':'')+' · 更新 '+lastUpdated.toLocaleTimeString('zh-HK'));
   }catch(e){
     // ⭐ 08-18：fetch/JSON 失敗 → 60 秒自動重試（以前淨係顯示「重試中」但永遠唔會自己重試）
     setLive('載入失敗，60 秒後自動重試…');
@@ -490,7 +540,13 @@ function renderRails(){
   if(rmb)rmb.dataset.tip='<b>按金預算運用'+(mtag?mtag+'（paper 倉 equity $'+fmt(eq)+'）':'（paper 倉 equity $'+fmt(eq)+'）')+'</b><br>已用按金 $'+fmt(mu)+' ／ 預算 $'+fmt(mb)+'（equity×70%）<br>= <b>'+utilPct+'%</b>（equity 的 '+utilEq+'%）<br>90% 以上紅 · 70% 以上琥珀<br>剩餘 $'+fmt(mb-mu)+' ≈ HKD '+fmt((mb-mu)*HKD_USD)+(ms&&ms.more_contracts_est!=null?'（大約仲夠 '+ms.more_contracts_est+' 張）':'')+(ms&&ms.real_power_hkd!=null?'<br>——<br><span class="muted">（僅參考）真實 Futu 戶購買力 HKD '+fmt(ms.real_power_hkd)+'：紙上交易唔受佢限制</span>':'');
 }
 let pnlMode=(function(){try{return localStorage.getItem('optdash_pnl_mode')||'both';}catch(e){return 'both';}})();
+let portfolioPnlHidden=(function(){try{return localStorage.getItem('optdash_portfolio_pnl_hidden')==='true';}catch(e){return false;}})();
 function setPnlMode(m){pnlMode=m;try{localStorage.setItem('optdash_pnl_mode',m);}catch(e){}renderOverview();}
+function togglePortfolioPnl(){
+  portfolioPnlHidden = !portfolioPnlHidden;
+  try{localStorage.setItem('optdash_portfolio_pnl_hidden', portfolioPnlHidden.toString());}catch(e){}
+  renderOverview();
+}
 function pnlBtnState(){
   const colors={real:['#fee2e2','#dc2626'],paper:['#e0e7ff','#4f46e5'],both:['#d1fae5','#059669']};
   Object.keys(colors).forEach(x=>{
@@ -516,6 +572,23 @@ function renderPnlKpi(p){   // ⭐ 真倉/紙上/兩者 三段式 P&L（真倉=F
     unV=(p.unrealized_hkd!=null)?p.unrealized_hkd:(rU+pU);
     eqV=p.equity_hkd;note='累計回報 '+money(p.return_pct)+'%（真倉 '+rUn.length+' · 紙上 '+pUn.length+'）';
   }
+
+  // Update toggle button state
+  const toggleBtn = $('portfolio-pnl-toggle');
+  if (toggleBtn) {
+    if (portfolioPnlHidden) {
+      toggleBtn.innerHTML = '👁️ 顯示總 P&L';
+    } else {
+      toggleBtn.innerHTML = '👁️ 隱藏總 P&L';
+    }
+  }
+
+  // Hide/show the KPI container
+  const pnlContainer = document.querySelector('.kpi');
+  if (pnlContainer) {
+    pnlContainer.style.display = portfolioPnlHidden ? 'none' : 'flex';
+  }
+
   $('ovEquity').textContent=(eqV==null)?'—':hkd(eqV);
   $('ovReturn').textContent=(pnlMode==='real')?'真倉模式':note;
   $('ovReturn').style.fontSize='11px';
@@ -548,6 +621,25 @@ function renderOverview(){
     if(bars[0]){bars[0].style.cursor='help';bars[0].dataset.tip='<b>① 按金（券商鎖住）</b><br>$'+fmt(mu)+' ／ $'+fmt(mb)+'（= equity×70% 預算）<br>運用 <b>'+muPct+'%</b> —— 超過 70% 琥珀、90% 紅（engine 會 reject 新倉）';}
     if(bars[1]){bars[1].style.cursor='help';bars[1].dataset.tip='<b>② 接貨現金（最壞情況）</b><br>HKD '+fmt(locked)+' ／ '+fmt(CAPITAL_HKD)+'<br>= <b>'+pct+'%</b> —— 些 Put 全部被指派時要拿出來接貨的總數；剩可用 HKD '+fmt(avail);}
   }
+  // 渲染關鍵提醒（總覽只顯示最重要的3個）
+  const overviewReminders = renderTradeReminders().slice(0, 3);
+  const ovRemindersCard = $('ovRemindersCard'), ovRemindersBody = $('ovRemindersBody');
+  if(ovRemindersCard){ovRemindersCard.style.display=overviewReminders.length?'block':'none';
+    if(ovRemindersBody && overviewReminders.length > 0){
+      let h = '';
+      overviewReminders.forEach(reminder => {
+        const timeStr = new Date(reminder.time).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
+        h += `<div style="padding:8px 0;border-bottom:1px solid #f1f5f9">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <span style="font-size:12px;">${reminder.priority === 'high' ? '🚨' : '⚠️'}</span>
+            <span style="font-size:12px;font-weight:600">${reminder.message}</span>
+            <span class="muted small" style="margin-left:auto">${timeStr}</span>
+          </div>
+        </div>`;
+      });
+      ovRemindersBody.innerHTML = h;
+    }}
+
   $('ovMonthly').textContent=hkd(rec.projected_monthly_hkd&&rec.projected_monthly_hkd.hkd);
   var _ml=document.querySelector('#ovMonthly')&&document.querySelector('#ovMonthly').parentNode.querySelector('.lbl');
   if(_ml&&_ml.dataset.mt!=='1'){_ml.dataset.mt='1';_ml.innerHTML='估算月收入'+tip('monthly');}
@@ -576,6 +668,180 @@ function ledTable(led){
     h+='<tr><td><b>'+esc(t.ticker)+'</b></td><td class="r">$'+t.strike+'</td><td class="r">'+(t.contracts||1)+'</td><td>'+esc(t.close_reason)+'</td><td class="r">'+money(t.pnl)+'</td><td class="r">'+money(t.pnl_hkd)+'</td></tr>';
   });
   return h+'</tbody></table>';
+}
+
+function tradeExecTable(execs){
+  let h='<table class="utable"><thead><tr><th>股票</th><th class="r">行使價</th><th class="r">張數</th><th class="r">成交價</th><th>時間</th><th>券商</th><th>狀態</th></tr></thead><tbody>';
+  execs.forEach(e=>{
+    const timestamp=new Date(e.timestamp);
+    const timeStr=timestamp.toLocaleDateString('zh-CN')+' '+timestamp.toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
+    const isRecent = (Date.now() - e.timestamp) < 2 * 60 * 60 * 1000; // 2 hours
+    const statusClass = e.status === '已完成' ? 'pos' : (e.status === '已委託' ? 'warn' : '');
+    h+='<tr><td><b>'+esc(e.ticker)+'</b></td><td class="r">$'+e.strike+'</td><td class="r">'+e.contracts+'</td><td class="r">$'+e.price+'</td><td class="muted small">'+timeStr+(isRecent?' <span class="pill w">新</span>':'')+'</td><td class="muted small">'+esc(e.broker)+'</td><td class="muted small '+statusClass+'">'+esc(e.status)+'</td></tr>';
+  });
+  return h+'</tbody></table>';
+}
+
+function renderTradeReminders(){
+  // Smart reminders based on current state
+  const reminders = [];
+
+  // 1. Recent executions (within 1 hour) - High priority
+  const recentExecs = (rec.trade_executions || []).filter(e => {
+    const execTime = new Date(e.timestamp).getTime();
+    return (Date.now() - execTime) < 60 * 60 * 1000; // 1 hour
+  });
+
+  if (recentExecs.length > 0) {
+    recentExecs.forEach(exec => {
+      reminders.push({
+        id: 'exec_' + exec.timestamp + '_' + exec.ticker,
+        type: 'execution',
+        priority: 'high',
+        ticker: exec.ticker,
+        message: `剛剛執行 ${exec.ticker} @ $${exec.strike} × ${exec.contracts}`,
+        time: exec.timestamp,
+        details: exec
+      });
+    });
+  }
+
+  // 2. Open positions nearing profit target
+  const openPositions = (rec.positions || []).filter(p => p.status === 'open' && p.pct_max >= 30);
+  openPositions.forEach(pos => {
+    if (pos.pct_max >= 50) {
+      reminders.push({
+        id: 'profit_' + pos.id,
+        type: 'profit_target',
+        priority: 'high',
+        ticker: pos.ticker,
+        message: `${pos.ticker} 已達利潤目標 (${pos.pct_max}%) - 建議平倉`,
+        time: Date.now(),
+        position: pos
+      });
+    } else if (pos.pct_max >= 30) {
+      reminders.push({
+        id: 'profit_' + pos.id,
+        type: 'profit_approaching',
+        priority: 'medium',
+        ticker: pos.ticker,
+        message: `${pos.ticker} 接近利潤目標 (${pos.pct_max}%)`,
+        time: Date.now(),
+        position: pos
+      });
+    }
+  });
+
+  // 3. Expiring positions
+  const expiringPositions = (rec.positions || []).filter(p => {
+    const expiry = new Date(p.expiry);
+    const daysToExpiry = Math.ceil((expiry - Date.now()) / (1000 * 60 * 60 * 24));
+    return daysToExpiry <= 7 && daysToExpiry > 0;
+  });
+
+  expiringPositions.forEach(pos => {
+    const days = Math.ceil((new Date(pos.expiry) - Date.now()) / (1000 * 60 * 60 * 24));
+    reminders.push({
+      id: 'expiry_' + pos.id,
+      type: 'expiry',
+      priority: days <= 3 ? 'high' : 'medium',
+      ticker: pos.ticker,
+      message: `${pos.ticker} 即將到期 (剩 ${days} 天)`,
+      time: Date.now(),
+      position: pos
+    });
+  });
+
+  // 4. Failed executions
+  const failedExecs = (rec.trade_executions || []).filter(e => e.status === '失敗' || e.status === '拒絕');
+  if (failedExecs.length > 0) {
+    reminders.push({
+      id: 'failed_' + Date.now(),
+      type: 'failed_execution',
+      priority: 'medium',
+      message: `有 ${failedExecs.length} 筆交易失敗，請檢查`,
+      time: Date.now(),
+      details: failedExecs
+    });
+  }
+
+  // Sort by priority and time
+  const priorityOrder = { high: 0, medium: 1, low: 2 };
+  reminders.sort((a, b) => {
+    if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    }
+    return new Date(b.time) - new Date(a.time);
+  });
+
+  return reminders;
+}
+
+function renderRemindersCard(){
+  const reminders = renderTradeReminders();
+  const reminderCard = $('remindersCard');
+  const reminderBody = $('remindersBody');
+
+  if (!reminderCard) return;
+
+  if (reminders.length === 0) {
+    reminderCard.style.display = 'none';
+    return;
+  }
+
+  reminderCard.style.display = 'block';
+  let h = '';
+
+  reminders.slice(0, 5).forEach(reminder => { // Show top 5 reminders
+    const timeStr = new Date(reminder.time).toLocaleDateString('zh-CN') + ' ' +
+                   new Date(reminder.time).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
+
+    let iconClass = '📌';
+    let priorityClass = '';
+
+    switch (reminder.priority) {
+      case 'high':
+        iconClass = '🚨';
+        priorityClass = 'warn';
+        break;
+      case 'medium':
+        iconClass = '⚠️';
+        priorityClass = 'muted';
+        break;
+      default:
+        iconClass = 'ℹ️';
+        priorityClass = 'muted';
+    }
+
+    let actionButtons = '';
+    if (reminder.type === 'profit_target' && reminder.position) {
+      actionButtons = `<button class="btn btn-go" onclick="closePos('${reminder.position.id}')">立即平倉</button>`;
+    } else if (reminder.type === 'expiry' && reminder.position) {
+      actionButtons = `<button class="btn btn-ghost" onclick="showDetail('${reminder.position.ticker}')">查看詳情</button>`;
+    } else if (reminder.type === 'execution' && reminder.details) {
+      actionButtons = `<button class="btn btn-ghost" onclick="showTradeDetail('${reminder.details.ticker}', '${reminder.details.timestamp}')">查看詳情</button>`;
+    }
+
+    h += `
+      <div class="reminder-item ${priorityClass}" style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+          <span style="font-size: 14px;">${iconClass}</span>
+          <span style="font-weight: 600; font-size: 13px;">${reminder.message}</span>
+          <span class="muted small" style="margin-left: auto;">${timeStr}</span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          ${actionButtons}
+          <button class="btn btn-ghost" style="font-size: 11px;" onclick="dismissReminder('${reminder.id}')">忽略</button>
+        </div>
+      </div>
+    `;
+  });
+
+  if (reminders.length > 5) {
+    h += `<div class="muted small" style="text-align: center; padding: 8px 0;">還有 ${reminders.length - 5} 個提醒...</div>`;
+  }
+
+  reminderBody.innerHTML = h;
 }
 
 function gateReason(){   // ⭐ 2026-08-17 v3：閘門關閉嘅「真實原因」—— 以前寫死「市寬 X%＜50%」，但 gate_closed 仲有每日 2 倉上限／熔斷兩個來源 → 出過「市寬 59% ＜ 50%」自相矛盾訊息
@@ -762,6 +1028,19 @@ function renderPositions(){
   const ac=$('actCard'), ab=$('actBody');
   if(ac){ac.style.display=acts.length?'':'none';
     if(ab)ab.innerHTML=acts.map(a=>'<div style="padding:6px 0;border-bottom:1px dashed #e2e8f0">'+esc(a)+'</div>').join('');}
+
+  // 渲染智能提醒
+  renderRemindersCard();
+
+  // 成交記錄（擴展到7天內）
+  const executions=(rec.trade_executions||[]).filter(e=>new Date(e.timestamp)>new Date(Date.now()-7*24*60*60*1000)); // 最近7天
+  const execCard=$('tradeExecutionCard'), execBody=$('tradeExecutionBody');
+  if(execCard){execCard.style.display=executions.length?'':'none';
+    if(execBody)execBody.innerHTML=executions.length?tradeExecTable(executions):'<div class="muted">暫無成交記錄。</div>';
+    // 更新卡片標題顯示範圍
+    const execMeta=execCard.querySelector('.meta');
+    if(execMeta)execMeta.textContent='最近7天內的成交記錄（共 '+executions.length+' 筆）';}
+
   const pos=(rec.positions||[]).filter(x=>x.status==='open');
   const body=$('posBody');
   let h='';
@@ -1337,7 +1616,27 @@ async function confirmExec(tk,exp,K,n,premium){
     side:side
   });
   closeExec();
-  if(r&&r.ok){toast('✅ 已排隊執行 '+tk+' ×'+n+'（engine 下個週期確認，price 到先記賬）');setTimeout(function(){loadRec();},4000);}
+  if(r&&r.ok){
+    toast('✅ 已排隊執行 '+tk+' ×'+n+'（engine 下個週期確認，price 到先記賬）');
+
+    // 添加成交提醒到執行記錄
+    const execution = {
+      ticker: tk,
+      strike: K,
+      contracts: Number(n),
+      price: premium,
+      timestamp: new Date().toISOString(),
+      broker: '富途證券（香港）', // 可以根據需要調整
+      status: '已委託',
+      action: '賣出' // 可以根據 side 判斷是賣 Put 還是賣 Call
+    };
+
+    // 添加到 trade_executions 數組
+    if (!rec.trade_executions) rec.trade_executions = [];
+    rec.trade_executions.unshift(execution);
+
+    setTimeout(function(){loadRec();},4000);
+  }
   else toast('❌ 執行失敗：'+(r&&r.error||'bridge 未連接'));
 }
 /* ════════════ 決定記錄（localStorage：執行/排隊/今日不做） ════════════ */
@@ -1462,7 +1761,8 @@ async function toggleReal(pid,val){   // 真倉=Futu 實單；紙上=engine 模�
 }
 function toast(msg){
   const el=$('liveBadge');el.textContent=msg;
-  setTimeout(()=>setLive((rec.paper?'📝 紙上':'🔴 LIVE')+' · '+rec.date),3000);
+  const displayDate = new Date().toISOString().split('T')[0];
+    setTimeout(()=>setLive((rec.paper?'📝 紙上':'🔴 LIVE')+' · '+displayDate),3000);
 }
 
 /* ════════════ tooltip（⭐ 08-16：任何有 data-tip 的元素都生效 —— bar chart 動態 hover 都用這個）════════════ */
@@ -1567,6 +1867,67 @@ function renderMethod(){
     '<p class="small muted" style="margin-top:8px">去重規則：Telegram 以「日期：股票：類型」為鍵，同一事件只推送一次；儀表板警報以紅色橫幅＋瀏覽器標題閃爍＋提示音顯示，警報內容有變化才會再響。</p>';
 
 }
+
+function closeModal(modalId){
+  const modal = $(modalId);
+  if (modal) modal.style.display = 'none';
+}
+
+function dismissReminder(reminderId){
+  // 將提醒標記為已忽略（儲存到 localStorage）
+  const ignoredReminders = JSON.parse(localStorage.getItem('ignoredReminders') || '[]');
+  if (!ignoredReminders.includes(reminderId)) {
+    ignoredReminders.push(reminderId);
+    localStorage.setItem('ignoredReminders', JSON.stringify(ignoredReminders));
+  }
+
+  // 重新渲染提醒
+  renderRemindersCard();
+
+  // 如果提醒卡片現在空了，隱藏整個卡片
+  const remindersCard = $('remindersCard');
+  if (remindersCard && remindersCard.style.display !== 'none') {
+    const remindersBody = $('remindersBody');
+    if (!remindersBody || remindersBody.children.length === 0) {
+      remindersCard.style.display = 'none';
+    }
+  }
+}
+
+function showTradeDetail(ticker, timestamp){
+  const execution = (rec.trade_executions || []).find(e =>
+    e.ticker === ticker && new Date(e.timestamp).getTime() === Number(timestamp)
+  );
+
+  if (!execution) return;
+
+  // 創建一個模態框顯示詳細資訊
+  const modal = $('detailModal');
+  if (!modal) return;
+
+  let html = `
+    <h3>📊 交易詳情 - ${execution.ticker}</h3>
+    <div style="display: grid; gap: 8px; margin-top: 16px;">
+      <div><span class="k">執行時間：</span><span>${new Date(execution.timestamp).toLocaleString('zh-CN')}</span></div>
+      <div><span class="k">操作類型：</span><span>${execution.action}</span></div>
+      <div><span class="k">行使價：</span><span>$${execution.strike}</span></div>
+      <div><span class="k">張數：</span><span>${execution.contracts}</span></div>
+      <div><span class="k">成交價：</span><span>$${execution.price}/股</span></div>
+      <div><span class="k">權利金：</span><span>$${(execution.price * 100 * execution.contracts).toFixed(2)} USD</span></div>
+      <div><span class="k">狀態：</span><span>${execution.status}</span></div>
+      <div><span class="k">券商：</span><span>${execution.broker}</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('detailModal')">關閉</button>
+    </div>
+  `;
+
+  modal.innerHTML = html;
+  modal.style.display = 'flex';
+}
+
+// 更新 renderAll 以包含提醒渲染
+function renderAll(){renderOverview();renderBest();renderCandidates();renderWinRank();renderRemindersCard();renderPositions();renderNotes();renderDecisions();renderMethod();renderAlarm();if(activeTk)renderDetail();}
 
 /* ════════════ boot ════════════ */
 setInterval(loadRec,60000);
