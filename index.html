@@ -186,6 +186,29 @@
     .card-icon.work { background: var(--primary-light); color: var(--primary); }
     .card-icon.personal { background: var(--secondary-light); color: var(--secondary); }
 
+    .section-header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .section-chip.work { background: var(--primary-light); }
+    .section-chip.personal { background: var(--secondary-light); }
+    .section-title { font-size: 17px; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .section-title .en { font-size: 12px; font-weight: 600; color: var(--text-dim); margin-left: 6px; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
     .card-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
     .card-subtitle { font-size: 13px; color: var(--text-dim); margin-bottom: 16px; line-height: 1.4; }
 
@@ -329,11 +352,18 @@
 
     <div class="dashboard-grid" id="dashboardGrid">
 
+      <!-- Work Section -->
+      <div class="section-header" data-category="work">
+        <span class="section-chip work">💼</span>
+        <h2 class="section-title">工作<span class="en">WORK</span></h2>
+        <span class="section-line"></span>
+      </div>
+
       <!-- Work Dashboards -->
       <div class="dashboard-card work" data-category="work">
         <div class="card-icon work">🎯</div>
         <h3 class="card-title">Quant Model</h3>
-        <p class="card-subtitle">量化模型 · 工作用</p>
+        <p class="card-subtitle">美股 · 港股每日量化訊號</p>
         <div class="card-tags">
           <span class="tag secondary">4-Factor Model</span>
           <span class="tag accent">ADBE + DDOG</span>
@@ -395,6 +425,13 @@
         <a href="https://leunghlk.github.io/quant-dashboard/ai-industry-chain.html" class="card-action" target="_blank" rel="noopener">
           打開圖譜 <span class="arrow">→</span>
         </a>
+      </div>
+
+      <!-- Personal Section -->
+      <div class="section-header" data-category="personal">
+        <span class="section-chip personal">🏠</span>
+        <h2 class="section-title">個人<span class="en">PERSONAL</span></h2>
+        <span class="section-line"></span>
       </div>
 
       <!-- Personal Dashboards -->
@@ -504,7 +541,7 @@
   <script>
     // Tab Navigation
     const tabs = document.querySelectorAll('.nav-tab');
-    const cards = document.querySelectorAll('.dashboard-card:not(.new-dashboard)');
+    const cards = document.querySelectorAll('.dashboard-card:not(.new-dashboard), .section-header');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
