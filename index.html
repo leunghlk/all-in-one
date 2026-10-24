@@ -319,9 +319,70 @@
       .dashboard-grid { grid-template-columns: 1fr; }
       .footer-links { flex-direction: column; gap: 8px; }
     }
+  /* ---- private gate ---- */
+  body.gated > *:not(#gate){ visibility: hidden; }
+  #gate{ position: fixed; inset: 0; z-index: 99999; background: #f9f9f7;
+    display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .gate-card{ background: #fff; border: 1px solid rgba(11,11,11,.10); border-radius: 18px;
+    padding: 34px 30px; max-width: 360px; width: 100%; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.10); }
+  .gate-logo{ width: 52px; height: 52px; border-radius: 14px; background: #007A3D; color: #fff;
+    font-size: 26px; font-weight: 800; line-height: 52px; margin: 0 auto 14px; }
+  .gate-card h2{ margin: 0 0 4px; font-size: 19px; color: #0b0b0b; }
+  .gate-card .gate-sub{ margin: 0 0 16px; font-size: 13px; color: #52514e; }
+  .gate-ip{ font-size: 12.5px; color: #898781; margin: 0 0 14px; }
+  .gate-ip span{ font-family: ui-monospace, Menlo, monospace; color: #52514e; }
+  .gate-row{ display: flex; gap: 8px; }
+  .gate-row input{ flex: 1; padding: 11px 13px; border: 1px solid #e1e0d9; border-radius: 10px; font-size: 15px; outline: none; }
+  .gate-row input:focus{ border-color: #007A3D; }
+  .gate-row button{ padding: 0 18px; border: 0; border-radius: 10px; background: #007A3D; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
+  #gateMsg{ min-height: 18px; font-size: 13px; color: #d03b3b; margin: 10px 0 0; }
   </style>
 </head>
-<body>
+<body class="gated">
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">K</div>
+    <h2>私人儀表板</h2>
+    <p class="gate-sub">只限授權裝置進入</p>
+    <p class="gate-ip">你的 IP：<span id="gateIp">查詢中…</span></p>
+    <div class="gate-row">
+      <input id="gatePw" type="password" placeholder="密碼" autocomplete="current-password">
+      <button id="gateGo">進入</button>
+    </div>
+    <p id="gateMsg"></p>
+  </div>
+</div>
+<script>
+(function(){
+  // ⬇️ 免密 IP 名單（公網 IP）。ISP 轉咗 IP 就喺度加返。
+  var ALLOW = ['218.250.101.169'];
+  var PW_SHA = '47afd00e2cbdb89ad311919011ab504db2ebf52e5503b6384f63233a6f392454';
+  var OK_KEY = 'hub_gate_ok';
+  function unlock(){
+    try{ localStorage.setItem(OK_KEY, '1'); }catch(e){}
+    document.body.classList.remove('gated');
+    var g = document.getElementById('gate'); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(OK_KEY) === '1'){ unlock(); return; } }catch(e){}
+  fetch('https://api.ipify.org?format=json').then(function(r){ return r.json(); }).then(function(j){
+    var ip = j.ip || '';
+    document.getElementById('gateIp').textContent = ip;
+    if(ALLOW.indexOf(ip) >= 0) unlock();
+  }).catch(function(){ document.getElementById('gateIp').textContent = '查詢失敗'; });
+  function tryPw(){
+    var v = document.getElementById('gatePw').value;
+    if(!v) return;
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)).then(function(buf){
+      var hex = [].map.call(new Uint8Array(buf), function(b){ return ('0' + b.toString(16)).slice(-2); }).join('');
+      document.getElementById('gateMsg').textContent = (hex === PW_SHA) ? '' : '密碼唔啱';
+      if(hex === PW_SHA) unlock();
+    });
+  }
+  document.getElementById('gateGo').addEventListener('click', tryPw);
+  document.getElementById('gatePw').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryPw(); });
+})();
+</script>
 
   <!-- Header -->
   <header class="header">
