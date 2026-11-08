@@ -714,17 +714,36 @@
       }
     }
 
-    /* ═══ 🖱️ 卡片自動排列（⭐11-08 用戶令：自己執位，唔使下下叫人改 code） ═══
+    /* ═══ 🖱️ 卡片自動排列＋✏️ 改名（⭐11-08 用戶令：自己執位／改名，唔使下下叫人改 code） ═══
        用法：直接拖卡（同一段 work/personal 內）放去想要嘅位——即存 localStorage，下次打開照你排嘅順序。
-       「↺ 重設排列」一鍵返原廠順序。拖嘅時候唔會誤開卡（drag 優先過 click）。 */
+       double-click 卡名（粗字）改卡名；double-click 灰色細字改細字——都自動記住。
+       「↺ 重設排列」一鍵返原廠（順序＋名齊還原）。拖嘅時候唔會誤開卡（drag 優先過 click）。
+       ⭐ 卡嘅身份 id（data-cid）釘死原廠卡名——改名唔會斷排列紀錄。 */
     (function(){
       const ORDER_KEY='hub_card_order_v1';
+      const RENAME_KEY='hub_card_renames_v1';
       const grid=document.getElementById('dashboardGrid');
       if(!grid)return;
-      const cardId=c=>{const t=c.querySelector('.card-title');return t?t.textContent.trim():'';};
-      const loadOrder=()=>{try{return JSON.parse(localStorage.getItem(ORDER_KEY)||'{}');}catch(e){return {};}};
+      // 穩定 id：首次載入把原廠卡名釘入 data-cid／原廠細字釘入 data-sub-orig（之後改名都唔會變）
+      grid.querySelectorAll('.dashboard-card').forEach(c=>{
+        const t=c.querySelector('.card-title'),s=c.querySelector('.card-subtitle');
+        if(t&&!c.getAttribute('data-cid'))c.setAttribute('data-cid',t.textContent.trim());
+        if(s&&!s.getAttribute('data-sub-orig'))s.setAttribute('data-sub-orig',s.textContent.trim());
+      });
+      const cardId=c=>c.getAttribute('data-cid')||(c.querySelector('.card-title')?c.querySelector('.card-title').textContent.trim():'');
+      const loadJson=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}');}catch(e){return {};}};
+      function applyRenames(){
+        const rn=loadJson(RENAME_KEY);
+        grid.querySelectorAll('.dashboard-card').forEach(c=>{
+          const r=rn[cardId(c)];
+          if(!r)return;
+          const t=c.querySelector('.card-title'),s=c.querySelector('.card-subtitle');
+          if(t&&r.t)t.textContent=r.t;
+          if(s&&typeof r.s==='string')s.textContent=r.s;
+        });
+      }
       function applyOrder(){
-        const saved=loadOrder();
+        const saved=loadJson(ORDER_KEY);
         grid.querySelectorAll('.dashboard-card').forEach(c=>{
           const cat=c.getAttribute('data-category');
           const anchor=grid.querySelector('.section-header[data-category="'+cat+'"]');
@@ -769,15 +788,42 @@
           });
         });
       }
+      // ✏️ double-click 卡名／灰細字 → prompt 改名（空白＝還原原廠字；Cancel＝唔改）
+      grid.addEventListener('dblclick',e=>{
+        const tBox=e.target.closest('.card-title'),sBox=e.target.closest('.card-subtitle');
+        if(!tBox&&!sBox)return;
+        const card=e.target.closest('.dashboard-card');
+        if(!card)return;
+        const cid=cardId(card);
+        if(!cid)return;
+        const rn=loadJson(RENAME_KEY);
+        const cur=rn[cid]||{};
+        const tEl=card.querySelector('.card-title'),sEl=card.querySelector('.card-subtitle');
+        if(tBox){
+          const nt=prompt('✏️ 改卡名（清空＝還原原廠名）：',cur.t||tBox.textContent.trim());
+          if(nt===null)return;
+          if(nt.trim()===''){delete cur.t;if(tEl)tEl.textContent=cid;}   // 清空＝還原原廠卡名
+          else{cur.t=nt.trim();if(tEl)tEl.textContent=cur.t;}
+        }else{
+          const ns=prompt('✏️ 改灰色細字（清空＝還原原廠字）：',typeof cur.s==='string'?cur.s:(sEl?sEl.textContent:''));
+          if(ns===null)return;
+          if(ns.trim()===''){delete cur.s;if(sEl)sEl.textContent=sEl.getAttribute('data-sub-orig')||'';}   // 清空＝還原原廠字
+          else{cur.s=ns.trim();if(sEl)sEl.textContent=cur.s;}
+        }
+        if(!cur.t&&typeof cur.s!=='string')delete rn[cid]; else rn[cid]=cur;
+        try{localStorage.setItem(RENAME_KEY,JSON.stringify(rn));}catch(e2){}
+      });
       applyOrder();
+      applyRenames();
       wireDnD();
       // 重設掣＋提示（插喺 grid 前嘅 toolbar 位）
       const tip=document.createElement('div');
-      tip.style.cssText='display:flex;gap:10px;align-items:center;margin:0 auto 14px;max-width:1200px;padding:0 20px;font-size:12.5px;color:#64748b';
-      tip.innerHTML='<span>🖱️ 拖住任何卡上下移動可以執位（自動記住；唔會誤開卡）。</span><button id="hubResetOrder" style="padding:4px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#334155">↺ 重設排列</button>';
+      tip.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 auto 14px;max-width:1200px;padding:0 20px;font-size:12.5px;color:#64748b';
+      tip.innerHTML='<span>🖱️ 拖卡執位 · ✏️ double-click 卡名／灰細字改名（自動記住；唔會誤開卡）。</span><button id="hubResetOrder" style="padding:4px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#334155">↺ 重設排列</button>';
       grid.parentNode.insertBefore(tip,grid);
       tip.querySelector('#hubResetOrder').addEventListener('click',()=>{
         try{localStorage.removeItem(ORDER_KEY);}catch(e){}
+        try{localStorage.removeItem(RENAME_KEY);}catch(e){}
         location.reload();
       });
     })();
