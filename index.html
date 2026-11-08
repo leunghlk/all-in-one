@@ -559,15 +559,15 @@
         </a>
       </div>
       <div class="dashboard-card personal" data-category="personal">
-        <div class="card-icon personal">🧪</div>
-        <h3 class="card-title">洗倉雷達</h3>
-        <p class="card-subtitle">Washout Radar · 研究訊號</p>
+        <div class="card-icon personal">🗺️</div>
+        <h3 class="card-title">統一策略台</h3>
+        <p class="card-subtitle">Unified Strategy · 四合一統一簿</p>
         <div class="card-tags">
-          <span class="tag secondary">未 seal</span>
-          <span class="tag accent">dd20 ≤ −8% 博反彈</span>
+          <span class="tag secondary">今日台 · Roadmap 決策樹</span>
+          <span class="tag accent">OOS 七窗 · 回本路徑 · 🛑三次確認止蝕</span>
         </div>
-        <a href="https://leungkathy.github.io/quant-dashboard/washout-radar.html" class="card-action" target="_blank" rel="noopener">
-          打開雷達 <span class="arrow">→</span>
+        <a href="https://leunghlk.github.io/unified-strategy/" class="card-action" target="_blank" rel="noopener">
+          打開策略台 <span class="arrow">→</span>
         </a>
       </div>
       <div class="dashboard-card personal" data-category="personal">
@@ -725,6 +725,74 @@
         alert(`儀表板 "${title}" 已登記！(尚未接駁)`);
       }
     }
+
+    /* ═══ 🖱️ 卡片自動排列（⭐11-08 用戶令：自己執位，唔使下下叫人改 code） ═══
+       用法：直接拖卡（同一段 work/personal 內）放去想要嘅位——即存 localStorage，下次打開照你排嘅順序。
+       「↺ 重設排列」一鍵返原廠順序。拖嘅時候唔會誤開卡（drag 優先過 click）。 */
+    (function(){
+      const ORDER_KEY='hub_card_order_v1';
+      const grid=document.getElementById('dashboardGrid');
+      if(!grid)return;
+      const cardId=c=>{const t=c.querySelector('.card-title');return t?t.textContent.trim():'';};
+      const loadOrder=()=>{try{return JSON.parse(localStorage.getItem(ORDER_KEY)||'{}');}catch(e){return {};}};
+      function applyOrder(){
+        const saved=loadOrder();
+        grid.querySelectorAll('.dashboard-card').forEach(c=>{
+          const cat=c.getAttribute('data-category');
+          const anchor=grid.querySelector('.section-header[data-category="'+cat+'"]');
+          if(!anchor||saved[cat])return;   // 唔同 category 有 anchor 都唔會 double-insert
+        });
+        Object.keys(saved).forEach(cat=>{
+          const anchor=grid.querySelector('.section-header[data-category="'+cat+'"]');
+          if(!anchor)return;
+          const ids=saved[cat];
+          const byId={};
+          grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>{byId[cardId(c)]=c;});
+          let ref=anchor;
+          ids.forEach(id=>{const c=byId[id];if(c){ref.insertAdjacentElement('afterend',c);ref=c;}});
+          // 新卡（未喺 saved）跟原有 DOM 順序接尾
+          grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>{
+            if(!ids.includes(cardId(c))){ref.insertAdjacentElement('afterend',c);ref=c;ids.push(cardId(c));}
+          });
+        });
+      }
+      function saveOrder(){
+        const saved={};
+        grid.querySelectorAll('.dashboard-card').forEach(c=>{
+          const cat=c.getAttribute('data-category');
+          (saved[cat]=saved[cat]||[]).push(cardId(c));
+        });
+        try{localStorage.setItem(ORDER_KEY,JSON.stringify(saved));}catch(e){}
+      }
+      let dragCard=null;
+      function wireDnD(){
+        grid.querySelectorAll('.dashboard-card').forEach(c=>{
+          if(c._dnd)return; c._dnd=true;
+          c.setAttribute('draggable','true');
+          c.addEventListener('dragstart',e=>{dragCard=c;c.style.opacity='.45';try{e.dataTransfer.setData('text/plain','card');}catch(e2){}e.dataTransfer.effectAllowed='move';});
+          c.addEventListener('dragend',()=>{c.style.opacity='';dragCard=null;saveOrder();});
+          c.addEventListener('dragover',e=>{
+            if(!dragCard||dragCard===c)return;
+            if(dragCard.getAttribute('data-category')!==c.getAttribute('data-category'))return;
+            e.preventDefault();
+            const r=c.getBoundingClientRect();
+            const before=(e.clientY-r.top)<r.height/2;
+            c.parentNode.insertBefore(dragCard,before?c:c.nextSibling);
+          });
+        });
+      }
+      applyOrder();
+      wireDnD();
+      // 重設掣＋提示（插喺 grid 前嘅 toolbar 位）
+      const tip=document.createElement('div');
+      tip.style.cssText='display:flex;gap:10px;align-items:center;margin:0 auto 14px;max-width:1200px;padding:0 20px;font-size:12.5px;color:#64748b';
+      tip.innerHTML='<span>🖱️ 拖住任何卡上下移動可以執位（自動記住；唔會誤開卡）。</span><button id="hubResetOrder" style="padding:4px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#334155">↺ 重設排列</button>';
+      grid.parentNode.insertBefore(tip,grid);
+      tip.querySelector('#hubResetOrder').addEventListener('click',()=>{
+        try{localStorage.removeItem(ORDER_KEY);}catch(e){}
+        location.reload();
+      });
+    })();
   </script>
 </body>
 </html>
