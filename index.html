@@ -605,7 +605,7 @@
       </div>
 
       <!-- Itinerary Dashboards -->
-      <div class="dashboard-card personal" data-category="personal">
+      <div class="dashboard-card personal" data-category="personal" data-cid="itinerary-perth">
         <div class="card-icon personal">🦘</div>
         <h3 class="card-title">珀斯行程章程</h3>
         <p class="card-subtitle">Perth 7日6夜 · 全家 Plan 3（＋二人行／父母版）</p>
@@ -619,7 +619,7 @@
       </div>
 
       <!-- Chongqing Itinerary Card -->
-      <div class="dashboard-card personal" data-category="personal">
+      <div class="dashboard-card personal" data-category="personal" data-cid="itinerary-chongqing">
         <div class="card-icon personal">🌶️</div>
         <h3 class="card-title">重慶二人行章程</h3>
         <p class="card-subtitle">4日3夜／5日4夜 · 情侶地鐵遊（＋武隆一日）</p>
@@ -767,6 +767,10 @@
           const anchor=grid.querySelector('.section-header[data-category="'+cat+'"]');
           if(!anchor)return;
           const ids=saved[cat];
+          // 過時自癒：saved 名單同現有卡對唔上大多數（改咗名／大執位後）→ 唔套用，照 server 順序
+          const curAll=[];grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>curAll.push(cardId(c)));
+          const hit=curAll.filter(id=>ids.includes(id)).length;
+          if(curAll.length&&hit/curAll.length<0.6)return;
           const byId={};
           grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>{byId[cardId(c)]=c;});
           let ref=anchor;
