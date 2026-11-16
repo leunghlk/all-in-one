@@ -767,10 +767,9 @@
           const anchor=grid.querySelector('.section-header[data-category="'+cat+'"]');
           if(!anchor)return;
           const ids=saved[cat];
-          // 過時自癒：saved 名單同現有卡對唔上大多數（改咗名／大執位後）→ 唔套用，照 server 順序
+          // 過時自癒：段內有任何 server 端新卡／改咗名嘅卡（id 唔喺 saved 名單）→ 舊排序唔套用，照 server 順序出（用戶再拖一次會重新記錄）
           const curAll=[];grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>curAll.push(cardId(c)));
-          const hit=curAll.filter(id=>ids.includes(id)).length;
-          if(curAll.length&&hit/curAll.length<0.6)return;
+          if(curAll.some(id=>!ids.includes(id)))return;
           const byId={};
           grid.querySelectorAll('.dashboard-card[data-category="'+cat+'"]').forEach(c=>{byId[cardId(c)]=c;});
           let ref=anchor;
