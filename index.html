@@ -421,9 +421,9 @@
       </div>
 
       <!-- Work Dashboards -->
-      <div class="dashboard-card work" data-category="work">
+      <div class="dashboard-card work" data-category="work" data-cid="基金對比 Infographics">
         <div class="card-icon work">📊</div>
-        <h3 class="card-title">基金對比 Infographics</h3>
+        <h3 class="card-title">infographics圖書館</h3>
         <p class="card-subtitle">多元資產入息基金四強對比 · A4 客用 1-pager</p>
         <div class="card-tags">
           <span class="tag primary">RM 基金</span>
@@ -819,38 +819,63 @@
           });
         });
       }
-      // ✏️ double-click 卡名／灰細字 → prompt 改名（空白＝還原原廠字；Cancel＝唔改）
+      // ✏️ v2（11-19）：double-click／double-tap 卡名／灰細字 → inline 直接改字（contenteditable）。
+      // 唔再用 prompt()：Safari 㩒過「禁止此頁面再顯示對話框」後 prompt 會靜靜返回 null＝改名永遠無聲失效。
+      // Enter／Tab／點第度（blur）＝儲存；Esc＝取消；清空儲存＝還原原廠字；貼上自動轉純文字。
+      function editLabel(el,card,isTitle){
+        if(!el||el.getAttribute('contenteditable')==='true')return;
+        const pre=el.textContent;
+        el.setAttribute('contenteditable','true');
+        el.style.outline='2px dashed #94a3b8';el.style.outlineOffset='2px';el.style.borderRadius='4px';el.style.padding='1px 4px';el.style.margin='-1px -4px';
+        el.focus();
+        try{const sel=window.getSelection();if(sel){const r=document.createRange();r.selectNodeContents(el);sel.removeAllRanges();sel.addRange(r);}}catch(e0){}
+        let done=false;
+        const finish=save=>{
+          if(done)return;done=true;
+          el.removeAttribute('contenteditable');
+          el.style.outline='';el.style.outlineOffset='';el.style.borderRadius='';el.style.padding='';el.style.margin='';
+          el.removeEventListener('keydown',onKey);el.removeEventListener('blur',onBlur);el.removeEventListener('paste',onPaste);
+          if(!save){el.textContent=pre;return;}
+          const txt=el.textContent.trim();
+          const cid=cardId(card);
+          if(!cid)return;
+          const rn=loadJson(RENAME_KEY);
+          const cur=rn[cid]||{};
+          const tEl=card.querySelector('.card-title'),sEl=card.querySelector('.card-subtitle');
+          if(isTitle){
+            if(txt===''||txt===cid){delete cur.t;if(tEl)tEl.textContent=cid;}   // 清空＝還原原廠卡名
+            else{cur.t=txt;if(tEl)tEl.textContent=cur.t;}
+          }else{
+            const orig=sEl?(sEl.getAttribute('data-sub-orig')||''):'';
+            if(txt===''||txt===orig){delete cur.s;if(sEl)sEl.textContent=orig;}   // 清空＝還原原廠字
+            else{cur.s=txt;if(sEl)sEl.textContent=cur.s;}
+          }
+          if(!cur.t&&typeof cur.s!=='string')delete rn[cid]; else rn[cid]=cur;
+          try{localStorage.setItem(RENAME_KEY,JSON.stringify(rn));}catch(e2){}
+        };
+        const onKey=e=>{
+          if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();finish(true);}
+          else if(e.key==='Escape'){finish(false);}
+        };
+        const onBlur=()=>finish(true);
+        const onPaste=e=>{e.preventDefault();const t=e.clipboardData?e.clipboardData.getData('text/plain'):'';if(t){try{document.execCommand('insertText',false,t);}catch(e1){el.textContent=t;}}};
+        el.addEventListener('keydown',onKey);el.addEventListener('blur',onBlur);el.addEventListener('paste',onPaste);
+      }
       grid.addEventListener('dblclick',e=>{
         const tBox=e.target.closest('.card-title'),sBox=e.target.closest('.card-subtitle');
         if(!tBox&&!sBox)return;
         const card=e.target.closest('.dashboard-card');
         if(!card)return;
-        const cid=cardId(card);
-        if(!cid)return;
-        const rn=loadJson(RENAME_KEY);
-        const cur=rn[cid]||{};
-        const tEl=card.querySelector('.card-title'),sEl=card.querySelector('.card-subtitle');
-        if(tBox){
-          const nt=prompt('✏️ 改卡名（清空＝還原原廠名）：',cur.t||tBox.textContent.trim());
-          if(nt===null)return;
-          if(nt.trim()===''){delete cur.t;if(tEl)tEl.textContent=cid;}   // 清空＝還原原廠卡名
-          else{cur.t=nt.trim();if(tEl)tEl.textContent=cur.t;}
-        }else{
-          const ns=prompt('✏️ 改灰色細字（清空＝還原原廠字）：',typeof cur.s==='string'?cur.s:(sEl?sEl.textContent:''));
-          if(ns===null)return;
-          if(ns.trim()===''){delete cur.s;if(sEl)sEl.textContent=sEl.getAttribute('data-sub-orig')||'';}   // 清空＝還原原廠字
-          else{cur.s=ns.trim();if(sEl)sEl.textContent=cur.s;}
-        }
-        if(!cur.t&&typeof cur.s!=='string')delete rn[cid]; else rn[cid]=cur;
-        try{localStorage.setItem(RENAME_KEY,JSON.stringify(rn));}catch(e2){}
+        editLabel(tBox||sBox,card,!!tBox);
       });
       applyOrder();
       applyRenames();
       wireDnD();
       // 重設掣＋提示（插喺 grid 前嘅 toolbar 位）
+      try{const st=document.createElement('style');st.textContent='.dashboard-card .card-title,.dashboard-card .card-subtitle{cursor:text;touch-action:manipulation;-webkit-user-select:text;user-select:text}';document.head.appendChild(st);}catch(eS){}
       const tip=document.createElement('div');
       tip.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 auto 14px;max-width:1200px;padding:0 20px;font-size:12.5px;color:#64748b';
-      tip.innerHTML='<span>🖱️ 拖卡執位 · ✏️ double-click 卡名／灰細字改名（自動記住；唔會誤開卡）。</span><button id="hubResetOrder" style="padding:4px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#334155">↺ 重設排列</button>';
+      tip.innerHTML='<span>🖱️ 拖卡執位 · ✏️ double-click（iPhone double-tap）卡名或灰細字直接改字：Enter／點第度＝儲存、Esc＝取消、清空＝還原原廠（自動記住；唔會誤開卡）。</span><button id="hubResetOrder" style="padding:4px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#334155">↺ 重設排列</button>';
       grid.parentNode.insertBefore(tip,grid);
       tip.querySelector('#hubResetOrder').addEventListener('click',()=>{
         try{localStorage.removeItem(ORDER_KEY);}catch(e){}
